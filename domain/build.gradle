@@ -1,0 +1,38 @@
+plugins {
+  id 'java-library'
+  id 'org.jetbrains.kotlin.jvm'
+}
+
+apply from: "dependencies.gradle"
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
+}
+
+jacocoTestReport {
+  dependsOn test
+
+  afterEvaluate {
+    classDirectories.setFrom(files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: ["**/di/**"])
+    }))
+  }
+}
+
+jacocoTestCoverageVerification.dependsOn build
+
+jacocoTestCoverageVerification {
+  violationRules {
+    rule {
+      limit {
+        minimum = 1.0
+      }
+    }
+  }
+  afterEvaluate {
+    classDirectories.setFrom(files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: ["**/di/**"])
+    }))
+  }
+}

@@ -1,0 +1,81 @@
+ext {
+  ver = [:]
+  lib = [:]
+}
+
+ver.kotlin = "1.7.22"
+lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
+
+ver.rxKotlin = "3.0.1"
+ver.rxRelay3 = "3.0.1"
+lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
+                "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
+
+ver.ktx = "1.9.0"
+ver.ktx_lifecycle_runtime = "2.6.1"
+lib.google = ["androidx.core:core-ktx:$ver.ktx",
+              "androidx.lifecycle:lifecycle-runtime-ktx:$ver.ktx_lifecycle_runtime",]
+
+ver.compose_ui = "1.4.0"
+ver.activity_compose = "1.7.0"
+ver.material = "1.4.0"
+ver.composeNavigation = "2.5.3"
+ver.accompanist_flowlayout = "0.17.0"
+lib.google_compose = ["androidx.activity:activity-compose:$ver.activity_compose",
+                      "androidx.compose.ui:ui:$ver.compose_ui",
+                      "androidx.compose.ui:ui-tooling:$ver.compose_ui",
+                      "androidx.compose.material:material:$ver.material",
+                      "androidx.navigation:navigation-compose:$ver.composeNavigation",
+                      "com.google.accompanist:accompanist-flowlayout:$ver.accompanist_flowlayout"]
+
+lib.compose_ui_test_junit4 = ["androidx.compose.ui:ui-test-junit4:$ver.compose_ui"]
+lib.compose_ui_test_manifest = "androidx.compose.ui:ui-test-manifest:$ver.compose_ui"
+
+ver.androidXJunit = "1.1.3-rc01"
+ver.expresso = "3.4.0"
+ver.androidx_core_testing = "2.2.0"
+lib.googleTest = ["androidx.test.ext:junit:$ver.androidXJunit",
+                  "androidx.test.espresso:espresso-core:$ver.expresso",
+                  "androidx.arch.core:core-testing:$ver.androidx_core_testing"]
+
+ver.koinAndroid = "3.4.3"
+lib.koinCompose = "io.insert-koin:koin-androidx-compose:$ver.koinAndroid"
+
+ver.junit4 = "4.13.2"
+lib.junit4 = ["junit:junit:$ver.junit4"]
+
+ver.koin = "3.4.0"
+lib.koinCore = "io.insert-koin:koin-core:$ver.koin"
+lib.koinTest = "io.insert-koin:koin-test-junit4:$ver.koin"
+
+ver.slf4jNop = "2.0.7"
+lib.slf4jNop = "org.slf4j:slf4j-nop:$ver.slf4jNop"
+
+ver.mockito = "5.2.0"
+ver.mockito_kotlin = "4.1.0"
+lib.mockito = ["org.mockito:mockito-core:$ver.mockito",
+               "org.mockito.kotlin:mockito-kotlin:$ver.mockito_kotlin"]
+
+ver.coil = "2.3.0"
+lib.coil = "io.coil-kt:coil-compose:$ver.coil"
+
+ver.rxKotlin = "3.0.1"
+ver.rxRelay3 = "3.0.1"
+lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
+                "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
+
+ver.rxAndroid = "3.0.2"
+lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
+
+ver.constraintLayoutCompose = "1.0.1"
+lib.constraint_layout_compose =
+    "androidx.constraintlayout:constraintlayout-compose:$ver.constraintLayoutCompose"
+
+ver.room = "2.5.0"
+lib.room = "androidx.room:room-runtime:$ver.room"
+lib.roomCompiler = "androidx.room:room-compiler:$ver.room"
+lib.roomTest = "androidx.room:room-testing:$ver.room"
+
+ver.retrofit2 = "2.9.0"
+lib.retrofit2 = ["com.squareup.retrofit2:retrofit:${ver.retrofit2}",
+                 "com.squareup.retrofit2:converter-gson:${ver.retrofit2}"]

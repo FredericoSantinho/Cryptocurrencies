@@ -1,0 +1,25 @@
+apply from: file("$rootDir/gradle/libraries.gradle")
+
+dependencies {
+  implementation fileTree(dir: 'libs' + '', include: ["*.jar"])
+
+  implementation project(':domain')
+
+  implementation lib.google
+  implementation lib.google_compose
+  implementation lib.coil
+  implementation lib.koinCompose
+  implementation lib.rxKotlin
+  implementation lib.rxAndroid
+  implementation lib.constraint_layout_compose
+
+  testImplementation lib.junit4
+  testImplementation lib.koinTest
+  testImplementation lib.mockito
+
+  androidTestImplementation lib.googleTest
+  androidTestImplementation lib.compose_ui_test_junit4
+  androidTestImplementation lib.koinTest
+
+  debugImplementation lib.compose_ui_test_manifest
+}
