@@ -3,6 +3,8 @@ apply from: file("$rootDir/gradle/libraries.gradle")
 dependencies {
   implementation fileTree(dir: 'libs' + '', include: ["*.jar"])
 
+  implementation project(":domain")
+
   implementation lib.google
   implementation lib.koinCore
   implementation lib.rxKotlin

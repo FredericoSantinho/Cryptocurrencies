@@ -1,0 +1,27 @@
+package neuro.coin.paprika.data.mapper
+
+import neuro.coin.paprika.data.model.coin.details.CoinDetailsDto
+import neuro.coin.paprika.data.model.coin.details.Team
+import neuro.coin.paprika.domain.model.CoinDetails
+
+fun CoinDetailsDto.toDomain(): CoinDetails {
+	return CoinDetails(
+		description,
+		hash_algorithm,
+		id,
+		is_active,
+		logo,
+		name,
+		open_source,
+		proof_type,
+		rank,
+		started_at,
+		symbol,
+		tags.map { it.name },
+		team.map { it.toDomain() },
+		type,
+		whitepaper.link
+	)
+}
+
+fun Team.toDomain() = neuro.coin.paprika.domain.model.Team(id, name, position)
