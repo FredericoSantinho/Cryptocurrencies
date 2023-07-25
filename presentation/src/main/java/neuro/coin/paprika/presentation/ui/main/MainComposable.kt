@@ -1,23 +1,42 @@
 package neuro.coin.paprika.presentation.ui.main
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.plcoding.cryptocurrencyappyt.presentation.Screen
+import neuro.coin.paprika.presentation.ui.coin.CoinDetailsComposable
+import neuro.coin.paprika.presentation.ui.coin.list.CoinListComposable
+import neuro.coin.paprika.presentation.ui.theme.CoinPaprikaTheme
 
 @Composable
 fun MainComposable() {
-	// A surface container using the 'background' color from the theme
-	Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-		Greeting("Android")
+//	CoinListComposable()
+
+	val navController = rememberNavController()
+	NavHost(
+		navController = navController,
+		startDestination = Screen.CoinListScreen.route
+	) {
+		composable(
+			route = Screen.CoinListScreen.route
+		) {
+			CoinListComposable(navController)
+		}
+		composable(
+			route = Screen.CoinDetailScreen.route + "/{coinId}"
+		) {
+			CoinDetailsComposable()
+		}
 	}
+
 }
 
+@Preview
 @Composable
-fun Greeting(name: String) {
-	Text(text = "Hello $name!", modifier = Modifier.semantics { testTag = "Android" })
+fun PreviewMainComposable() {
+	CoinPaprikaTheme {
+		MainComposable()
+	}
 }
