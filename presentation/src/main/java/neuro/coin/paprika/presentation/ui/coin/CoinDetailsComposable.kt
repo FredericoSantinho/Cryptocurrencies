@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.plcoding.cryptocurrencyappyt.presentation.coin_detail.components.TeamListItem
-import neuro.coin.paprika.presentation.ui.coin.list.CoinListItemComposable
 import neuro.coin.paprika.presentation.ui.model.TeamMember
 
 @Composable
@@ -24,7 +23,8 @@ fun CoinDetailsComposable() {
 			modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp),
 		) {
 			item {
-				CoinListItemComposable(isActive = true)
+				// TODO: Uncomment with proper parameters
+				//				CoinListItemComposable()
 			}
 			item {
 				Text(

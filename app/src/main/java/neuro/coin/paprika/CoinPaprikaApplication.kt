@@ -4,6 +4,7 @@ import android.app.Application
 import neuro.coin.paprika.data.di.networkModule
 import neuro.coin.paprika.data.di.repositoryModule
 import neuro.coin.paprika.presentation.di.useCaseModule
+import neuro.coin.paprika.presentation.di.viewModelModule
 import org.koin.core.context.startKoin
 
 class CoinPaprikaApplication : Application() {
@@ -11,7 +12,7 @@ class CoinPaprikaApplication : Application() {
 		super.onCreate()
 
 		startKoin {
-			modules(networkModule, repositoryModule, useCaseModule)
+			modules(networkModule, repositoryModule, useCaseModule, viewModelModule)
 		}
 	}
 }
