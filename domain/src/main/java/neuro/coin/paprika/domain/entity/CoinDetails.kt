@@ -1,4 +1,4 @@
-package neuro.coin.paprika.domain.model
+package neuro.coin.paprika.domain.entity
 
 data class CoinDetails(
 	val description: String,

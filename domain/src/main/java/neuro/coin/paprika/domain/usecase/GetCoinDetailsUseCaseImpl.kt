@@ -1,6 +1,6 @@
 package neuro.coin.paprika.domain.usecase
 
-import neuro.coin.paprika.domain.model.CoinDetails
+import neuro.coin.paprika.domain.entity.CoinDetails
 import neuro.coin.paprika.domain.repository.GetCoinRepository
 
 class GetCoinDetailsUseCaseImpl(private val getCoinRepository: GetCoinRepository) :

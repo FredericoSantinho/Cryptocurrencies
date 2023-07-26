@@ -1,7 +1,7 @@
 package neuro.coin.paprika.presentation.mapper
 
-import neuro.coin.paprika.domain.model.CoinDetails
-import neuro.coin.paprika.domain.model.Team
+import neuro.coin.paprika.domain.entity.CoinDetails
+import neuro.coin.paprika.domain.entity.Team
 import neuro.coin.paprika.presentation.model.CoinDetailsModel
 import neuro.coin.paprika.presentation.model.TeamModel
 
