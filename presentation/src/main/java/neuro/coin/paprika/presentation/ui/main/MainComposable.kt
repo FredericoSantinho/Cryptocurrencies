@@ -9,11 +9,10 @@ import com.plcoding.cryptocurrencyappyt.presentation.Screen
 import neuro.coin.paprika.presentation.ui.coin.CoinDetailsComposable
 import neuro.coin.paprika.presentation.ui.coin.list.CoinListComposable
 import neuro.coin.paprika.presentation.ui.theme.CoinPaprikaTheme
+import neuro.coin.paprika.presentation.viewmodel.coins.details.CoinDetailsViewModel
 
 @Composable
 fun MainComposable() {
-//	CoinListComposable()
-
 	val navController = rememberNavController()
 	NavHost(
 		navController = navController,
@@ -25,7 +24,7 @@ fun MainComposable() {
 			CoinListComposable(navController)
 		}
 		composable(
-			route = Screen.CoinDetailScreen.route + "/{coinId}"
+			route = Screen.CoinDetailScreen.route + "/{${CoinDetailsViewModel.PARAM_COIN_ID}}"
 		) {
 			CoinDetailsComposable()
 		}

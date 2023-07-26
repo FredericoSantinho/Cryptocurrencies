@@ -1,6 +1,6 @@
-package neuro.coin.paprika.domain.model
+package neuro.coin.paprika.presentation.model
 
-data class CoinDetails(
+data class CoinDetailsModel(
 	val description: String,
 	val hashAlgorithm: String,
 	val id: String,
@@ -12,6 +12,6 @@ data class CoinDetails(
 	val rank: Int,
 	val symbol: String,
 	val tags: List<String>,
-	val team: List<Team>,
+	val teamModel: List<TeamModel>,
 	val type: String
 )

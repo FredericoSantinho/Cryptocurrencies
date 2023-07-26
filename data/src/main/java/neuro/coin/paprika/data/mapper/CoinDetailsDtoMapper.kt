@@ -15,12 +15,10 @@ fun CoinDetailsDto.toDomain(): CoinDetails {
 		open_source,
 		proof_type,
 		rank,
-		started_at,
 		symbol,
 		tags.map { it.name },
 		team.map { it.toDomain() },
-		type,
-		whitepaper.link
+		type
 	)
 }
 

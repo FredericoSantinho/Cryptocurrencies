@@ -10,11 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import neuro.coin.paprika.presentation.ui.model.TeamMember
+import neuro.coin.paprika.presentation.model.TeamModel
 
 @Composable
 fun TeamListItem(
-	teamMember: TeamMember,
+	teamModel: TeamModel,
 	modifier: Modifier = Modifier
 ) {
 	Column(
@@ -22,12 +22,12 @@ fun TeamListItem(
 		verticalArrangement = Arrangement.Center
 	) {
 		Text(
-			text = teamMember.name,
+			text = teamModel.name,
 			style = MaterialTheme.typography.h6
 		)
 		Spacer(modifier = Modifier.height(4.dp))
 		Text(
-			text = teamMember.position,
+			text = teamModel.position,
 			style = MaterialTheme.typography.body2,
 			fontStyle = FontStyle.Italic
 		)
