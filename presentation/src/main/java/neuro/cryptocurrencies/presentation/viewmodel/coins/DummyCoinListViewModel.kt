@@ -2,6 +2,8 @@ package neuro.cryptocurrencies.presentation.viewmodel.coins
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.model.CoinModel
 
 class DummyCoinListViewModel : CoinListViewModel {
@@ -14,12 +16,9 @@ class DummyCoinListViewModel : CoinListViewModel {
 				)
 			)
 		)
-	override val uiEvent: State<CoinListViewModelImpl.UiEvent?> = mutableStateOf(null)
+	override val uiEvent: SharedFlow<CoinListViewModelImpl.UiEvent> = MutableSharedFlow()
 
 	override fun onCoinClick(coinId: String) {
-	}
-
-	override fun eventConsumed() {
 	}
 
 	override fun onRefresh() {

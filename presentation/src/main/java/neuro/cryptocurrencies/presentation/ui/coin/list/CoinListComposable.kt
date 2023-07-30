@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.plcoding.cryptocurrencyappyt.presentation.Screen
+import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
@@ -109,19 +110,21 @@ fun CoinListComposable(
 		}
 	}
 
-	onUiEvent(viewModel.uiEvent.value, viewModel, navController)
+	onUiEvent(viewModel.uiEvent, navController)
 }
 
+@Composable
 fun onUiEvent(
-	uiEvent: CoinListViewModelImpl.UiEvent?,
-	coinListViewModel: CoinListViewModel,
+	uiEventSharedFlow: SharedFlow<CoinListViewModelImpl.UiEvent>,
 	navController: NavHostController
 ) {
-	when (uiEvent) {
-		is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(Screen.CoinDetailScreen.route + "/${uiEvent.coinId}")
-		null -> {}
+	LaunchedEffect(key1 = Unit) {
+		uiEventSharedFlow.collect { uiEvent ->
+			when (uiEvent) {
+				is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(Screen.CoinDetailScreen.route + "/${uiEvent.coinId}")
+			}
+		}
 	}
-	coinListViewModel.eventConsumed()
 }
 
 @Preview

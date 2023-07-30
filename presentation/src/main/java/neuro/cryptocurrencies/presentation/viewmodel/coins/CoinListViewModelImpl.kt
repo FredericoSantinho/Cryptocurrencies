@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -23,8 +25,8 @@ class CoinListViewModelImpl(
 ) : ViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState
-	private val _uiEvent = mutableStateOf<UiEvent?>(null)
-	override val uiEvent: State<UiEvent?> = _uiEvent
+	private val _uiEvent = MutableSharedFlow<UiEvent>()
+	override val uiEvent: SharedFlow<UiEvent> = _uiEvent
 
 	private val coins = MutableStateFlow<List<CoinModel>?>(null)
 	private val searchTerm = MutableStateFlow("")
@@ -80,11 +82,9 @@ class CoinListViewModelImpl(
 	}
 
 	override fun onCoinClick(coinId: String) {
-		_uiEvent.value = UiEvent.NavigateToDetails(coinId)
-	}
-
-	override fun eventConsumed() {
-		_uiEvent.value = null
+		viewModelScope.launch {
+			_uiEvent.emit(UiEvent.NavigateToDetails(coinId))
+		}
 	}
 
 	override fun onRefresh() {
