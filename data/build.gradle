@@ -7,7 +7,7 @@ plugins {
 apply from: "dependencies.gradle"
 
 android {
-  namespace 'neuro.coin.paprika.data'
+  namespace 'neuro.cryptocurrencies.data'
   compileSdk project.compileSdkVersion
 
   defaultConfig {

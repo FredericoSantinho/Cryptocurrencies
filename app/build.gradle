@@ -8,11 +8,11 @@ apply from: "dependencies.gradle"
 android {
   apply from: file("$rootDir/gradle/versions.gradle")
 
-  namespace 'neuro.coin.paprika'
+  namespace 'neuro.cryptocurrencies'
   compileSdk project.compileSdkVersion
 
   defaultConfig {
-    applicationId "neuro.coin.paprika"
+    applicationId "neuro.cryptocurrencies"
     minSdk project.minimumSdkVersion
     targetSdk project.targetSdkVersion
     versionCode 1
