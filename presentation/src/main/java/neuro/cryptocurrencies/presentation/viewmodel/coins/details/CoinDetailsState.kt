@@ -4,6 +4,7 @@ import neuro.cryptocurrencies.presentation.model.CoinDetailsModel
 
 data class CoinDetailsState(
 	val coinDetailsModel: CoinDetailsModel? = null,
-	val error: String = "",
+	val isError: Boolean = false,
+	val errorMessage: String = "",
 	val isLoading: Boolean = false
 )

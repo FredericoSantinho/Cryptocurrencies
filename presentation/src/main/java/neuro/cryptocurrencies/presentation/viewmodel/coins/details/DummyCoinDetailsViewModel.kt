@@ -20,10 +20,18 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 					"POW",
 					1,
 					"BTC",
-					listOf("tag1","tag2","tag3"),
+					listOf("tag1", "tag2", "tag3"),
 					listOf(TeamModel("Satoshi Nakamoto", "Founder")),
 					"Coin"
 				)
 			)
 		)
+
+	override fun errorShown() {
+
+	}
+
+	override fun onRetry() {
+
+	}
 }

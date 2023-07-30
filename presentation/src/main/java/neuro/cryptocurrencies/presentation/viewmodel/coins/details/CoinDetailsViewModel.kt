@@ -4,4 +4,7 @@ import androidx.compose.runtime.State
 
 interface CoinDetailsViewModel {
 	val uiState: State<CoinDetailsState>
+
+	fun errorShown()
+	fun onRetry()
 }
