@@ -31,16 +31,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 	val coinDetailsModel = viewModel.uiState.value.coinDetailsModel
 
 	Scaffold(topBar = {
-		TopAppBar(
-			elevation = 4.dp,
-			title = {
-				Text(
-					text = stringResource(id = R.string.app_name),
-					color = MaterialTheme.colors.background
-				)
-			},
-			backgroundColor = MaterialTheme.colors.primary,
-		)
+		TopAppBar()
 	}) {
 		Surface(
 			modifier = Modifier
@@ -75,14 +66,17 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 					}
 					if (coinDetailsModel.type.isNotBlank()) {
 						item {
-							Text(text = "Type", style = MaterialTheme.typography.h5)
+							Text(text = stringResource(id = R.string.type), style = MaterialTheme.typography.h5)
 						}
 						item {
 							Text(text = coinDetailsModel.type, style = MaterialTheme.typography.body2)
 						}
 					}
 					item {
-						Text(text = "Open Source", style = MaterialTheme.typography.h5)
+						Text(
+							text = stringResource(id = R.string.open_source),
+							style = MaterialTheme.typography.h5
+						)
 					}
 					item {
 						Text(
@@ -92,7 +86,10 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 					}
 					if (coinDetailsModel.proofType.isNotBlank()) {
 						item {
-							Text(text = "Proof type", style = MaterialTheme.typography.h5)
+							Text(
+								text = stringResource(id = R.string.proof_type),
+								style = MaterialTheme.typography.h5
+							)
 						}
 						item {
 							Text(text = coinDetailsModel.proofType, style = MaterialTheme.typography.body2)
@@ -100,7 +97,10 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 					}
 					if (coinDetailsModel.hashAlgorithm.isNotBlank()) {
 						item {
-							Text(text = "Hash Algorithm", style = MaterialTheme.typography.h5)
+							Text(
+								text = stringResource(id = R.string.hash_algorithm),
+								style = MaterialTheme.typography.h5
+							)
 						}
 						item {
 							Text(text = coinDetailsModel.hashAlgorithm, style = MaterialTheme.typography.body2)
@@ -108,7 +108,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 					}
 					if (coinDetailsModel.tags.isNotEmpty()) {
 						item {
-							Text(text = "Tags", style = MaterialTheme.typography.h5)
+							Text(text = stringResource(id = R.string.tags), style = MaterialTheme.typography.h5)
 						}
 						item {
 							FlowRow(
@@ -124,7 +124,10 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 					}
 					if (coinDetailsModel.teamModel.isNotEmpty()) {
 						item {
-							Text(text = "Team members", style = MaterialTheme.typography.h5)
+							Text(
+								text = stringResource(id = R.string.team_members),
+								style = MaterialTheme.typography.h5
+							)
 						}
 						items(coinDetailsModel.teamModel) { teamModel ->
 							TeamListItem(teamModel)
@@ -135,4 +138,18 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 			}
 		}
 	}
+}
+
+@Composable
+private fun TopAppBar() {
+	TopAppBar(
+		elevation = 4.dp,
+		title = {
+			Text(
+				text = stringResource(id = R.string.app_name),
+				color = MaterialTheme.colors.background
+			)
+		},
+		backgroundColor = MaterialTheme.colors.primary,
+	)
 }

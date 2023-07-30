@@ -4,7 +4,16 @@
 
   <string name="active">Active</string>
   <string name="inactive">Inactive</string>
+
   <string name="no_data_available">No data available</string>
   <string name="refresh">Refresh</string>
+
   <string name="search_for_a_coin">Search for a coin</string>
+
+  <string name="type">Type</string>
+  <string name="open_source">Open Source</string>
+  <string name="proof_type">Proof type</string>
+  <string name="hash_algorithm">Hash Algorithm</string>
+  <string name="tags">Tags</string>
+  <string name="team_members">Team members</string>
 </resources>
