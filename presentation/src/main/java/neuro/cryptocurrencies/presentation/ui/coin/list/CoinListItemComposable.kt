@@ -1,6 +1,5 @@
 package neuro.cryptocurrencies.presentation.ui.coin.list
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -18,37 +17,44 @@ import neuro.cryptocurrencies.presentation.R
 
 @Composable
 fun CoinListItemComposable(
-	rank: Int, name: String, symbol: String, isActive: Boolean, modifier: Modifier = Modifier
+	rank: Int,
+	name: String,
+	symbol: String,
+	isActive: Boolean,
+	maxLines: Int = 1,
+	modifier: Modifier = Modifier
 ) {
-	Row(modifier = modifier) {
-		ConstraintLayout(modifier = Modifier
+	ConstraintLayout(
+		modifier = modifier
 			.padding(16.dp)
-			.fillMaxWidth()) {
-			val (textC, activeC) = createRefs()
+			.fillMaxWidth()
+	) {
+		val (textC, activeC) = createRefs()
 
-			Text(
-				text = "$rank. $name ($symbol)",
-				style = MaterialTheme.typography.h6,
-				overflow = TextOverflow.Ellipsis,
-				modifier = Modifier.constrainAs(textC) {
-					start.linkTo(parent.start)
-					end.linkTo(activeC.start)
-					width = Dimension.fillToConstraints
-				},
-				maxLines = 1
-			)
-			Text(
-				text = if (!isActive) "\"${stringResource(id = R.string.active)}\"" else "\"${
-					stringResource(
-						id = R.string.inactive
-					)
-				}\"",
-				textAlign = TextAlign.End,
-				color = if (isActive) Color.Green else Color.Red,
-				modifier = Modifier.constrainAs(activeC) {
-					end.linkTo(parent.end)
-				}
-			)
-		}
+		Text(
+			text = "$rank. $name ($symbol)",
+			style = MaterialTheme.typography.h6,
+			overflow = TextOverflow.Ellipsis,
+			modifier = Modifier.constrainAs(textC) {
+				start.linkTo(parent.start)
+				end.linkTo(activeC.start, margin = 16.dp)
+				width = Dimension.fillToConstraints
+			},
+			maxLines = maxLines
+		)
+		Text(
+			text = if (!isActive) "\"${stringResource(id = R.string.active)}\"" else "\"${
+				stringResource(
+					id = R.string.inactive
+				)
+			}\"",
+			textAlign = TextAlign.End,
+			color = if (isActive) Color.Green else Color.Red,
+			modifier = Modifier.constrainAs(activeC) {
+				end.linkTo(parent.end)
+				top.linkTo(parent.top)
+				bottom.linkTo(parent.bottom)
+			}
+		)
 	}
 }

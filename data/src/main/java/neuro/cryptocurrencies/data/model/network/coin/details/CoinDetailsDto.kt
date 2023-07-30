@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CoinDetailsDto(
 	@SerializedName("description")
-	val description: String,
+	val description: String?,
 	@SerializedName("development_status")
 	val developmentStatus: String,
 	@SerializedName("first_data_at")
@@ -13,7 +13,7 @@ data class CoinDetailsDto(
 	@SerializedName("hardware_wallet")
 	val hardwareWallet: Boolean,
 	@SerializedName("hash_algorithm")
-	val hashAlgorithm: String,
+	val hashAlgorithm: String?,
 	@SerializedName("id")
 	val id: String,
 	@SerializedName("is_active")
@@ -37,7 +37,7 @@ data class CoinDetailsDto(
 	@SerializedName("org_structure")
 	val orgStructure: String,
 	@SerializedName("proof_type")
-	val proofType: String,
+	val proofType: String?,
 	@SerializedName("rank")
 	val rank: Int,
 	@SerializedName("started_at")
@@ -45,7 +45,7 @@ data class CoinDetailsDto(
 	@SerializedName("symbol")
 	val symbol: String,
 	@SerializedName("tags")
-	val tags: List<Tag>,
+	val tags: List<Tag>?,
 	@SerializedName("team")
 	val team: List<Team>,
 	@SerializedName("type")

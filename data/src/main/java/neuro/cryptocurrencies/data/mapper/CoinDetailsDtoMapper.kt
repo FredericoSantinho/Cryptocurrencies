@@ -6,17 +6,17 @@ import neuro.cryptocurrencies.domain.entity.CoinDetails
 
 fun CoinDetailsDto.toDomain(): CoinDetails {
 	return CoinDetails(
-		description,
-		hashAlgorithm,
+		description ?: "",
+		hashAlgorithm = "",
 		id,
 		isActive,
 		logo,
 		name,
 		openSource,
-		proofType,
+		proofType = "",
 		rank,
 		symbol,
-		tags.map { it.name },
+		tags?.map { it.name } ?: emptyList(),
 		team.map { it.toDomain() },
 		type
 	)
