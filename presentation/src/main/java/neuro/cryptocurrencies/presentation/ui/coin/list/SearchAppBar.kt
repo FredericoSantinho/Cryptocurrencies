@@ -12,11 +12,18 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.common.composables.TextFieldWithoutPadding
 
@@ -28,6 +35,8 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 	var searchTerm by rememberSaveable {
 		mutableStateOf("")
 	}
+	val focusRequester = remember { FocusRequester() }
+	val coroutineScope = rememberCoroutineScope()
 
 	TopAppBar(
 		elevation = 4.dp,
@@ -52,7 +61,8 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 						text = stringResource(id = R.string.search_for_a_coin),
 						color = Color.DarkGray
 					)
-				}
+				},
+				modifier = Modifier.focusRequester(focusRequester)
 			)
 		},
 		backgroundColor = MaterialTheme.colors.primary,
@@ -61,6 +71,11 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 				searching = !searching
 				if (!searching) {
 					searchTerm = ""
+				} else {
+					coroutineScope.launch {
+						delay(100)
+						focusRequester.requestFocus()
+					}
 				}
 			}) {
 				Icon(
