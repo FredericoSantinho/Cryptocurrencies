@@ -5,13 +5,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import neuro.cryptocurrencies.data.model.database.coin.RoomCoin
+import neuro.cryptocurrencies.data.model.database.coin.RoomCoinTicker
 
 @Dao
 interface CoinDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun upsertContact(roomCoins: List<RoomCoin>)
+	suspend fun upsertCoinTickers(roomCoinTickers: List<RoomCoinTicker>)
 
-	@Query("select * from coin_table order by rank asc")
-	fun observeCoins(): Flow<List<RoomCoin>>
+	@Query("select * from coin_ticker_table order by rank asc")
+	fun observeCoinTickers(): Flow<List<RoomCoinTicker>>
 } 

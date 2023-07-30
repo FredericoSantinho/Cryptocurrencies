@@ -4,15 +4,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import neuro.cryptocurrencies.presentation.model.CoinModel
+import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 class DummyCoinListViewModel : CoinListViewModel {
 	override val uiState: State<CoinListState> =
 		mutableStateOf(
 			CoinListState(
 				listOf(
-					CoinModel("bitcoin", true, "Bitcoin", 1, "BTC"),
-					CoinModel("ethereum", true, "Ethereum", 2, "ETH")
+					CoinTickerModel("bitcoin", "Bitcoin", 1, "BTC", "25421.53", "0.56%"),
+					CoinTickerModel("ethereum", "Ethereum", 2, "ETH", "1543.43", "-0.30%")
 				)
 			)
 		)

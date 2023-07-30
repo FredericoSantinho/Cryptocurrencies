@@ -75,7 +75,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 									coinDetailsModel.rank,
 									coinDetailsModel.name,
 									coinDetailsModel.symbol,
-									coinDetailsModel.isActive,
+									"12345",
 									3
 								)
 							}

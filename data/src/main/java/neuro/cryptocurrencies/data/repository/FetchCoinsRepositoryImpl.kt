@@ -2,7 +2,7 @@ package neuro.cryptocurrencies.data.repository
 
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.dao.CoinDao
-import neuro.cryptocurrencies.data.mapper.toRoomCoin
+import neuro.cryptocurrencies.data.mapper.toDatabase
 import neuro.cryptocurrencies.domain.repository.FetchCoinsRepository
 import neuro.cryptocurrencies.domain.usecase.ErrorRetrievingDataException
 import retrofit2.HttpException
@@ -14,8 +14,9 @@ class FetchCoinsRepositoryImpl(
 ) : FetchCoinsRepository {
 	override suspend fun fetchCoins() {
 		try {
-			val roomCoins = coinPaprikaApi.getCoins().filter { it.rank != 0 }.map { it.toRoomCoin() }
-			coinDao.upsertContact(roomCoins)
+			val roomCoins =
+				coinPaprikaApi.getCoinsTickers().filter { it.rank != 0 }.map { it.toDatabase() }
+			coinDao.upsertCoinTickers(roomCoins)
 		} catch (e: HttpException) {
 			throw ErrorRetrievingDataException(e.localizedMessage ?: "An unexpected error occurred")
 		} catch (e: IOException) {

@@ -1,9 +1,10 @@
 package neuro.cryptocurrencies.domain.entity
 
-data class Coin(
+data class CoinTicker(
 	val id: String,
-	val isActive: Boolean,
 	val name: String,
 	val rank: Int,
-	val symbol: String
+	val symbol: String,
+	val price: Double,
+	val percentChange24h: Double
 )

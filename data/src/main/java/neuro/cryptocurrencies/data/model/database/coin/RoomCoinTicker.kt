@@ -5,14 +5,15 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-	tableName = "coin_table",
+	tableName = "coin_ticker_table",
 	indices = [Index(value = ["rank"], unique = true)]
 )
-data class RoomCoin(
+data class RoomCoinTicker(
 	@PrimaryKey
 	val id: String,
-	val isActive: Boolean,
 	val name: String,
 	val rank: Int,
-	val symbol: String
+	val symbol: String,
+	val price: Double,
+	val percentChange24h: Double
 )

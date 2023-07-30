@@ -1,8 +1,8 @@
 package neuro.cryptocurrencies.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import neuro.cryptocurrencies.domain.entity.Coin
+import neuro.cryptocurrencies.domain.entity.CoinTicker
 
 interface ObserveCoinsRepository {
-	fun observeCoins(): Flow<List<Coin>>
+	fun observeCoinsTickers(): Flow<List<CoinTicker>>
 }

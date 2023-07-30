@@ -2,9 +2,6 @@
 <resources>
   <string name="app_name">Cryptocurrencies</string>
 
-  <string name="active">Active</string>
-  <string name="inactive">Inactive</string>
-
   <string name="no_data_available">No data available</string>
   <string name="refresh">Refresh</string>
 

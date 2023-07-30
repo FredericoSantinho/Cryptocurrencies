@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import neuro.cryptocurrencies.domain.usecase.FetchCoinsUseCase
 import neuro.cryptocurrencies.domain.usecase.GetCoinsUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
-import neuro.cryptocurrencies.presentation.model.CoinModel
+import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 class CoinListViewModelImpl(
 	private val getCoinsUseCase: GetCoinsUseCase,
@@ -28,7 +28,7 @@ class CoinListViewModelImpl(
 	private val _uiEvent = MutableSharedFlow<UiEvent>()
 	override val uiEvent: SharedFlow<UiEvent> = _uiEvent
 
-	private val coins = MutableStateFlow<List<CoinModel>?>(null)
+	private val coinTickers = MutableStateFlow<List<CoinTickerModel>?>(null)
 	private val searchTerm = MutableStateFlow("")
 
 	init {
@@ -56,7 +56,7 @@ class CoinListViewModelImpl(
 	}
 
 	private fun updateUiState() {
-		coins.combine(searchTerm) { coinModels, searchTerm ->
+		coinTickers.combine(searchTerm) { coinModels, searchTerm ->
 			coinModels?.let {
 				val filteredCoins = coinModels.filter { it.name.lowercase().contains(searchTerm) }
 				_uiState.value =
@@ -74,8 +74,8 @@ class CoinListViewModelImpl(
 
 	private fun observeCoins() {
 		getCoinsUseCase.execute().map { it.toPresentation() }.onEach { coinModels ->
-			coins.value = emptyList()
-			coins.value = coinModels
+			coinTickers.value = emptyList()
+			coinTickers.value = coinModels
 		}.catch {
 			_uiState.value =
 				uiState.value.copy(

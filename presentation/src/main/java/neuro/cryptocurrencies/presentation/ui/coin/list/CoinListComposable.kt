@@ -91,7 +91,7 @@ fun CoinListComposable(
 										it.rank,
 										it.name,
 										it.symbol,
-										it.isActive,
+										it.price,
 										modifier = Modifier.clickable { viewModel.onCoinClick(it.id) })
 								}
 							}
