@@ -71,13 +71,14 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 		actions = {
 			IconButton(onClick = {
 				searching = !searching
-				if (!searching) {
-					searchTerm = ""
-				} else {
+				if (searching) {
 					coroutineScope.launch {
 						delay(100)
 						focusRequester.requestFocus()
 					}
+				} else {
+					searchTerm = ""
+					onSearchTerm(searchTerm)
 				}
 			}) {
 				Icon(

@@ -36,6 +36,25 @@ class CoinListViewModelImpl(
 		updateUiState()
 	}
 
+	override fun onCoinClick(coinId: String) {
+		viewModelScope.launch {
+			_uiEvent.emit(UiEvent.NavigateToDetails(coinId))
+		}
+	}
+
+	override fun onRefresh() {
+		_uiState.value = uiState.value.copy(isRefreshing = true)
+		fetchCoins()
+	}
+
+	override fun errorShown() {
+		_uiState.value = uiState.value.copy(error = "")
+	}
+
+	override fun onSearchTerm(searchTerm: String) {
+		this.searchTerm.value = searchTerm
+	}
+
 	private fun updateUiState() {
 		coins.combine(searchTerm) { coinModels, searchTerm ->
 			coinModels?.let {
@@ -55,6 +74,7 @@ class CoinListViewModelImpl(
 
 	private fun observeCoins() {
 		getCoinsUseCase.execute().map { it.toPresentation() }.onEach { coinModels ->
+			coins.value = emptyList()
 			coins.value = coinModels
 		}.catch {
 			_uiState.value =
@@ -79,25 +99,6 @@ class CoinListViewModelImpl(
 		) {
 			fetchCoinsUseCase.fetchCoins()
 		}
-	}
-
-	override fun onCoinClick(coinId: String) {
-		viewModelScope.launch {
-			_uiEvent.emit(UiEvent.NavigateToDetails(coinId))
-		}
-	}
-
-	override fun onRefresh() {
-		fetchCoins()
-		_uiState.value = uiState.value.copy(isRefreshing = true)
-	}
-
-	override fun errorShown() {
-		_uiState.value = uiState.value.copy(error = "")
-	}
-
-	override fun onSearchTerm(searchTerm: String) {
-		this.searchTerm.value = searchTerm
 	}
 
 	sealed class UiEvent {
