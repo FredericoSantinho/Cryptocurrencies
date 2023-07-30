@@ -43,7 +43,7 @@ fun CoinListComposable(
 ) {
 	val coinListState = viewModel.uiState.value
 
-	Scaffold(topBar = { SearchAppBar() }) {
+	Scaffold(topBar = { SearchAppBar({ viewModel.onSearchTerm(it) }) }) {
 		Surface(
 			modifier = Modifier
 				.padding(it)

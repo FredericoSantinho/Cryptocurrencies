@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -22,10 +22,10 @@ import neuro.cryptocurrencies.presentation.ui.common.composables.TextFieldWithou
 
 @Composable
 fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
-	var searching by remember {
+	var searching by rememberSaveable {
 		mutableStateOf(false)
 	}
-	var searchTerm by remember {
+	var searchTerm by rememberSaveable {
 		mutableStateOf("")
 	}
 
