@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -12,6 +13,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -41,57 +43,64 @@ fun CoinListComposable(
 ) {
 	val coinListState = viewModel.uiState.value
 
-	Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-		if (coinListState.isLoading) {
-			Box(modifier = Modifier.fillMaxSize()) {
-				CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-			}
-		} else {
-			if (coinListState.coins?.isEmpty() == true && !coinListState.isRefreshing) {
-				Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-					Column(horizontalAlignment = Alignment.CenterHorizontally) {
-						Text(text = stringResource(id = R.string.no_data_available))
-						Text(text = stringResource(id = R.string.refresh))
-						IconButton(onClick = { viewModel.onRefresh() }) {
-							Icon(Icons.Default.Refresh, contentDescription = "refresh")
-						}
-					}
+	Scaffold(topBar = { SearchAppBar() }) {
+		Surface(
+			modifier = Modifier
+				.padding(it)
+				.fillMaxSize(),
+			color = MaterialTheme.colors.background
+		) {
+			if (coinListState.isLoading) {
+				Box(modifier = Modifier.fillMaxSize()) {
+					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 				}
 			} else {
-				val pullRefreshState =
-					rememberPullRefreshState(coinListState.isRefreshing, { viewModel.onRefresh() })
+				if (coinListState.coins?.isEmpty() == true && !coinListState.isRefreshing) {
+					Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+						Column(horizontalAlignment = Alignment.CenterHorizontally) {
+							Text(text = stringResource(id = R.string.no_data_available))
+							Text(text = stringResource(id = R.string.refresh))
+							IconButton(onClick = { viewModel.onRefresh() }) {
+								Icon(Icons.Default.Refresh, contentDescription = "refresh")
+							}
+						}
+					}
+				} else {
+					val pullRefreshState =
+						rememberPullRefreshState(coinListState.isRefreshing, { viewModel.onRefresh() })
 
-				Box(
-					modifier = Modifier
-						.fillMaxSize()
-						.pullRefresh(pullRefreshState)
-				) {
-					PullRefreshIndicator(
-						coinListState.isRefreshing,
-						pullRefreshState,
-						Modifier.align(Alignment.TopCenter)
-					)
+					Box(
+						modifier = Modifier
+							.fillMaxSize()
+							.pullRefresh(pullRefreshState)
+					) {
+						PullRefreshIndicator(
+							coinListState.isRefreshing,
+							pullRefreshState,
+							Modifier.align(Alignment.TopCenter)
+						)
 
-					coinListState.coins?.let {
-						LazyColumn(modifier = Modifier) {
-							items(coinListState.coins) {
-								CoinListItemComposable(
-									it.rank,
-									it.name,
-									it.symbol,
-									it.isActive,
-									modifier = Modifier.clickable { viewModel.onCoinClick(it.id) })
+						coinListState.coins?.let {
+							LazyColumn(modifier = Modifier) {
+								items(coinListState.coins) {
+									CoinListItemComposable(
+										it.rank,
+										it.name,
+										it.symbol,
+										it.isActive,
+										modifier = Modifier.clickable { viewModel.onCoinClick(it.id) })
+								}
 							}
 						}
 					}
 				}
-			}
 
-			val context = LocalContext.current
-			LaunchedEffect(key1 = coinListState.error) {
-				if (coinListState.error.isNotBlank() && !coinListState.isRefreshing) {
-					Toast.makeText(context, coinListState.error, Toast.LENGTH_LONG).show()
-					viewModel.errorShown()
+				val context = LocalContext.current
+				LaunchedEffect(key1 = coinListState.error) {
+					if (coinListState.error.isNotBlank() && !coinListState.isRefreshing) {
+						Toast.makeText(context, coinListState.error, Toast.LENGTH_LONG).show()
+						viewModel.errorShown()
+					}
 				}
 			}
 		}
