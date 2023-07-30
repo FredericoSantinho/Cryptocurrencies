@@ -28,19 +28,32 @@ class CoinListViewModel(
 	}
 
 	private fun getCoins() {
+		observeCoins()
+		fetchCoins()
+	}
+
+	private fun observeCoins() {
 		getCoinsUseCase.execute().map { it.toPresentation() }.onEach { coins ->
-			_uiState.value = uiState.value.copy(coins = coins, isLoading = false)
+			_uiState.value =
+				uiState.value.copy(coins = coins, isLoading = false, isRefreshing = false)
 		}.catch {
 			_uiState.value =
-				uiState.value.copy(error = it.message ?: "Unexpected error occurred!", isLoading = false)
+				uiState.value.copy(
+					error = it.message ?: "Unexpected error occurred!",
+					isLoading = false,
+					isRefreshing = false
+				)
 		}.launchIn(viewModelScope)
+	}
 
+	private fun fetchCoins() {
 		viewModelScope.launch(
 			CoroutineExceptionHandler { coroutineContext, throwable ->
 				_uiState.value =
 					uiState.value.copy(
 						error = throwable.message ?: "Unexpected error occurred!",
-						isLoading = false
+						isLoading = false,
+						isRefreshing = false
 					)
 			},
 		) {
@@ -54,6 +67,15 @@ class CoinListViewModel(
 
 	fun eventConsumed() {
 		_uiEvent.value = null
+	}
+
+	fun onRefresh() {
+		fetchCoins()
+		_uiState.value = uiState.value.copy(isRefreshing = true)
+	}
+
+	fun errorShown() {
+		_uiState.value = uiState.value.copy(error = "")
 	}
 
 	sealed class UiEvent {
