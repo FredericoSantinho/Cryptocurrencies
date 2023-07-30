@@ -7,13 +7,13 @@ import neuro.coin.paprika.domain.entity.CoinDetails
 fun CoinDetailsDto.toDomain(): CoinDetails {
 	return CoinDetails(
 		description,
-		hash_algorithm,
+		hashAlgorithm,
 		id,
-		is_active,
+		isActive,
 		logo,
 		name,
-		open_source,
-		proof_type,
+		openSource,
+		proofType,
 		rank,
 		symbol,
 		tags.map { it.name },

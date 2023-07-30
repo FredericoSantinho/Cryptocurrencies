@@ -1,28 +1,55 @@
 package neuro.coin.paprika.data.model.network.coin.details
 
+
+import com.google.gson.annotations.SerializedName
+
 data class CoinDetailsDto(
+	@SerializedName("description")
 	val description: String,
-	val development_status: String,
-	val first_data_at: String,
-	val hardware_wallet: Boolean,
-	val hash_algorithm: String,
+	@SerializedName("development_status")
+	val developmentStatus: String,
+	@SerializedName("first_data_at")
+	val firstDataAt: String,
+	@SerializedName("hardware_wallet")
+	val hardwareWallet: Boolean,
+	@SerializedName("hash_algorithm")
+	val hashAlgorithm: String,
+	@SerializedName("id")
 	val id: String,
-	val is_active: Boolean,
-	val is_new: Boolean,
-	val last_data_at: String,
+	@SerializedName("is_active")
+	val isActive: Boolean,
+	@SerializedName("is_new")
+	val isNew: Boolean,
+	@SerializedName("last_data_at")
+	val lastDataAt: String,
+	@SerializedName("links")
 	val links: Links,
-	val links_extended: List<LinksExtended>,
+	@SerializedName("links_extended")
+	val linksExtended: List<LinksExtended>,
+	@SerializedName("logo")
 	val logo: String,
+	@SerializedName("message")
 	val message: String,
+	@SerializedName("name")
 	val name: String,
-	val open_source: Boolean,
-	val org_structure: String,
-	val proof_type: String,
+	@SerializedName("open_source")
+	val openSource: Boolean,
+	@SerializedName("org_structure")
+	val orgStructure: String,
+	@SerializedName("proof_type")
+	val proofType: String,
+	@SerializedName("rank")
 	val rank: Int,
-	val started_at: String,
+	@SerializedName("started_at")
+	val startedAt: String,
+	@SerializedName("symbol")
 	val symbol: String,
+	@SerializedName("tags")
 	val tags: List<Tag>,
+	@SerializedName("team")
 	val team: List<Team>,
+	@SerializedName("type")
 	val type: String,
+	@SerializedName("whitepaper")
 	val whitepaper: Whitepaper
 )

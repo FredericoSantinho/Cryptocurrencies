@@ -1,10 +1,19 @@
 package neuro.coin.paprika.data.model.network.coin.details
 
+
+import com.google.gson.annotations.SerializedName
+
 data class Links(
+	@SerializedName("explorer")
 	val explorer: List<String>,
+	@SerializedName("facebook")
 	val facebook: List<String>,
+	@SerializedName("reddit")
 	val reddit: List<String>,
-	val source_code: List<String>,
+	@SerializedName("source_code")
+	val sourceCode: List<String>,
+	@SerializedName("website")
 	val website: List<String>,
+	@SerializedName("youtube")
 	val youtube: List<String>
 )
