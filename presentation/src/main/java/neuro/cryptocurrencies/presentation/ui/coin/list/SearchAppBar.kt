@@ -21,11 +21,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.common.composables.TextFieldWithoutPadding
+import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 
 @Composable
 fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
@@ -85,4 +87,12 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 				)
 			}
 		})
+}
+
+@Preview
+@Composable
+fun PreviewSearchAppBar() {
+	CryptocurrenciesTheme {
+		SearchAppBar({})
+	}
 }

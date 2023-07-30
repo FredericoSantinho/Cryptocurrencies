@@ -29,17 +29,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.plcoding.cryptocurrencyappyt.presentation.Screen
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coins.DummyCoinListViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CoinListComposable(
 	navController: NavHostController,
-	viewModel: CoinListViewModel = getViewModel()
+	viewModel: CoinListViewModel = getViewModel<CoinListViewModelImpl>()
 ) {
 	val coinListState = viewModel.uiState.value
 
@@ -110,12 +113,12 @@ fun CoinListComposable(
 }
 
 fun onUiEvent(
-	uiEvent: CoinListViewModel.UiEvent?,
+	uiEvent: CoinListViewModelImpl.UiEvent?,
 	coinListViewModel: CoinListViewModel,
 	navController: NavHostController
 ) {
 	when (uiEvent) {
-		is CoinListViewModel.UiEvent.NavigateToDetails -> navController.navigate(Screen.CoinDetailScreen.route + "/${uiEvent.coinId}")
+		is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(Screen.CoinDetailScreen.route + "/${uiEvent.coinId}")
 		null -> {}
 	}
 	coinListViewModel.eventConsumed()
@@ -125,7 +128,6 @@ fun onUiEvent(
 @Composable
 fun PreviewCoinListComposable() {
 	CryptocurrenciesTheme {
-		// TODO: Replace with interface
-		//		CoinListComposable(rememberNavController())
+		CoinListComposable(rememberNavController(), DummyCoinListViewModel())
 	}
 }

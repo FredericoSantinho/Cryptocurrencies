@@ -6,10 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.plcoding.cryptocurrencyappyt.presentation.Screen
-import neuro.cryptocurrencies.presentation.ui.coin.CoinDetailsComposable
+import neuro.cryptocurrencies.presentation.ui.coin.details.CoinDetailsComposable
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
 
 @Composable
 fun MainComposable() {
@@ -24,7 +24,7 @@ fun MainComposable() {
 			CoinListComposable(navController)
 		}
 		composable(
-			route = Screen.CoinDetailScreen.route + "/{${CoinDetailsViewModel.PARAM_COIN_ID}}"
+			route = Screen.CoinDetailScreen.route + "/{${CoinDetailsViewModelImpl.PARAM_COIN_ID}}"
 		) {
 			CoinDetailsComposable()
 		}

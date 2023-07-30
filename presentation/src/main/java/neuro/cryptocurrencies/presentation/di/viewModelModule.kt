@@ -1,11 +1,11 @@
 package neuro.cryptocurrencies.presentation.di
 
-import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-	viewModel { CoinListViewModel(get(), get()) }
-	viewModel { CoinDetailsViewModel(get(), get()) }
+	viewModel { CoinListViewModelImpl(get(), get()) }
+	viewModel { CoinDetailsViewModelImpl(get(), get()) }
 }

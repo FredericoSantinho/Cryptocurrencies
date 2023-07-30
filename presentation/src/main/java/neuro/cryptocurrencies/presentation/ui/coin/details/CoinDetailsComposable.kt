@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.coin
+package neuro.cryptocurrencies.presentation.ui.coin.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,16 +18,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.plcoding.cryptocurrencyappyt.presentation.coin_detail.components.TeamListItem
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListItemComposable
+import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coins.details.DummyCoinDetailsViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
+fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()) {
 	val coinDetailsModel = viewModel.uiState.value.coinDetailsModel
 
 	Scaffold(topBar = {
@@ -122,14 +125,14 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel()) {
 							}
 						}
 					}
-					if (coinDetailsModel.teamModel.isNotEmpty()) {
+					if (coinDetailsModel.team.isNotEmpty()) {
 						item {
 							Text(
 								text = stringResource(id = R.string.team_members),
 								style = MaterialTheme.typography.h5
 							)
 						}
-						items(coinDetailsModel.teamModel) { teamModel ->
+						items(coinDetailsModel.team) { teamModel ->
 							TeamListItem(teamModel)
 							Divider()
 						}
@@ -152,4 +155,12 @@ private fun TopAppBar() {
 		},
 		backgroundColor = MaterialTheme.colors.primary,
 	)
+}
+
+@Preview
+@Composable
+fun PreviewCoinDetailsComposable() {
+	CryptocurrenciesTheme {
+		CoinDetailsComposable(DummyCoinDetailsViewModel())
+	}
 }
