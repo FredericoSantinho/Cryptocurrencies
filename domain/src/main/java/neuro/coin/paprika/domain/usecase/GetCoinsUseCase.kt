@@ -1,7 +1,8 @@
 package neuro.coin.paprika.domain.usecase
 
+import kotlinx.coroutines.flow.Flow
 import neuro.coin.paprika.domain.entity.Coin
 
 interface GetCoinsUseCase {
-	suspend fun execute(): List<Coin>
+	fun execute(): Flow<List<Coin>>
 }

@@ -1,7 +1,7 @@
 package neuro.coin.paprika.data.api
 
-import neuro.coin.paprika.data.model.coin.CoinDto
-import neuro.coin.paprika.data.model.coin.details.CoinDetailsDto
+import neuro.coin.paprika.data.model.network.coin.CoinDto
+import neuro.coin.paprika.data.model.network.coin.details.CoinDetailsDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 

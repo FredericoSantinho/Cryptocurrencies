@@ -1,7 +1,7 @@
 package neuro.coin.paprika.data.mapper
 
-import neuro.coin.paprika.data.model.coin.details.CoinDetailsDto
-import neuro.coin.paprika.data.model.coin.details.Team
+import neuro.coin.paprika.data.model.network.coin.details.CoinDetailsDto
+import neuro.coin.paprika.data.model.network.coin.details.Team
 import neuro.coin.paprika.domain.entity.CoinDetails
 
 fun CoinDetailsDto.toDomain(): CoinDetails {

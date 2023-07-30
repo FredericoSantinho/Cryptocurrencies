@@ -4,7 +4,9 @@ ext {
 }
 
 ver.kotlin = "1.7.22"
-lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
+ver.kotlinx_coroutines = "1.7.3"
+lib.kotlin = ["org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin",
+              "org.jetbrains.kotlinx:kotlinx-coroutines-core:$ver.kotlinx_coroutines"]
 
 ver.rxKotlin = "3.0.1"
 ver.rxRelay3 = "3.0.1"
@@ -72,7 +74,8 @@ lib.constraint_layout_compose =
     "androidx.constraintlayout:constraintlayout-compose:$ver.constraintLayoutCompose"
 
 ver.room = "2.5.0"
-lib.room = "androidx.room:room-runtime:$ver.room"
+lib.room = ["androidx.room:room-runtime:$ver.room",
+            "androidx.room:room-ktx:$ver.room"]
 lib.roomCompiler = "androidx.room:room-compiler:$ver.room"
 lib.roomTest = "androidx.room:room-testing:$ver.room"
 

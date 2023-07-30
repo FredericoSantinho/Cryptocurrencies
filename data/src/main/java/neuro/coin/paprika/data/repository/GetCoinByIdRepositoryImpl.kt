@@ -2,16 +2,17 @@ package neuro.coin.paprika.data.repository
 
 import neuro.coin.paprika.data.api.CoinPaprikaApi
 import neuro.coin.paprika.data.mapper.toDomain
-import neuro.coin.paprika.domain.entity.Coin
-import neuro.coin.paprika.domain.repository.GetCoinsRepository
+import neuro.coin.paprika.domain.entity.CoinDetails
+import neuro.coin.paprika.domain.repository.GetCoinByIdRepository
 import neuro.coin.paprika.domain.usecase.ErrorRetrievingDataException
 import retrofit2.HttpException
 import java.io.IOException
 
-class GetCoinsRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) : GetCoinsRepository {
-	override suspend fun getCoins(): List<Coin> {
-		return try {
-			coinPaprikaApi.getCoins().map { it.toDomain() }
+class GetCoinByIdRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
+	GetCoinByIdRepository {
+	override suspend fun getCoinById(coinId: String): CoinDetails {
+		try {
+			return coinPaprikaApi.getCoinById(coinId).toDomain()
 		} catch (e: HttpException) {
 			throw ErrorRetrievingDataException(e.localizedMessage ?: "An unexpected error occurred")
 		} catch (e: IOException) {

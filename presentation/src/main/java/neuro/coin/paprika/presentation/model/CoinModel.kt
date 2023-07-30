@@ -5,6 +5,5 @@ data class CoinModel(
 	val isActive: Boolean,
 	val name: String,
 	val rank: Int,
-	val symbol: String,
-	val type: String
+	val symbol: String
 )

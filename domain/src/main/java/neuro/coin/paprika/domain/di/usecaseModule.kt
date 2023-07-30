@@ -1,5 +1,7 @@
 package neuro.coin.paprika.domain.di
 
+import neuro.coin.paprika.domain.usecase.FetchCoinsUseCase
+import neuro.coin.paprika.domain.usecase.FetchCoinsUseCaseImpl
 import neuro.coin.paprika.domain.usecase.GetCoinDetailsUseCase
 import neuro.coin.paprika.domain.usecase.GetCoinDetailsUseCaseImpl
 import neuro.coin.paprika.domain.usecase.GetCoinsUseCase
@@ -9,4 +11,5 @@ import org.koin.dsl.module
 val useCaseModule = module {
 	factory<GetCoinDetailsUseCase> { GetCoinDetailsUseCaseImpl(get()) }
 	factory<GetCoinsUseCase> { GetCoinsUseCaseImpl(get()) }
+	factory<FetchCoinsUseCase> { FetchCoinsUseCaseImpl(get()) }
 }
