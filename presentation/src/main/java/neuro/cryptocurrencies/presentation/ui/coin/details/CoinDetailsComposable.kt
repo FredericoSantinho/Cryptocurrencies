@@ -39,7 +39,7 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()) {
-	val coinDetailsModel = viewModel.uiState.value.coinDetailsModel
+	val coinDetailsModelWithPrice = viewModel.uiState.value.coinDetailsWithPriceModel
 
 	Scaffold(topBar = {
 		TopAppBar()
@@ -66,7 +66,9 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 						}
 					}
 				} else {
-					coinDetailsModel?.let {
+					coinDetailsModelWithPrice?.let {
+						val coinDetailsModel = coinDetailsModelWithPrice.coinDetailsModel
+
 						LazyColumn(
 							modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp),
 						) {
@@ -75,7 +77,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 									coinDetailsModel.rank,
 									coinDetailsModel.name,
 									coinDetailsModel.symbol,
-									"12345",
+									coinDetailsModelWithPrice.price,
 									3
 								)
 							}

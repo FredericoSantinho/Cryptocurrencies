@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.mapper
+package neuro.cryptocurrencies.data.mapper.database
 
 import neuro.cryptocurrencies.data.model.database.coin.RoomCoinTicker
 import neuro.cryptocurrencies.domain.entity.CoinTicker

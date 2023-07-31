@@ -9,6 +9,9 @@ interface CoinPaprikaApi {
 	@GET("/v1/tickers")
 	suspend fun getCoinsTickers(): List<CoinTickerDto>
 
+	@GET("/v1/tickers/{coinId}")
+	suspend fun getCoinTicker(@Path("coinId") coinId: String): CoinTickerDto
+
 	@GET("/v1/coins/{coinId}")
 	suspend fun getCoinById(@Path("coinId") coinId: String): CoinDetailsDto
 }

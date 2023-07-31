@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.mapper
+package neuro.cryptocurrencies.data.mapper.network
 
 import neuro.cryptocurrencies.data.model.network.coin.details.CoinDetailsDto
 import neuro.cryptocurrencies.data.model.network.coin.details.Team

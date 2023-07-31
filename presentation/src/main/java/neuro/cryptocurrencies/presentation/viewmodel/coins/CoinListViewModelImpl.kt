@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import neuro.cryptocurrencies.domain.usecase.FetchCoinsUseCase
-import neuro.cryptocurrencies.domain.usecase.GetCoinsUseCase
+import neuro.cryptocurrencies.domain.usecase.GetCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 class CoinListViewModelImpl(
-	private val getCoinsUseCase: GetCoinsUseCase,
+	private val getCoinsTickersUseCase: GetCoinsTickersUseCase,
 	private val fetchCoinsUseCase: FetchCoinsUseCase
 ) : ViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
@@ -75,7 +75,7 @@ class CoinListViewModelImpl(
 	}
 
 	private fun observeCoins() {
-		getCoinsUseCase.execute().map { it.toPresentation() }.onEach { coinModels ->
+		getCoinsTickersUseCase.execute().map { it.toPresentation() }.onEach { coinModels ->
 			if (coinTickers.value != null) {
 				coinTickers.value = emptyList()
 			}

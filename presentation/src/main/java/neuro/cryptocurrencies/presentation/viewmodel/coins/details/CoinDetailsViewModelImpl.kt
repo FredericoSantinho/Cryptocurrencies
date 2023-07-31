@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import neuro.cryptocurrencies.domain.usecase.GetCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.GetCoinDetailsWithPriceUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 
 class CoinDetailsViewModelImpl(
-	private val getCoinDetailsUseCase: GetCoinDetailsUseCase,
+	private val getCoinDetailsWithPriceUseCase: GetCoinDetailsWithPriceUseCase,
 	savedStateHandle: SavedStateHandle
 ) : ViewModel(), CoinDetailsViewModel {
 	private val _uiState = mutableStateOf(CoinDetailsState(isLoading = true))
@@ -44,9 +44,14 @@ class CoinDetailsViewModelImpl(
 					isLoading = false
 				)
 		}) {
-			val coinDetailsModel = getCoinDetailsUseCase.execute(coinId).toPresentation()
+			val coinDetailsWithPriceModel =
+				getCoinDetailsWithPriceUseCase.execute(coinId, viewModelScope).toPresentation()
 			_uiState.value =
-				uiState.value.copy(coinDetailsModel = coinDetailsModel, isLoading = false, isError = false)
+				uiState.value.copy(
+					coinDetailsWithPriceModel = coinDetailsWithPriceModel,
+					isLoading = false,
+					isError = false
+				)
 		}
 	}
 
