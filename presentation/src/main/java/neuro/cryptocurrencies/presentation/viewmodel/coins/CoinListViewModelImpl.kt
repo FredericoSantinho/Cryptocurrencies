@@ -59,8 +59,10 @@ class CoinListViewModelImpl(
 		coinTickers.combine(searchTerm) { coinModels, searchTerm ->
 			coinModels?.let {
 				val filteredCoins = coinModels.filter { it.name.lowercase().contains(searchTerm) }
-				_uiState.value =
-					uiState.value.copy(coins = filteredCoins, isLoading = false, isRefreshing = false)
+				if (filteredCoins.isNotEmpty()) {
+					_uiState.value =
+						uiState.value.copy(coins = filteredCoins, isLoading = false, isRefreshing = false)
+				}
 			}
 		}.catch {
 			_uiState.value = uiState.value.copy(
