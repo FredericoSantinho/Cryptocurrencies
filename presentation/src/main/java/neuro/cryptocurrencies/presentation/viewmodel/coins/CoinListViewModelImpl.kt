@@ -61,11 +61,17 @@ class CoinListViewModelImpl(
 				val filteredCoins = coinModels.filter { it.name.lowercase().contains(searchTerm) }
 				if (filteredCoins.isNotEmpty()) {
 					_uiState.value =
-						uiState.value.copy(coins = filteredCoins, isLoading = false, isRefreshing = false)
+						uiState.value.copy(
+							coins = filteredCoins,
+							isLoading = false,
+							isRefreshing = false,
+							isError = false
+						)
 				}
 			}
 		}.catch {
 			_uiState.value = uiState.value.copy(
+				isError = true,
 				errorMessage = it.message ?: "Unexpected error occurred!"
 			)
 		}.launchIn(viewModelScope)
@@ -85,6 +91,7 @@ class CoinListViewModelImpl(
 		}.catch {
 			_uiState.value =
 				uiState.value.copy(
+					isError = true,
 					errorMessage = it.message ?: "Unexpected error occurred!",
 					isLoading = false,
 					isRefreshing = false
@@ -97,6 +104,7 @@ class CoinListViewModelImpl(
 			CoroutineExceptionHandler { coroutineContext, throwable ->
 				_uiState.value =
 					uiState.value.copy(
+						isError = true,
 						errorMessage = throwable.message ?: "Unexpected error occurred!",
 						isLoading = false,
 						isRefreshing = false
