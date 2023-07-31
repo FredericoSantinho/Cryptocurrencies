@@ -100,9 +100,9 @@ fun CoinListComposable(
 				}
 
 				val context = LocalContext.current
-				LaunchedEffect(key1 = coinListState.error) {
-					if (coinListState.error.isNotBlank() && !coinListState.isRefreshing) {
-						Toast.makeText(context, coinListState.error, Toast.LENGTH_LONG).show()
+				LaunchedEffect(key1 = coinListState.errorMessage) {
+					if (coinListState.errorMessage.isNotBlank() && !coinListState.isRefreshing) {
+						Toast.makeText(context, coinListState.errorMessage, Toast.LENGTH_LONG).show()
 						viewModel.errorShown()
 					}
 				}

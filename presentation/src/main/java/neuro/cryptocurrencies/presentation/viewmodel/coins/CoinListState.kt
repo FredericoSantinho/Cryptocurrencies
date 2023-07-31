@@ -4,7 +4,7 @@ import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 data class CoinListState(
 	val coins: List<CoinTickerModel>? = null,
-	val error: String = "",
+	val errorMessage: String = "",
 	val isLoading: Boolean = false,
 	val isRefreshing: Boolean = false
 )

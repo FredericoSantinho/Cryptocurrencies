@@ -48,7 +48,7 @@ class CoinListViewModelImpl(
 	}
 
 	override fun errorShown() {
-		_uiState.value = uiState.value.copy(error = "")
+		_uiState.value = uiState.value.copy(errorMessage = "")
 	}
 
 	override fun onSearchTerm(searchTerm: String) {
@@ -63,7 +63,9 @@ class CoinListViewModelImpl(
 					uiState.value.copy(coins = filteredCoins, isLoading = false, isRefreshing = false)
 			}
 		}.catch {
-			_uiState.value = uiState.value.copy(error = it.message ?: "Unexpected error occurred!")
+			_uiState.value = uiState.value.copy(
+				errorMessage = it.message ?: "Unexpected error occurred!"
+			)
 		}.launchIn(viewModelScope)
 	}
 
@@ -74,12 +76,14 @@ class CoinListViewModelImpl(
 
 	private fun observeCoins() {
 		getCoinsUseCase.execute().map { it.toPresentation() }.onEach { coinModels ->
-			coinTickers.value = emptyList()
+			if (coinTickers.value != null) {
+				coinTickers.value = emptyList()
+			}
 			coinTickers.value = coinModels
 		}.catch {
 			_uiState.value =
 				uiState.value.copy(
-					error = it.message ?: "Unexpected error occurred!",
+					errorMessage = it.message ?: "Unexpected error occurred!",
 					isLoading = false,
 					isRefreshing = false
 				)
@@ -91,7 +95,7 @@ class CoinListViewModelImpl(
 			CoroutineExceptionHandler { coroutineContext, throwable ->
 				_uiState.value =
 					uiState.value.copy(
-						error = throwable.message ?: "Unexpected error occurred!",
+						errorMessage = throwable.message ?: "Unexpected error occurred!",
 						isLoading = false,
 						isRefreshing = false
 					)
