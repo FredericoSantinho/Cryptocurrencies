@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import neuro.cryptocurrencies.domain.usecase.GetCoinDetailsWithPriceUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
+import neuro.cryptocurrencies.presentation.model.TeamModel
 
 class CoinDetailsViewModelImpl(
 	private val getCoinDetailsWithPriceUseCase: GetCoinDetailsWithPriceUseCase,
@@ -46,6 +47,14 @@ class CoinDetailsViewModelImpl(
 
 	override fun onTagClick(tag: String) {
 		_uiState.value = uiState.value.copy(showDialog = true, dialogTitle = tag, dialogLoading = true)
+	}
+
+	override fun onTeamMemberClick(teamModel: TeamModel) {
+		_uiState.value = uiState.value.copy(
+			showDialog = true,
+			dialogTitle = "${teamModel.name} (${teamModel.position})",
+			dialogLoading = true
+		)
 	}
 
 	private fun getCoinDetails(coinId: String) {

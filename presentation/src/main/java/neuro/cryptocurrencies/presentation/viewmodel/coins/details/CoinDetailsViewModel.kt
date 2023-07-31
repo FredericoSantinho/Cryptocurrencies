@@ -1,6 +1,7 @@
 package neuro.cryptocurrencies.presentation.viewmodel.coins.details
 
 import androidx.compose.runtime.State
+import neuro.cryptocurrencies.presentation.model.TeamModel
 
 interface CoinDetailsViewModel {
 	val uiState: State<CoinDetailsState>
@@ -10,4 +11,5 @@ interface CoinDetailsViewModel {
 	fun onRefresh()
 	fun onDialogDismiss()
 	fun onTagClick(tag: String)
+	fun onTeamMemberClick(teamModel: TeamModel)
 }

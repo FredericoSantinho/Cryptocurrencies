@@ -188,7 +188,9 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 										)
 									}
 									items(coinDetailsModel.team) { teamModel ->
-										TeamListItem(teamModel)
+										TeamListItem(teamModel, modifier = Modifier.clickable {
+											viewModel.onTeamMemberClick(teamModel)
+										})
 										Divider()
 									}
 								}
