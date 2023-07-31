@@ -45,7 +45,7 @@ fun CoinListComposable(
 	navController: NavHostController,
 	viewModel: CoinListViewModel = getViewModel<CoinListViewModelImpl>()
 ) {
-	val coinListState = viewModel.uiState.value
+	val uiState = viewModel.uiState.value
 
 	Scaffold(topBar = { SearchAppBar({ viewModel.onSearchTerm(it) }) }) {
 		Surface(
@@ -54,12 +54,12 @@ fun CoinListComposable(
 				.fillMaxSize(),
 			color = MaterialTheme.colors.background
 		) {
-			if (coinListState.isLoading) {
+			if (uiState.isLoading) {
 				Box(modifier = Modifier.fillMaxSize()) {
 					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 				}
 			} else {
-				if (coinListState.isError && !coinListState.isRefreshing) {
+				if (uiState.isError && !uiState.isRefreshing) {
 					Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 						Column(horizontalAlignment = Alignment.CenterHorizontally) {
 							Text(text = stringResource(id = R.string.no_data_available))
@@ -71,7 +71,7 @@ fun CoinListComposable(
 					}
 				} else {
 					val pullRefreshState =
-						rememberPullRefreshState(coinListState.isRefreshing, { viewModel.onRefresh() })
+						rememberPullRefreshState(uiState.isRefreshing, { viewModel.onRefresh() })
 
 					Box(
 						modifier = Modifier
@@ -79,14 +79,14 @@ fun CoinListComposable(
 							.pullRefresh(pullRefreshState)
 					) {
 						PullRefreshIndicator(
-							coinListState.isRefreshing,
+							uiState.isRefreshing,
 							pullRefreshState,
 							Modifier.align(Alignment.TopCenter)
 						)
 
-						coinListState.coins?.let {
+						uiState.coins?.let {
 							LazyColumn(modifier = Modifier) {
-								items(coinListState.coins) {
+								items(uiState.coins) {
 									CoinListItemComposable(
 										it.rank,
 										it.name,
@@ -100,9 +100,9 @@ fun CoinListComposable(
 				}
 
 				val context = LocalContext.current
-				LaunchedEffect(key1 = coinListState.errorMessage) {
-					if (coinListState.errorMessage.isNotBlank() && !coinListState.isRefreshing) {
-						Toast.makeText(context, coinListState.errorMessage, Toast.LENGTH_LONG).show()
+				LaunchedEffect(key1 = uiState.errorMessage) {
+					if (uiState.errorMessage.isNotBlank() && !uiState.isRefreshing) {
+						Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_LONG).show()
 						viewModel.errorShown()
 					}
 				}

@@ -8,4 +8,6 @@ interface CoinDetailsViewModel {
 	fun errorShown()
 	fun onRetry()
 	fun onRefresh()
+	fun onDialogDismiss()
+	fun onTagClick(tag: String)
 }

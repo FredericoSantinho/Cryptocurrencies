@@ -1,6 +1,7 @@
 package neuro.cryptocurrencies.presentation.ui.coin.details
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListItemComposable
+import neuro.cryptocurrencies.presentation.ui.common.composables.AlertDialogDismissable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
@@ -44,8 +46,8 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()) {
-	val coinDetailsState = viewModel.uiState.value
-	val coinDetailsModelWithPrice = coinDetailsState.coinDetailsWithPriceModel
+	val uiState = viewModel.uiState.value
+	val coinDetailsModelWithPrice = uiState.coinDetailsWithPriceModel
 
 	Scaffold(topBar = {
 		TopAppBar()
@@ -56,12 +58,12 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 				.fillMaxSize(),
 			color = MaterialTheme.colors.background
 		) {
-			if (coinDetailsState.isLoading) {
+			if (uiState.isLoading) {
 				Box(modifier = Modifier.fillMaxSize()) {
 					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 				}
 			} else {
-				if (coinDetailsState.isError) {
+				if (uiState.isError) {
 					Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 						Column(horizontalAlignment = Alignment.CenterHorizontally) {
 							Text(text = stringResource(id = R.string.no_data_available))
@@ -75,7 +77,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 					coinDetailsModelWithPrice?.let {
 						val coinDetailsModel = coinDetailsModelWithPrice.coinDetailsModel
 						val pullRefreshState =
-							rememberPullRefreshState(coinDetailsState.isRefreshing, { viewModel.onRefresh() })
+							rememberPullRefreshState(uiState.isRefreshing, { viewModel.onRefresh() })
 
 						Box(
 							modifier = Modifier
@@ -83,7 +85,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 								.pullRefresh(pullRefreshState)
 						) {
 							PullRefreshIndicator(
-								coinDetailsState.isRefreshing,
+								uiState.isRefreshing,
 								pullRefreshState,
 								Modifier.align(Alignment.TopCenter)
 							)
@@ -171,7 +173,9 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 											modifier = Modifier.fillMaxWidth()
 										) {
 											for (tag in coinDetailsModel.tags) {
-												CoinTag(tag)
+												CoinTag(tag, modifier = Modifier.clickable {
+													viewModel.onTagClick(tag)
+												})
 											}
 										}
 									}
@@ -194,12 +198,21 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 				}
 			}
 		}
+
+		if (uiState.showDialog) {
+			AlertDialogDismissable(
+				title = uiState.dialogTitle,
+				text = uiState.dialogText,
+				onDismissRequest = { viewModel.onDialogDismiss() },
+				loading = uiState.dialogLoading
+			)
+		}
 	}
 
 	val context = LocalContext.current
-	LaunchedEffect(key1 = coinDetailsState.errorMessage) {
-		if (coinDetailsState.errorMessage.isNotBlank()) {
-			Toast.makeText(context, coinDetailsState.errorMessage, Toast.LENGTH_LONG).show()
+	LaunchedEffect(key1 = uiState.errorMessage) {
+		if (uiState.errorMessage.isNotBlank()) {
+			Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_LONG).show()
 			viewModel.errorShown()
 		}
 	}

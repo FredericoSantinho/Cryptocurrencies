@@ -41,4 +41,12 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 	override fun onRefresh() {
 
 	}
+
+	override fun onDialogDismiss() {
+
+	}
+
+	override fun onTagClick(tag: String) {
+
+	}
 }

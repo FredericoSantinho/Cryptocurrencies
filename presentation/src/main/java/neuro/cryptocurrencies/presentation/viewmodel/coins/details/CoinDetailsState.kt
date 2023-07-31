@@ -7,5 +7,9 @@ data class CoinDetailsState(
 	val isError: Boolean = false,
 	val errorMessage: String = "",
 	val isLoading: Boolean = false,
-	val isRefreshing: Boolean = false
+	val isRefreshing: Boolean = false,
+	val showDialog: Boolean = false,
+	val dialogLoading: Boolean = false,
+	val dialogTitle: String = "",
+	val dialogText: String = ""
 )

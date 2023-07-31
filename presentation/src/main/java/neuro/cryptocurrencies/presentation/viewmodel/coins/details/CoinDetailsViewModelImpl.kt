@@ -40,6 +40,14 @@ class CoinDetailsViewModelImpl(
 		getCoinDetails(coinId)
 	}
 
+	override fun onDialogDismiss() {
+		_uiState.value = uiState.value.copy(showDialog = false, dialogTitle = "", dialogText = "")
+	}
+
+	override fun onTagClick(tag: String) {
+		_uiState.value = uiState.value.copy(showDialog = true, dialogTitle = tag, dialogLoading = true)
+	}
+
 	private fun getCoinDetails(coinId: String) {
 		viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
 			_uiState.value =
