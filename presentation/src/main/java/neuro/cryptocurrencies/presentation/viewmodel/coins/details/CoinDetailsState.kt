@@ -6,5 +6,6 @@ data class CoinDetailsState(
 	val coinDetailsWithPriceModel: CoinDetailsWithPriceModel? = null,
 	val isError: Boolean = false,
 	val errorMessage: String = "",
-	val isLoading: Boolean = false
+	val isLoading: Boolean = false,
+	val isRefreshing: Boolean = false
 )

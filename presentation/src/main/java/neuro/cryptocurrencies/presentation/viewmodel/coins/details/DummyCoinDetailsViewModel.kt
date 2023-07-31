@@ -37,4 +37,8 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 	override fun onRetry() {
 
 	}
+
+	override fun onRefresh() {
+
+	}
 }

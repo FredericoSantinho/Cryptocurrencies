@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -20,6 +21,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -37,9 +41,11 @@ import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsVi
 import neuro.cryptocurrencies.presentation.viewmodel.coins.details.DummyCoinDetailsViewModel
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()) {
-	val coinDetailsModelWithPrice = viewModel.uiState.value.coinDetailsWithPriceModel
+	val coinDetailsState = viewModel.uiState.value
+	val coinDetailsModelWithPrice = coinDetailsState.coinDetailsWithPriceModel
 
 	Scaffold(topBar = {
 		TopAppBar()
@@ -50,12 +56,12 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 				.fillMaxSize(),
 			color = MaterialTheme.colors.background
 		) {
-			if (viewModel.uiState.value.isLoading) {
+			if (coinDetailsState.isLoading) {
 				Box(modifier = Modifier.fillMaxSize()) {
 					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 				}
 			} else {
-				if (viewModel.uiState.value.isError) {
+				if (coinDetailsState.isError) {
 					Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 						Column(horizontalAlignment = Alignment.CenterHorizontally) {
 							Text(text = stringResource(id = R.string.no_data_available))
@@ -68,104 +74,119 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 				} else {
 					coinDetailsModelWithPrice?.let {
 						val coinDetailsModel = coinDetailsModelWithPrice.coinDetailsModel
+						val pullRefreshState =
+							rememberPullRefreshState(coinDetailsState.isRefreshing, { viewModel.onRefresh() })
 
-						LazyColumn(
-							modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp),
+						Box(
+							modifier = Modifier
+								.fillMaxSize()
+								.pullRefresh(pullRefreshState)
 						) {
-							item {
-								CoinListItemComposable(
-									coinDetailsModel.rank,
-									coinDetailsModel.name,
-									coinDetailsModel.symbol,
-									coinDetailsModelWithPrice.price,
-									3
-								)
-							}
-							if (coinDetailsModel.description.isNotBlank()) {
+							PullRefreshIndicator(
+								coinDetailsState.isRefreshing,
+								pullRefreshState,
+								Modifier.align(Alignment.TopCenter)
+							)
+
+							LazyColumn(
+								modifier = Modifier.padding(16.dp),
+								verticalArrangement = Arrangement.spacedBy(16.dp),
+							) {
+								item {
+									CoinListItemComposable(
+										coinDetailsModel.rank,
+										coinDetailsModel.name,
+										coinDetailsModel.symbol,
+										coinDetailsModelWithPrice.price,
+										3
+									)
+								}
+								if (coinDetailsModel.description.isNotBlank()) {
+									item {
+										Text(
+											text = coinDetailsModel.description,
+											style = MaterialTheme.typography.body2
+										)
+									}
+								}
+								if (coinDetailsModel.type.isNotBlank()) {
+									item {
+										Text(
+											text = stringResource(id = R.string.type),
+											style = MaterialTheme.typography.h5
+										)
+									}
+									item {
+										Text(text = coinDetailsModel.type, style = MaterialTheme.typography.body2)
+									}
+								}
 								item {
 									Text(
-										text = coinDetailsModel.description,
+										text = stringResource(id = R.string.open_source),
+										style = MaterialTheme.typography.h5
+									)
+								}
+								item {
+									Text(
+										text = coinDetailsModel.openSource.toString(),
 										style = MaterialTheme.typography.body2
 									)
 								}
-							}
-							if (coinDetailsModel.type.isNotBlank()) {
-								item {
-									Text(
-										text = stringResource(id = R.string.type),
-										style = MaterialTheme.typography.h5
-									)
+								if (coinDetailsModel.proofType.isNotBlank()) {
+									item {
+										Text(
+											text = stringResource(id = R.string.proof_type),
+											style = MaterialTheme.typography.h5
+										)
+									}
+									item {
+										Text(text = coinDetailsModel.proofType, style = MaterialTheme.typography.body2)
+									}
 								}
-								item {
-									Text(text = coinDetailsModel.type, style = MaterialTheme.typography.body2)
+								if (coinDetailsModel.hashAlgorithm.isNotBlank()) {
+									item {
+										Text(
+											text = stringResource(id = R.string.hash_algorithm),
+											style = MaterialTheme.typography.h5
+										)
+									}
+									item {
+										Text(
+											text = coinDetailsModel.hashAlgorithm,
+											style = MaterialTheme.typography.body2
+										)
+									}
 								}
-							}
-							item {
-								Text(
-									text = stringResource(id = R.string.open_source),
-									style = MaterialTheme.typography.h5
-								)
-							}
-							item {
-								Text(
-									text = coinDetailsModel.openSource.toString(),
-									style = MaterialTheme.typography.body2
-								)
-							}
-							if (coinDetailsModel.proofType.isNotBlank()) {
-								item {
-									Text(
-										text = stringResource(id = R.string.proof_type),
-										style = MaterialTheme.typography.h5
-									)
-								}
-								item {
-									Text(text = coinDetailsModel.proofType, style = MaterialTheme.typography.body2)
-								}
-							}
-							if (coinDetailsModel.hashAlgorithm.isNotBlank()) {
-								item {
-									Text(
-										text = stringResource(id = R.string.hash_algorithm),
-										style = MaterialTheme.typography.h5
-									)
-								}
-								item {
-									Text(
-										text = coinDetailsModel.hashAlgorithm,
-										style = MaterialTheme.typography.body2
-									)
-								}
-							}
-							if (coinDetailsModel.tags.isNotEmpty()) {
-								item {
-									Text(
-										text = stringResource(id = R.string.tags),
-										style = MaterialTheme.typography.h5
-									)
-								}
-								item {
-									FlowRow(
-										mainAxisSpacing = 10.dp,
-										crossAxisSpacing = 10.dp,
-										modifier = Modifier.fillMaxWidth()
-									) {
-										for (tag in coinDetailsModel.tags) {
-											CoinTag(tag)
+								if (coinDetailsModel.tags.isNotEmpty()) {
+									item {
+										Text(
+											text = stringResource(id = R.string.tags),
+											style = MaterialTheme.typography.h5
+										)
+									}
+									item {
+										FlowRow(
+											mainAxisSpacing = 10.dp,
+											crossAxisSpacing = 10.dp,
+											modifier = Modifier.fillMaxWidth()
+										) {
+											for (tag in coinDetailsModel.tags) {
+												CoinTag(tag)
+											}
 										}
 									}
 								}
-							}
-							if (coinDetailsModel.team.isNotEmpty()) {
-								item {
-									Text(
-										text = stringResource(id = R.string.team_members),
-										style = MaterialTheme.typography.h5
-									)
-								}
-								items(coinDetailsModel.team) { teamModel ->
-									TeamListItem(teamModel)
-									Divider()
+								if (coinDetailsModel.team.isNotEmpty()) {
+									item {
+										Text(
+											text = stringResource(id = R.string.team_members),
+											style = MaterialTheme.typography.h5
+										)
+									}
+									items(coinDetailsModel.team) { teamModel ->
+										TeamListItem(teamModel)
+										Divider()
+									}
 								}
 							}
 						}
@@ -176,9 +197,9 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 	}
 
 	val context = LocalContext.current
-	LaunchedEffect(key1 = viewModel.uiState.value.errorMessage) {
-		if (viewModel.uiState.value.errorMessage.isNotBlank()) {
-			Toast.makeText(context, viewModel.uiState.value.errorMessage, Toast.LENGTH_LONG).show()
+	LaunchedEffect(key1 = coinDetailsState.errorMessage) {
+		if (coinDetailsState.errorMessage.isNotBlank()) {
+			Toast.makeText(context, coinDetailsState.errorMessage, Toast.LENGTH_LONG).show()
 			viewModel.errorShown()
 		}
 	}

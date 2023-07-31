@@ -35,13 +35,19 @@ class CoinDetailsViewModelImpl(
 		getCoinDetails(coinId)
 	}
 
+	override fun onRefresh() {
+		_uiState.value = uiState.value.copy(isRefreshing = true)
+		getCoinDetails(coinId)
+	}
+
 	private fun getCoinDetails(coinId: String) {
 		viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
 			_uiState.value =
 				uiState.value.copy(
 					errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
 					isError = true,
-					isLoading = false
+					isLoading = false,
+					isRefreshing = false
 				)
 		}) {
 			val coinDetailsWithPriceModel =
@@ -50,7 +56,8 @@ class CoinDetailsViewModelImpl(
 				uiState.value.copy(
 					coinDetailsWithPriceModel = coinDetailsWithPriceModel,
 					isLoading = false,
-					isError = false
+					isError = false,
+					isRefreshing = false
 				)
 		}
 	}

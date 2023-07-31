@@ -7,4 +7,5 @@ interface CoinDetailsViewModel {
 
 	fun errorShown()
 	fun onRetry()
+	fun onRefresh()
 }
