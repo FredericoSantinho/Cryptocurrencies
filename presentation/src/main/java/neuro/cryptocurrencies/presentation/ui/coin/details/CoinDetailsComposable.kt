@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -173,7 +174,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 											modifier = Modifier.fillMaxWidth()
 										) {
 											for (tag in coinDetailsModel.tags) {
-												CoinTag(tag, modifier = Modifier.clickable {
+												CoinTag(tag.name, modifier = Modifier.clickable {
 													viewModel.onTagClick(tag)
 												})
 											}
@@ -206,7 +207,8 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 				title = uiState.dialogTitle,
 				text = uiState.dialogText,
 				onDismissRequest = { viewModel.onDialogDismiss() },
-				loading = uiState.dialogLoading
+				loading = uiState.dialogLoading,
+				modifier = Modifier.height(240.dp)
 			)
 		}
 	}

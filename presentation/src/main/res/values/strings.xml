@@ -13,4 +13,5 @@
   <string name="hash_algorithm">Hash Algorithm</string>
   <string name="tags">Tags</string>
   <string name="team_members">Team members</string>
+  <string name="error_retrieving_data">Error retrieving data. Please check your internet connection.</string>
 </resources>

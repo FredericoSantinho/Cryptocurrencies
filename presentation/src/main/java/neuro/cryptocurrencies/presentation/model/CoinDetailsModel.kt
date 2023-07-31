@@ -11,7 +11,7 @@ data class CoinDetailsModel(
 	val proofType: String,
 	val rank: Int,
 	val symbol: String,
-	val tags: List<String>,
+	val tags: List<TagModel>,
 	val team: List<TeamModel>,
 	val type: String
 )
