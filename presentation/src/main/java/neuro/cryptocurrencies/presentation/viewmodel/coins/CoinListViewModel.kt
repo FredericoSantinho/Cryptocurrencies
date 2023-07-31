@@ -9,6 +9,7 @@ interface CoinListViewModel {
 
 	fun onCoinClick(coinId: String)
 	fun onRefresh()
+	fun onRetry()
 	fun errorShown()
 	fun onSearchTerm(searchTerm: String)
 }

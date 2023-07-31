@@ -64,7 +64,7 @@ fun CoinListComposable(
 						Column(horizontalAlignment = Alignment.CenterHorizontally) {
 							Text(text = stringResource(id = R.string.no_data_available))
 							Text(text = stringResource(id = R.string.refresh))
-							IconButton(onClick = { viewModel.onRefresh() }) {
+							IconButton(onClick = { viewModel.onRetry() }) {
 								Icon(Icons.Default.Refresh, contentDescription = "refresh")
 							}
 						}

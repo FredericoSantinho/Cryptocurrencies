@@ -24,6 +24,10 @@ class DummyCoinListViewModel : CoinListViewModel {
 	override fun onRefresh() {
 	}
 
+	override fun onRetry() {
+
+	}
+
 	override fun errorShown() {
 	}
 

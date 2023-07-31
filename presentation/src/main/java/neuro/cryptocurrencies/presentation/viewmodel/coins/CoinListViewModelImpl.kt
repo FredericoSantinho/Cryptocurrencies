@@ -47,6 +47,11 @@ class CoinListViewModelImpl(
 		fetchCoins()
 	}
 
+	override fun onRetry() {
+		_uiState.value = uiState.value.copy(isLoading = true)
+		fetchCoins()
+	}
+
 	override fun errorShown() {
 		_uiState.value = uiState.value.copy(errorMessage = "")
 	}
