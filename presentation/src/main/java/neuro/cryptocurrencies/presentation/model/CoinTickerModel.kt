@@ -5,6 +5,5 @@ data class CoinTickerModel(
 	val name: String,
 	val rank: Int,
 	val symbol: String,
-	val price: String,
-	val percentChange24h: String
+	val price: String
 )

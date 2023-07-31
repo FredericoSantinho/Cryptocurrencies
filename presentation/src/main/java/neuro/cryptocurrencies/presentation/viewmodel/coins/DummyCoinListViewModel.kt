@@ -11,8 +11,8 @@ class DummyCoinListViewModel : CoinListViewModel {
 		mutableStateOf(
 			CoinListState(
 				listOf(
-					CoinTickerModel("bitcoin", "Bitcoin", 1, "BTC", "25421.53", "0.56%"),
-					CoinTickerModel("ethereum", "Ethereum", 2, "ETH", "1543.43", "-0.30%")
+					CoinTickerModel("bitcoin", "Bitcoin", 1, "BTC", "25421.53"),
+					CoinTickerModel("ethereum", "Ethereum", 2, "ETH", "1543.43")
 				)
 			)
 		)

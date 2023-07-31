@@ -12,8 +12,7 @@ fun CoinTicker.toPresentation() = CoinTickerModel(
 	name,
 	rank,
 	symbol,
-	currencyFormatter.format(price),
-	percentChange24h.toString()
+	currencyFormatter.format(price)
 )
 
 fun List<CoinTicker>.toPresentation() = map { it.toPresentation() }

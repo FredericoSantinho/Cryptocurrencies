@@ -5,7 +5,7 @@ import neuro.cryptocurrencies.data.model.network.coin.tickers.CoinTickerDto
 import neuro.cryptocurrencies.domain.entity.CoinTicker
 
 fun CoinTickerDto.toDatabase() =
-	RoomCoinTicker(id, name, rank, symbol, quotes.usd.price, quotes.usd.percentChange24h)
+	RoomCoinTicker(id, name, rank, symbol, quotes.usd.price)
 
 fun CoinTickerDto.toDomain() =
-	CoinTicker(id, name, rank, symbol, quotes.usd.price, quotes.usd.percentChange24h)
+	CoinTicker(id, name, rank, symbol, quotes.usd.price)

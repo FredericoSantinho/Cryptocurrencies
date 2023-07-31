@@ -14,6 +14,5 @@ data class RoomCoinTicker(
 	val name: String,
 	val rank: Int,
 	val symbol: String,
-	val price: Double,
-	val percentChange24h: Double
+	val price: Double
 )
