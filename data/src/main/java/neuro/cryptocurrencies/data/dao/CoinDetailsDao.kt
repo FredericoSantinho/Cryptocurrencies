@@ -15,10 +15,10 @@ interface CoinDetailsDao {
 	suspend fun upsertCoinDetails(roomCoinTickers: RoomCoinDetailsWithPrice)
 
 	@Transaction
-	@Query("select * from coin_details_with_price_table where id=:coinId")
+	@Query("SELECT * FROM coin_details_with_price_table WHERE id=:coinId")
 	fun observeCoinDetails(coinId: String): Flow<RoomCoinDetailsWithPriceWithTagsAndTeam?>
 
 	@Transaction
-	@Query("select * from coin_details_with_price_table where id=:coinId")
-	suspend fun getCoinDetails(coinId: String): RoomCoinDetailsWithPriceWithTagsAndTeam?
+	@Query("SELECT COUNT(1) FROM coin_details_with_price_table WHERE id=:coinId")
+	suspend fun hasCoinDetails(coinId: String): Boolean
 }

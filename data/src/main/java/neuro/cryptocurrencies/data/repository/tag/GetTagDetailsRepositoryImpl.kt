@@ -1,13 +1,13 @@
 package neuro.cryptocurrencies.data.repository.tag
 
-import neuro.cryptocurrencies.data.dao.TagDetailsDao
-import neuro.cryptocurrencies.data.mapper.database.toDomain
+import neuro.cryptocurrencies.data.api.CoinPaprikaApi
+import neuro.cryptocurrencies.data.mapper.network.toDomain
 import neuro.cryptocurrencies.domain.entity.TagDetails
 import neuro.cryptocurrencies.domain.repository.tag.GetTagDetailsRepository
 
-class GetTagDetailsRepositoryImpl(private val tagDetailsDao: TagDetailsDao) :
+class GetTagDetailsRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
 	GetTagDetailsRepository {
-	override suspend fun getTagDetails(tagId: String): TagDetails? {
-		return tagDetailsDao.getTagDetails(tagId)?.toDomain()
+	override suspend fun getTagDetails(tagId: String): TagDetails {
+		return coinPaprikaApi.getTag(tagId).toDomain()
 	}
 }

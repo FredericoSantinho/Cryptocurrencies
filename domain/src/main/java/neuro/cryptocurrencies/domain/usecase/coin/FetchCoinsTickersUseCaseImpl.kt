@@ -1,10 +1,15 @@
 package neuro.cryptocurrencies.domain.usecase.coin
 
-import neuro.cryptocurrencies.domain.repository.coin.FetchCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.SaveCoinTickersRepository
 
-class FetchCoinsTickersUseCaseImpl(private val fetchCoinsTickersRepository: FetchCoinsTickersRepository) :
+class FetchCoinsTickersUseCaseImpl(
+	private val getCoinTickersRepository: GetCoinTickersRepository,
+	private val saveCoinTickersRepository: SaveCoinTickersRepository
+) :
 	FetchCoinsTickersUseCase {
 	override suspend fun execute() {
-		fetchCoinsTickersRepository.fetchCoinsTickers()
+		val coinTickers = getCoinTickersRepository.getCoinTickers()
+		saveCoinTickersRepository.saveCoinTickers(coinTickers)
 	}
 }

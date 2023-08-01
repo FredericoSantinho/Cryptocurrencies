@@ -17,10 +17,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import neuro.cryptocurrencies.domain.usecase.coin.details.FetchCoinDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.details.GetCachedCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.details.HasCachedCoinDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.details.ObserveCoinDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.GetTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
@@ -30,10 +30,10 @@ import neuro.cryptocurrencies.presentation.model.TeamModel
 class CoinDetailsViewModelImpl(
 	private val observeCoinDetailsUseCase: ObserveCoinDetailsUseCase,
 	private val fetchCoinDetailsUseCase: FetchCoinDetailsUseCase,
-	private val getCachedCoinDetailsUseCase: GetCachedCoinDetailsUseCase,
+	private val hasCachedCoinDetailsUseCase: HasCachedCoinDetailsUseCase,
 	private val observeTagDetailsUseCase: ObserveTagDetailsUseCase,
 	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
-	private val getTagDetailsUsecase: GetTagDetailsUseCase,
+	private val hasCachedTagDetailsUsecase: HasCachedTagDetailsUseCase,
 	private val context: Application,
 	savedStateHandle: SavedStateHandle
 ) : ViewModel(), CoinDetailsViewModel {
@@ -102,9 +102,9 @@ class CoinDetailsViewModelImpl(
 						)
 				}
 			}) {
-				val coinDetailsWithPrice = getCachedCoinDetailsUseCase.execute(coinId)
+				val hasCachedCoinDetails = hasCachedCoinDetailsUseCase.execute(coinId)
 				withContext(Dispatchers.Main) {
-					if (coinDetailsWithPrice == null) {
+					if (!hasCachedCoinDetails) {
 						_uiState.value =
 							uiState.value.copy(
 								errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
@@ -157,12 +157,11 @@ class CoinDetailsViewModelImpl(
 						)
 				}
 			}) {
-				val tagDetails = getTagDetailsUsecase.execute(tagModel.id)
+				val hasTagDetails = hasCachedTagDetailsUsecase.execute(tagModel.id)
 				withContext(Dispatchers.Main) {
-					if (tagDetails == null) {
+					if (!hasTagDetails) {
 						_uiState.value =
 							uiState.value.copy(
-								errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
 								dialogText = context.getString(R.string.error_retrieving_data),
 								dialogLoading = false
 							)

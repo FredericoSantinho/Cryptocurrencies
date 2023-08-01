@@ -12,7 +12,7 @@ interface CoinTickerDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun upsertCoinTickers(roomCoinTickers: List<RoomCoinTicker>)
 
-	@Query("select * from coin_ticker_table order by rank asc")
+	@Query("SELECT * FROM coin_ticker_table ORDER BY rank ASC")
 	fun observeCoinTickers(): Flow<List<RoomCoinTicker>>
 
 	@Query("SELECT COUNT(1) FROM coin_ticker_table")

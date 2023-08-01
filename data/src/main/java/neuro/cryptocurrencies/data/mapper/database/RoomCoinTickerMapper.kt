@@ -6,3 +6,5 @@ import neuro.cryptocurrencies.domain.entity.CoinTicker
 fun RoomCoinTicker.toDomain() = CoinTicker(id, name, rank, symbol, price)
 
 fun List<RoomCoinTicker>.toDomain() = map { it.toDomain() }
+
+fun CoinTicker.toDatabase() = RoomCoinTicker(id, name, rank, symbol, price)
