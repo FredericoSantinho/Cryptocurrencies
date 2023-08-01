@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.model.database.tag
+package neuro.cryptocurrencies.data.model.network.tag
 
 
 import com.google.gson.annotations.SerializedName

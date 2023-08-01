@@ -1,8 +1,8 @@
 package neuro.cryptocurrencies.data.api
 
-import neuro.cryptocurrencies.data.model.database.tag.TagDto
 import neuro.cryptocurrencies.data.model.network.coin.details.CoinDetailsDto
 import neuro.cryptocurrencies.data.model.network.coin.tickers.CoinTickerDto
+import neuro.cryptocurrencies.data.model.network.tag.TagDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 
