@@ -26,7 +26,7 @@ fun MainComposable() {
 		composable(
 			route = Screen.CoinDetailScreen.route + "/{${CoinDetailsViewModelImpl.PARAM_COIN_ID}}"
 		) {
-			CoinDetailsComposable()
+			CoinDetailsComposable(navController)
 		}
 	}
 

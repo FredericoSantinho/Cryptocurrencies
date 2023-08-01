@@ -22,6 +22,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -30,10 +31,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.flowlayout.FlowRow
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListItemComposable
@@ -46,12 +50,15 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()) {
+fun CoinDetailsComposable(
+	navController: NavController,
+	viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()
+) {
 	val uiState = viewModel.uiState.value
 	val coinDetailsModelWithPrice = uiState.coinDetailsWithPriceModel
 
 	Scaffold(topBar = {
-		TopAppBar()
+		TopAppBar(navController)
 	}) {
 		Surface(
 			modifier = Modifier
@@ -224,7 +231,7 @@ fun CoinDetailsComposable(viewModel: CoinDetailsViewModel = getViewModel<CoinDet
 }
 
 @Composable
-private fun TopAppBar() {
+private fun TopAppBar(navController: NavController) {
 	TopAppBar(
 		elevation = 4.dp,
 		title = {
@@ -232,6 +239,11 @@ private fun TopAppBar() {
 				text = stringResource(id = R.string.app_name),
 				color = MaterialTheme.colors.background
 			)
+		},
+		navigationIcon = {
+			IconButton(onClick = { navController.navigateUp() }) {
+				Icon(Icons.Filled.ArrowBack, null, tint = Color.Black)
+			}
 		},
 		backgroundColor = MaterialTheme.colors.primary,
 	)
@@ -241,6 +253,6 @@ private fun TopAppBar() {
 @Composable
 fun PreviewCoinDetailsComposable() {
 	CryptocurrenciesTheme {
-		CoinDetailsComposable(DummyCoinDetailsViewModel())
+		CoinDetailsComposable(rememberNavController(), DummyCoinDetailsViewModel())
 	}
 }
