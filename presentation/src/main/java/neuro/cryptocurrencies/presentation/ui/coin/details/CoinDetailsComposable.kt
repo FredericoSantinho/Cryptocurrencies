@@ -58,7 +58,10 @@ fun CoinDetailsComposable(
 	val coinDetailsModelWithPrice = uiState.coinDetailsWithPriceModel
 
 	Scaffold(topBar = {
-		TopAppBar(navController)
+		TopAppBar(
+			navController,
+			coinDetailsModelWithPrice?.coinDetailsModel?.name ?: stringResource(id = R.string.app_name)
+		)
 	}) {
 		Surface(
 			modifier = Modifier
@@ -231,12 +234,12 @@ fun CoinDetailsComposable(
 }
 
 @Composable
-private fun TopAppBar(navController: NavController) {
+private fun TopAppBar(navController: NavController, title: String) {
 	TopAppBar(
 		elevation = 4.dp,
 		title = {
 			Text(
-				text = stringResource(id = R.string.app_name),
+				text = title,
 				color = MaterialTheme.colors.background
 			)
 		},
