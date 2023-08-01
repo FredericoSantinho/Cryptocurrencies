@@ -89,12 +89,12 @@ class CoinDetailsViewModelImpl(
 	private fun fetchTag(tagModel: TagModel) {
 		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
 			// In case a network error occurs.
-			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
 				// In case a database error occurs.
 				viewModelScope.launch {
 					_uiState.value =
 						uiState.value.copy(
-							errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
+							errorMessage = throwable1.localizedMessage ?: "Unexpected error occurred!",
 							dialogText = context.getString(R.string.unexpected_error),
 							dialogLoading = false
 						)

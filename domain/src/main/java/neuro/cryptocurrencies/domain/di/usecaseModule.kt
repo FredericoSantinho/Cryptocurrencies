@@ -2,6 +2,8 @@ package neuro.cryptocurrencies.domain.di
 
 import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCaseImpl
 import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCaseImpl
 import neuro.cryptocurrencies.domain.usecase.coin.details.GetCoinDetailsWithPriceUseCase
@@ -21,4 +23,5 @@ val useCaseModule = module {
 	factory<FetchTagUseCase> { FetchTagUseCaseImpl(get()) }
 	factory<ObserveCoinsTickersUseCase> { ObserveCoinsTickersUseCaseImpl(get()) }
 	factory<FetchCoinsTickersUseCase> { FetchCoinsTickersUseCaseImpl(get()) }
+	factory<HasCachedCoinsTickersUseCase> { HasCachedCoinsTickersUseCaseImpl(get()) }
 }

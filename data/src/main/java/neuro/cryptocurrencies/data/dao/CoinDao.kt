@@ -14,4 +14,7 @@ interface CoinDao {
 
 	@Query("select * from coin_ticker_table order by rank asc")
 	fun observeCoinTickers(): Flow<List<RoomCoinTicker>>
+
+	@Query("SELECT COUNT(1) FROM coin_ticker_table")
+	suspend fun hasCoinTickers(): Boolean
 } 

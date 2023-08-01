@@ -16,14 +16,17 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 class CoinListViewModelImpl(
 	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
-	private val fetchCoinsTickersUseCase: FetchCoinsTickersUseCase
+	private val fetchCoinsTickersUseCase: FetchCoinsTickersUseCase,
+	private val hasCachedCoinsTickersUseCase: HasCachedCoinsTickersUseCase
 ) : ViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState
@@ -111,14 +114,38 @@ class CoinListViewModelImpl(
 		viewModelScope.launch(
 			Dispatchers.IO +
 					CoroutineExceptionHandler { _, throwable ->
-						viewModelScope.launch(Dispatchers.Main) {
-							_uiState.value =
-								uiState.value.copy(
-									isError = true,
-									errorMessage = throwable.message ?: "Unexpected error occurred!",
-									isLoading = false,
-									isRefreshing = false
-								)
+						// In case a network error occurs.
+						viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+							// In case a database error occurs.
+							viewModelScope.launch(Dispatchers.Main) {
+								_uiState.value =
+									uiState.value.copy(
+										isError = true,
+										errorMessage = throwable1.message ?: "Unexpected error occurred!",
+										isLoading = false,
+										isRefreshing = false
+									)
+							}
+						}) {
+							val hasCachedCoinsTickers = hasCachedCoinsTickersUseCase.execute()
+							withContext(Dispatchers.Main) {
+								if (!hasCachedCoinsTickers) {
+									_uiState.value =
+										uiState.value.copy(
+											isError = true,
+											errorMessage = throwable.message ?: "Unexpected error occurred!",
+											isLoading = false,
+											isRefreshing = false
+										)
+								} else {
+									_uiState.value =
+										uiState.value.copy(
+											errorMessage = throwable.message ?: "Unexpected error occurred!",
+											isLoading = false,
+											isRefreshing = false
+										)
+								}
+							}
 						}
 					},
 		) {
