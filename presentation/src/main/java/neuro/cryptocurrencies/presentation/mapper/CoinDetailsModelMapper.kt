@@ -8,10 +8,9 @@ import neuro.cryptocurrencies.presentation.model.TagModel
 import neuro.cryptocurrencies.presentation.model.TeamModel
 
 fun CoinDetails.toPresentation() = CoinDetailsModel(
+	id,
 	description,
 	hashAlgorithm,
-	id,
-	isActive,
 	logo,
 	name,
 	openSource,

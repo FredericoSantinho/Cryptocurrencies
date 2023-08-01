@@ -7,10 +7,9 @@ import neuro.cryptocurrencies.domain.entity.CoinDetails
 
 fun CoinDetailsDto.toDomain(): CoinDetails {
 	return CoinDetails(
+		id,
 		description ?: "",
 		hashAlgorithm = "",
-		id,
-		isActive,
 		logo,
 		name,
 		openSource,

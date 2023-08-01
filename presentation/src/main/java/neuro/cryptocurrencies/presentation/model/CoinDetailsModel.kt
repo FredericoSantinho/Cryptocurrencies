@@ -1,10 +1,9 @@
 package neuro.cryptocurrencies.presentation.model
 
 data class CoinDetailsModel(
+	val id: String,
 	val description: String,
 	val hashAlgorithm: String,
-	val id: String,
-	val isActive: Boolean,
 	val logo: String,
 	val name: String,
 	val openSource: Boolean,

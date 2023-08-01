@@ -13,10 +13,9 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 			CoinDetailsState(
 				CoinDetailsWithPriceModel(
 					CoinDetailsModel(
+						"bitcoin",
 						"description",
 						"SHA256",
-						"bitcoin",
-						true,
 						"",
 						"Bitcoin",
 						true,
