@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.domain.usecase.coin
+package neuro.cryptocurrencies.domain.usecase.coin.details
 
 import kotlinx.coroutines.CoroutineScope
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice

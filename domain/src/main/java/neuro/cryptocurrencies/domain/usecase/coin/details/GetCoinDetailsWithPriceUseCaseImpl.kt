@@ -1,11 +1,11 @@
-package neuro.cryptocurrencies.domain.usecase.coin
+package neuro.cryptocurrencies.domain.usecase.coin.details
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice
-import neuro.cryptocurrencies.domain.repository.coin.GetCoinDetailsRepository
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
+import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
 
 class GetCoinDetailsWithPriceUseCaseImpl(
 	private val getCoinDetailsRepository: GetCoinDetailsRepository,

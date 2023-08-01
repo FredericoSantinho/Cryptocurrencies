@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import neuro.cryptocurrencies.domain.usecase.coin.GetCoinDetailsWithPriceUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.details.GetCoinDetailsWithPriceUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.GetTagUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagUseCase

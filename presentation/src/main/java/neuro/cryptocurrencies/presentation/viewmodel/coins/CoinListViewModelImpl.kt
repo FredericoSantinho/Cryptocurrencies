@@ -16,14 +16,14 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 class CoinListViewModelImpl(
 	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
-	private val fetchCoinsUseCase: FetchCoinsUseCase
+	private val fetchCoinsTickersUseCase: FetchCoinsTickersUseCase
 ) : ViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState
@@ -122,7 +122,7 @@ class CoinListViewModelImpl(
 						}
 					},
 		) {
-			fetchCoinsUseCase.fetchCoins()
+			fetchCoinsTickersUseCase.fetchCoins()
 		}
 	}
 

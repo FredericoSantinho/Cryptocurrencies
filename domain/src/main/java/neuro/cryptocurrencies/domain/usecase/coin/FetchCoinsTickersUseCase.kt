@@ -1,5 +1,5 @@
 package neuro.cryptocurrencies.domain.usecase.coin
 
-interface FetchCoinsUseCase {
+interface FetchCoinsTickersUseCase {
 	suspend fun fetchCoins()
 }
