@@ -138,18 +138,20 @@ class CoinListViewModelImpl(
 											isRefreshing = false
 										)
 								} else {
-									_uiState.value =
-										uiState.value.copy(
-											errorMessage = throwable.message ?: "Unexpected error occurred!",
-											isLoading = false,
-											isRefreshing = false
-										)
+									if (uiState.value.isRefreshing) {
+										_uiState.value =
+											uiState.value.copy(
+												errorMessage = throwable.message ?: "Unexpected error occurred!",
+												isLoading = false,
+												isRefreshing = false
+											)
+									}
 								}
 							}
 						}
 					},
 		) {
-			fetchCoinsTickersUseCase.fetchCoins()
+			fetchCoinsTickersUseCase.execute()
 		}
 	}
 

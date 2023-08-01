@@ -4,7 +4,7 @@ import neuro.cryptocurrencies.domain.repository.coin.FetchCoinsTickersRepository
 
 class FetchCoinsTickersUseCaseImpl(private val fetchCoinsTickersRepository: FetchCoinsTickersRepository) :
 	FetchCoinsTickersUseCase {
-	override suspend fun fetchCoins() {
+	override suspend fun execute() {
 		fetchCoinsTickersRepository.fetchCoinsTickers()
 	}
 }

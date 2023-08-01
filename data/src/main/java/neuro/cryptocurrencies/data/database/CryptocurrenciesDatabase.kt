@@ -2,16 +2,25 @@ package neuro.cryptocurrencies.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import neuro.cryptocurrencies.data.dao.CoinDao
+import neuro.cryptocurrencies.data.dao.CoinDetailsDao
+import neuro.cryptocurrencies.data.dao.CoinTickerDao
 import neuro.cryptocurrencies.data.dao.TagDao
+import neuro.cryptocurrencies.data.dao.TagDetailsDao
+import neuro.cryptocurrencies.data.dao.TeamDao
 import neuro.cryptocurrencies.data.model.database.coin.RoomCoinTicker
+import neuro.cryptocurrencies.data.model.database.coin.details.RoomCoinDetailsWithPrice
+import neuro.cryptocurrencies.data.model.database.tag.RoomTag
 import neuro.cryptocurrencies.data.model.database.tag.RoomTagDetails
+import neuro.cryptocurrencies.data.model.database.team.RoomTeamMember
 
 @Database(
- entities = [RoomCoinTicker::class, RoomTagDetails::class],
- version = 1
+	entities = [RoomCoinTicker::class, RoomCoinDetailsWithPrice::class, RoomTagDetails::class, RoomTag::class, RoomTeamMember::class],
+	version = 1
 )
 abstract class CryptocurrenciesDatabase : RoomDatabase() {
- abstract val coinDao: CoinDao
- abstract val tagDao: TagDao
+	abstract val coinTickerDao: CoinTickerDao
+	abstract val coinDetailsDao: CoinDetailsDao
+	abstract val tagDetailsDao: TagDetailsDao
+	abstract val tagDao: TagDao
+	abstract val teamDao: TeamDao
 }

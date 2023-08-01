@@ -1,6 +1,7 @@
 package neuro.cryptocurrencies.presentation.viewmodel.coins.details
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -15,20 +16,24 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import neuro.cryptocurrencies.domain.usecase.coin.details.GetCoinDetailsWithPriceUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.FetchTagUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.GetTagUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.details.FetchCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.details.GetCachedCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.details.ObserveCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.GetTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.TagModel
 import neuro.cryptocurrencies.presentation.model.TeamModel
 
 class CoinDetailsViewModelImpl(
-	private val getCoinDetailsWithPriceUseCase: GetCoinDetailsWithPriceUseCase,
-	private val observeTagUseCase: ObserveTagUseCase,
-	private val fetchTagUseCase: FetchTagUseCase,
-	private val getTagUsecase: GetTagUseCase,
+	private val observeCoinDetailsUseCase: ObserveCoinDetailsUseCase,
+	private val fetchCoinDetailsUseCase: FetchCoinDetailsUseCase,
+	private val getCachedCoinDetailsUseCase: GetCachedCoinDetailsUseCase,
+	private val observeTagDetailsUseCase: ObserveTagDetailsUseCase,
+	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
+	private val getTagDetailsUsecase: GetTagDetailsUseCase,
 	private val context: Application,
 	savedStateHandle: SavedStateHandle
 ) : ViewModel(), CoinDetailsViewModel {
@@ -42,8 +47,9 @@ class CoinDetailsViewModelImpl(
 	init {
 		savedStateHandle.get<String>(PARAM_COIN_ID)?.let {
 			coinId = it
-			getCoinDetails(it)
 		}
+		observeCoinDetailsWithPrice()
+		fetchCoinDetailsWithPrice()
 	}
 
 	override fun errorShown() {
@@ -52,12 +58,12 @@ class CoinDetailsViewModelImpl(
 
 	override fun onRetry() {
 		_uiState.value = uiState.value.copy(isLoading = true, isError = false)
-		getCoinDetails(coinId)
+		fetchCoinDetailsWithPrice()
 	}
 
 	override fun onRefresh() {
 		_uiState.value = uiState.value.copy(isRefreshing = true)
-		getCoinDetails(coinId)
+		fetchCoinDetailsWithPrice()
 	}
 
 	override fun onDialogDismiss() {
@@ -70,11 +76,62 @@ class CoinDetailsViewModelImpl(
 		fetchTag(tagModel)
 	}
 
+	private fun observeCoinDetailsWithPrice() {
+		observeCoinDetailsUseCase.execute(coinId).flowOn(Dispatchers.IO)
+			.onEach { coinDetailsWithPrice ->
+				_uiState.value =
+					uiState.value.copy(
+						coinDetailsWithPriceModel = coinDetailsWithPrice.toPresentation(),
+						isLoading = false,
+						isError = false,
+						isRefreshing = false
+					)
+			}.catch { Log.e("TAG", "observeCoinDetailsWithPrice: ", it) }
+			.launchIn(viewModelScope)
+	}
+
+	private fun fetchCoinDetailsWithPrice() {
+		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+			// In case a network error occurs.
+			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+				// In case a database error occurs.
+				viewModelScope.launch {
+					_uiState.value =
+						uiState.value.copy(
+							errorMessage = throwable1.localizedMessage ?: "Unexpected error occurred!",
+						)
+				}
+			}) {
+				val coinDetailsWithPrice = getCachedCoinDetailsUseCase.execute(coinId)
+				withContext(Dispatchers.Main) {
+					if (coinDetailsWithPrice == null) {
+						_uiState.value =
+							uiState.value.copy(
+								errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
+								isError = true,
+								isLoading = false,
+								isRefreshing = false
+							)
+					} else {
+						if (uiState.value.isRefreshing) {
+							_uiState.value = uiState.value.copy(
+								isRefreshing = false,
+								errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!"
+							)
+						}
+					}
+				}
+			}
+		}) {
+			fetchCoinDetailsUseCase.execute(coinId, viewModelScope)
+		}
+	}
+
 	private fun observeTag(tagModel: TagModel) {
 		_uiState.value =
 			uiState.value.copy(showDialog = true, dialogTitle = tagModel.name, dialogLoading = true)
 		dialogFeedingJob.value =
-			observeTagUseCase.execute(tagModel.id).flowOn(Dispatchers.IO).onEach { tagDetails ->
+			observeTagDetailsUseCase.execute(tagModel.id).flowOn(Dispatchers.IO).onEach { tagDetails ->
 				_uiState.value =
 					uiState.value.copy(dialogText = tagDetails.description, dialogLoading = false)
 			}.catch { throwable ->
@@ -100,7 +157,7 @@ class CoinDetailsViewModelImpl(
 						)
 				}
 			}) {
-				val tagDetails = getTagUsecase.execute(tagModel.id)
+				val tagDetails = getTagDetailsUsecase.execute(tagModel.id)
 				withContext(Dispatchers.Main) {
 					if (tagDetails == null) {
 						_uiState.value =
@@ -113,7 +170,7 @@ class CoinDetailsViewModelImpl(
 				}
 			}
 		}) {
-			fetchTagUseCase.execute(tagModel.id)
+			fetchTagDetailsUseCase.execute(tagModel.id)
 		}
 	}
 
@@ -123,32 +180,6 @@ class CoinDetailsViewModelImpl(
 			dialogTitle = "${teamModel.name} (${teamModel.position})",
 			dialogLoading = true
 		)
-	}
-
-	private fun getCoinDetails(coinId: String) {
-		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
-			viewModelScope.launch {
-				_uiState.value =
-					uiState.value.copy(
-						errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
-						isError = true,
-						isLoading = false,
-						isRefreshing = false
-					)
-			}
-		}) {
-			val coinDetailsWithPriceModel =
-				getCoinDetailsWithPriceUseCase.execute(coinId, viewModelScope).toPresentation()
-			withContext(Dispatchers.Main) {
-				_uiState.value =
-					uiState.value.copy(
-						coinDetailsWithPriceModel = coinDetailsWithPriceModel,
-						isLoading = false,
-						isError = false,
-						isRefreshing = false
-					)
-			}
-		}
 	}
 
 	companion object {

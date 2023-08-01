@@ -2,6 +2,6 @@ package neuro.cryptocurrencies.domain.repository.tag
 
 import neuro.cryptocurrencies.domain.entity.TagDetails
 
-interface GetTagRepository {
-	fun getTag(tagId: String): TagDetails?
+interface GetTagDetailsRepository {
+	suspend fun getTagDetails(tagId: String): TagDetails?
 }

@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 @Entity(
 	tableName = "tag_table"
 )
-data class RoomTagDetails(
+data class RoomTag(
 	@PrimaryKey
 	val id: String,
 	val name: String,
-	val description: String,
+	val coinDetailsId: String
 )

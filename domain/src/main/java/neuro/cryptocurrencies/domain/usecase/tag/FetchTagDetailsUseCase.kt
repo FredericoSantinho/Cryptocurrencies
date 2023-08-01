@@ -1,5 +1,5 @@
 package neuro.cryptocurrencies.domain.usecase.tag
 
-interface FetchTagUseCase {
+interface FetchTagDetailsUseCase {
 	suspend fun execute(tagId: String)
 }

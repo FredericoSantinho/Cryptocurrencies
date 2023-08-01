@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import neuro.cryptocurrencies.data.model.database.coin.RoomCoinTicker
 
 @Dao
-interface CoinDao {
+interface CoinTickerDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun upsertCoinTickers(roomCoinTickers: List<RoomCoinTicker>)
 

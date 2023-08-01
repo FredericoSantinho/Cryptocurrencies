@@ -3,11 +3,11 @@ package neuro.cryptocurrencies.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import neuro.cryptocurrencies.data.model.database.tag.RoomTag
+import neuro.cryptocurrencies.data.model.database.team.RoomTeamMember
 
 @Dao
-interface TagDao {
+interface TeamDao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun upsertTags(roomTagsDetails: List<RoomTag>)
+	suspend fun upsertTeamMember(roomTeamMembers: List<RoomTeamMember>)
 }
