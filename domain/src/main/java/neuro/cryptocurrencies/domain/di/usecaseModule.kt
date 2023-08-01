@@ -4,8 +4,8 @@ import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsUseCaseImpl
 import neuro.cryptocurrencies.domain.usecase.coin.GetCoinDetailsWithPriceUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.GetCoinDetailsWithPriceUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.coin.GetCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.GetCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCaseImpl
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagUseCaseImpl
 import neuro.cryptocurrencies.domain.usecase.tag.GetTagUseCase
@@ -19,6 +19,6 @@ val useCaseModule = module {
 	factory<ObserveTagUseCase> { ObserveTagUseCaseImpl(get()) }
 	factory<GetTagUseCase> { GetTagUsecaseImpl(get()) }
 	factory<FetchTagUseCase> { FetchTagUseCaseImpl(get()) }
-	factory<GetCoinsTickersUseCase> { GetCoinsTickersUseCaseImpl(get()) }
+	factory<ObserveCoinsTickersUseCase> { ObserveCoinsTickersUseCaseImpl(get()) }
 	factory<FetchCoinsUseCase> { FetchCoinsUseCaseImpl(get()) }
 }

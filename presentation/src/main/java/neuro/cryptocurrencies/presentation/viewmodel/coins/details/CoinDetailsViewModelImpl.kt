@@ -73,8 +73,8 @@ class CoinDetailsViewModelImpl(
 	private fun observeTag(tagModel: TagModel) {
 		_uiState.value =
 			uiState.value.copy(showDialog = true, dialogTitle = tagModel.name, dialogLoading = true)
-		val observeJob =
-			observeTagUseCase.execute(tagModel.id).flowOn(Dispatchers.Main).onEach { tagDetails ->
+		dialogFeedingJob.value =
+			observeTagUseCase.execute(tagModel.id).flowOn(Dispatchers.IO).onEach { tagDetails ->
 				_uiState.value =
 					uiState.value.copy(dialogText = tagDetails.description, dialogLoading = false)
 			}.catch { throwable ->
@@ -84,7 +84,6 @@ class CoinDetailsViewModelImpl(
 					dialogLoading = false
 				)
 			}.launchIn(viewModelScope)
-		dialogFeedingJob.value = observeJob
 	}
 
 	private fun fetchTag(tagModel: TagModel) {

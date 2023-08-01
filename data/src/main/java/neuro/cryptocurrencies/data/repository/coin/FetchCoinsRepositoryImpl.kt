@@ -1,21 +1,22 @@
-package neuro.cryptocurrencies.data.repository
+package neuro.cryptocurrencies.data.repository.coin
 
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
-import neuro.cryptocurrencies.data.dao.TagDao
+import neuro.cryptocurrencies.data.dao.CoinDao
 import neuro.cryptocurrencies.data.mapper.network.toDatabase
-import neuro.cryptocurrencies.domain.repository.tag.FetchTagRepository
+import neuro.cryptocurrencies.domain.repository.coin.FetchCoinsRepository
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import retrofit2.HttpException
 import java.io.IOException
 
-class FetchTagRepositoryImpl(
+class FetchCoinsRepositoryImpl(
 	private val coinPaprikaApi: CoinPaprikaApi,
-	private val tagDao: TagDao
-) : FetchTagRepository {
-	override suspend fun fetchTag(tagId: String) {
+	private val coinDao: CoinDao
+) : FetchCoinsRepository {
+	override suspend fun fetchCoins() {
 		try {
-			val roomTagDetails = coinPaprikaApi.getTag(tagId).toDatabase()
-			tagDao.upsertTag(roomTagDetails)
+			val roomCoins =
+				coinPaprikaApi.getCoinsTickers().filter { it.rank != 0 }.map { it.toDatabase() }
+			coinDao.upsertCoinTickers(roomCoins)
 		} catch (e: HttpException) {
 			throw ErrorRetrievingDataException(e.localizedMessage ?: "An unexpected error occurred")
 		} catch (e: IOException) {

@@ -5,22 +5,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.GetCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 
 class CoinListViewModelImpl(
-	private val getCoinsTickersUseCase: GetCoinsTickersUseCase,
+	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
 	private val fetchCoinsUseCase: FetchCoinsUseCase
 ) : ViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
@@ -88,33 +90,37 @@ class CoinListViewModelImpl(
 	}
 
 	private fun observeCoins() {
-		getCoinsTickersUseCase.execute().map { it.toPresentation() }.onEach { coinModels ->
-			if (coinTickers.value != null) {
-				coinTickers.value = emptyList()
-			}
-			coinTickers.value = coinModels
-		}.catch {
-			_uiState.value =
-				uiState.value.copy(
-					isError = true,
-					errorMessage = it.message ?: "Unexpected error occurred!",
-					isLoading = false,
-					isRefreshing = false
-				)
-		}.launchIn(viewModelScope)
+		observeCoinsTickersUseCase.execute().map { it.toPresentation() }.flowOn(Dispatchers.IO)
+			.onEach { coinModels ->
+				if (coinTickers.value != null) {
+					coinTickers.value = emptyList()
+				}
+				coinTickers.value = coinModels
+			}.catch {
+				_uiState.value =
+					uiState.value.copy(
+						isError = true,
+						errorMessage = it.message ?: "Unexpected error occurred!",
+						isLoading = false,
+						isRefreshing = false
+					)
+			}.launchIn(viewModelScope)
 	}
 
 	private fun fetchCoins() {
 		viewModelScope.launch(
-			CoroutineExceptionHandler { _, throwable ->
-				_uiState.value =
-					uiState.value.copy(
-						isError = true,
-						errorMessage = throwable.message ?: "Unexpected error occurred!",
-						isLoading = false,
-						isRefreshing = false
-					)
-			},
+			Dispatchers.IO +
+					CoroutineExceptionHandler { _, throwable ->
+						viewModelScope.launch(Dispatchers.Main) {
+							_uiState.value =
+								uiState.value.copy(
+									isError = true,
+									errorMessage = throwable.message ?: "Unexpected error occurred!",
+									isLoading = false,
+									isRefreshing = false
+								)
+						}
+					},
 		) {
 			fetchCoinsUseCase.fetchCoins()
 		}

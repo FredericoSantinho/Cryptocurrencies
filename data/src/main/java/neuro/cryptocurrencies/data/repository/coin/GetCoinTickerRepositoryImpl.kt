@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository
+package neuro.cryptocurrencies.data.repository.coin
 
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mapper.network.toDomain

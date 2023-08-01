@@ -1,12 +1,12 @@
 package neuro.cryptocurrencies.data.di
 
-import neuro.cryptocurrencies.data.repository.FetchCoinsRepositoryImpl
-import neuro.cryptocurrencies.data.repository.FetchTagRepositoryImpl
-import neuro.cryptocurrencies.data.repository.GetCoinDetailsRepositoryImpl
-import neuro.cryptocurrencies.data.repository.GetCoinTickerRepositoryImpl
-import neuro.cryptocurrencies.data.repository.GetTagRepositoryImpl
-import neuro.cryptocurrencies.data.repository.ObserveCoinsTickersRepositoryImpl
-import neuro.cryptocurrencies.data.repository.ObserveTagRepositoryImpl
+import neuro.cryptocurrencies.data.repository.coin.FetchCoinsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.coin.GetCoinDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.coin.GetCoinTickerRepositoryImpl
+import neuro.cryptocurrencies.data.repository.coin.ObserveCoinsTickersRepositoryImpl
+import neuro.cryptocurrencies.data.repository.tag.FetchTagRepositoryImpl
+import neuro.cryptocurrencies.data.repository.tag.GetTagRepositoryImpl
+import neuro.cryptocurrencies.data.repository.tag.ObserveTagRepositoryImpl
 import neuro.cryptocurrencies.domain.repository.coin.FetchCoinsRepository
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinDetailsRepository
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
