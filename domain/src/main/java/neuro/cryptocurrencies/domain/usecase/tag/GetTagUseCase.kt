@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.domain.usecase
+package neuro.cryptocurrencies.domain.usecase.tag
 
 import neuro.cryptocurrencies.domain.entity.TagDetails
 

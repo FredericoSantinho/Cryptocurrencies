@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import neuro.cryptocurrencies.domain.usecase.FetchTagUseCase
-import neuro.cryptocurrencies.domain.usecase.GetCoinDetailsWithPriceUseCase
-import neuro.cryptocurrencies.domain.usecase.GetTagUseCase
-import neuro.cryptocurrencies.domain.usecase.ObserveTagUseCase
+import neuro.cryptocurrencies.domain.usecase.coin.GetCoinDetailsWithPriceUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.FetchTagUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.GetTagUseCase
+import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagUseCase
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.TagModel
@@ -88,7 +88,7 @@ class CoinDetailsViewModelImpl(
 	}
 
 	private fun fetchTag(tagModel: TagModel) {
-		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { coroutineContext, throwable ->
+		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
 			// In case a network error occurs.
 			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
 				// In case a database error occurs.
@@ -127,7 +127,7 @@ class CoinDetailsViewModelImpl(
 	}
 
 	private fun getCoinDetails(coinId: String) {
-		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { coroutineContext, throwable ->
+		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
 			viewModelScope.launch {
 				_uiState.value =
 					uiState.value.copy(

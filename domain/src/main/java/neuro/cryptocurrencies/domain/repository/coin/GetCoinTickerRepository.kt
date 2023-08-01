@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.domain.repository
+package neuro.cryptocurrencies.domain.repository.coin
 
 import neuro.cryptocurrencies.domain.entity.CoinTicker
 

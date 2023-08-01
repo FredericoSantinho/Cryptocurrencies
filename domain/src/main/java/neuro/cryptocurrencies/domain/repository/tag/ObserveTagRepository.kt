@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.domain.repository
+package neuro.cryptocurrencies.domain.repository.tag
 
 import kotlinx.coroutines.flow.Flow
 import neuro.cryptocurrencies.domain.entity.TagDetails

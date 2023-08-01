@@ -1,6 +1,6 @@
-package neuro.cryptocurrencies.domain.usecase
+package neuro.cryptocurrencies.domain.usecase.coin
 
-import neuro.cryptocurrencies.domain.repository.FetchCoinsRepository
+import neuro.cryptocurrencies.domain.repository.coin.FetchCoinsRepository
 
 class FetchCoinsUseCaseImpl(private val fetchCoinsRepository: FetchCoinsRepository) :
 	FetchCoinsUseCase {

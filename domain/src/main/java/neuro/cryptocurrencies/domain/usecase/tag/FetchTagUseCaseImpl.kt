@@ -1,6 +1,6 @@
-package neuro.cryptocurrencies.domain.usecase
+package neuro.cryptocurrencies.domain.usecase.tag
 
-import neuro.cryptocurrencies.domain.repository.FetchTagRepository
+import neuro.cryptocurrencies.domain.repository.tag.FetchTagRepository
 
 class FetchTagUseCaseImpl(private val fetchTagRepository: FetchTagRepository) :
 	FetchTagUseCase {

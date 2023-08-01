@@ -7,13 +7,13 @@ import neuro.cryptocurrencies.data.repository.GetCoinTickerRepositoryImpl
 import neuro.cryptocurrencies.data.repository.GetTagRepositoryImpl
 import neuro.cryptocurrencies.data.repository.ObserveCoinsTickersRepositoryImpl
 import neuro.cryptocurrencies.data.repository.ObserveTagRepositoryImpl
-import neuro.cryptocurrencies.domain.repository.FetchCoinsRepository
-import neuro.cryptocurrencies.domain.repository.FetchTagRepository
-import neuro.cryptocurrencies.domain.repository.GetCoinDetailsRepository
-import neuro.cryptocurrencies.domain.repository.GetCoinTickerRepository
-import neuro.cryptocurrencies.domain.repository.GetTagRepository
-import neuro.cryptocurrencies.domain.repository.ObserveCoinsTickersRepository
-import neuro.cryptocurrencies.domain.repository.ObserveTagRepository
+import neuro.cryptocurrencies.domain.repository.coin.FetchCoinsRepository
+import neuro.cryptocurrencies.domain.repository.coin.GetCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
+import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.tag.FetchTagRepository
+import neuro.cryptocurrencies.domain.repository.tag.GetTagRepository
+import neuro.cryptocurrencies.domain.repository.tag.ObserveTagRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {

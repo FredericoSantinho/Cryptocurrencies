@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.domain.usecase
+package neuro.cryptocurrencies.domain.usecase.coin
 
 import kotlinx.coroutines.flow.Flow
 import neuro.cryptocurrencies.domain.entity.CoinTicker

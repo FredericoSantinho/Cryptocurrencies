@@ -1,8 +1,8 @@
-package neuro.cryptocurrencies.domain.usecase
+package neuro.cryptocurrencies.domain.usecase.coin
 
 import kotlinx.coroutines.flow.Flow
 import neuro.cryptocurrencies.domain.entity.CoinTicker
-import neuro.cryptocurrencies.domain.repository.ObserveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
 
 class GetCoinsTickersUseCaseImpl(private val observeCoinsTickersRepository: ObserveCoinsTickersRepository) :
 	GetCoinsTickersUseCase {

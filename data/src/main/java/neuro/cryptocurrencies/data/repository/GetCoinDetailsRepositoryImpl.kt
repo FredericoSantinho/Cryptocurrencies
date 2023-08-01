@@ -3,8 +3,8 @@ package neuro.cryptocurrencies.data.repository
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mapper.network.toDomain
 import neuro.cryptocurrencies.domain.entity.CoinDetails
-import neuro.cryptocurrencies.domain.repository.GetCoinDetailsRepository
-import neuro.cryptocurrencies.domain.usecase.ErrorRetrievingDataException
+import neuro.cryptocurrencies.domain.repository.coin.GetCoinDetailsRepository
+import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import retrofit2.HttpException
 import java.io.IOException
 
