@@ -11,4 +11,5 @@ dependencies {
   testImplementation lib.junit4
   testImplementation lib.mockito
   testImplementation lib.koinTest
+  testImplementation lib.coroutines_test
 }
