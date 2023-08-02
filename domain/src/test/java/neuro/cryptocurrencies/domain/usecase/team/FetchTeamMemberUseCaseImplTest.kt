@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.domain.usecase.team
 
 import kotlinx.coroutines.runBlocking
-import neuro.cryptocurrencies.domain.entity.TeamMemberDetails
+import neuro.cryptocurrencies.domain.mocks.teamMemberDetailsMock
 import neuro.cryptocurrencies.domain.repository.team.GetTeamMemberDetailsRepository
 import neuro.cryptocurrencies.domain.repository.team.SaveTeamMemberDetailsRepository
 import org.junit.Test
@@ -21,7 +21,7 @@ class FetchTeamMemberUseCaseImplTest {
 			FetchTeamMemberUseCaseImpl(getTeamMemberDetailsRepository, saveTeamMemberDetailsRepository)
 
 		val teamMemberId = "satoshi-nakamoto"
-		val teamMemberDetails = TeamMemberDetails("1", "Satoshi Nakamoto", "")
+		val teamMemberDetails = teamMemberDetailsMock()
 		whenever(getTeamMemberDetailsRepository.getTeamMemberDetails(teamMemberId)).thenReturn(
 			teamMemberDetails
 		)
