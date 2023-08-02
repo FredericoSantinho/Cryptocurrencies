@@ -8,6 +8,9 @@ import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersReposito
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 
 class ObserveCoinsTickersUseCaseImplTest {
@@ -21,9 +24,13 @@ class ObserveCoinsTickersUseCaseImplTest {
 			emit(buildCoinTickerList())
 		})
 
+		verifyNoInteractions(observeCoinsTickersRepository)
+
 		val coinTickersFlow = observeCoinsTickersUseCase.execute().first()
 
 		assertEquals(buildCoinTickerList(), coinTickersFlow)
+
+		verify(observeCoinsTickersRepository, times(1)).observeCoinsTickers()
 	}
 
 	private fun buildCoinTickerList(): List<CoinTicker> {

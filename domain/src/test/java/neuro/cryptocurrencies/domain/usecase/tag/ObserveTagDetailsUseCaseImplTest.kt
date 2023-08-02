@@ -8,6 +8,9 @@ import neuro.cryptocurrencies.domain.repository.tag.ObserveTagDetailsRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 
 class ObserveTagDetailsUseCaseImplTest {
@@ -24,7 +27,12 @@ class ObserveTagDetailsUseCaseImplTest {
 			)
 		})
 
+		verifyNoInteractions(observeTagDetailsRepository)
+
 		val tagDetails = observeTagDetailsUseCase.execute(tagId).first()
+
+		verify(observeTagDetailsRepository, times(1)).observeTagDetails(tagId)
+
 		assertEquals(buildTagDetails(), tagDetails)
 	}
 
