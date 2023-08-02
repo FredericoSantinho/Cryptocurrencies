@@ -1,0 +1,37 @@
+package neuro.cryptocurrencies.domain.usecase.team
+
+import kotlinx.coroutines.runBlocking
+import neuro.cryptocurrencies.domain.entity.TeamMemberDetails
+import neuro.cryptocurrencies.domain.repository.team.GetTeamMemberDetailsRepository
+import neuro.cryptocurrencies.domain.repository.team.SaveTeamMemberDetailsRepository
+import org.junit.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.whenever
+
+class FetchTeamMemberUseCaseImplTest {
+	@Test
+	fun test() = runBlocking {
+		val getTeamMemberDetailsRepository = mock<GetTeamMemberDetailsRepository>()
+		val saveTeamMemberDetailsRepository = mock<SaveTeamMemberDetailsRepository>()
+
+		val fetchTeamMemberUseCase =
+			FetchTeamMemberUseCaseImpl(getTeamMemberDetailsRepository, saveTeamMemberDetailsRepository)
+
+		val teamMemberId = "satoshi-nakamoto"
+		val teamMemberDetails = TeamMemberDetails("1", "Satoshi Nakamoto", "")
+		whenever(getTeamMemberDetailsRepository.getTeamMemberDetails(teamMemberId)).thenReturn(
+			teamMemberDetails
+		)
+
+		verifyNoInteractions(getTeamMemberDetailsRepository)
+		verifyNoInteractions(saveTeamMemberDetailsRepository)
+
+		fetchTeamMemberUseCase.execute(teamMemberId)
+
+		verify(getTeamMemberDetailsRepository, times(1)).getTeamMemberDetails(teamMemberId)
+		verify(saveTeamMemberDetailsRepository, times(1)).saveTeamMemberDetails(teamMemberDetails)
+	}
+}
