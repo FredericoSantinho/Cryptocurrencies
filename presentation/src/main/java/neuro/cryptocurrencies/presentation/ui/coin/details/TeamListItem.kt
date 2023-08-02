@@ -3,6 +3,7 @@ package neuro.cryptocurrencies.presentation.ui.coin.details
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -20,7 +21,7 @@ fun TeamListItem(
 	modifier: Modifier = Modifier
 ) {
 	Column(
-		modifier = modifier,
+		modifier = modifier.fillMaxWidth(),
 		verticalArrangement = Arrangement.Center
 	) {
 		Text(
@@ -40,6 +41,6 @@ fun TeamListItem(
 @Composable
 fun PreviewTeamListItem() {
 	CryptocurrenciesTheme{
-		TeamListItem(TeamModel("Satoshi Nakamoto", "Founder"))
+		TeamListItem(TeamModel("1", "Satoshi Nakamoto", "Founder"))
 	}
 }

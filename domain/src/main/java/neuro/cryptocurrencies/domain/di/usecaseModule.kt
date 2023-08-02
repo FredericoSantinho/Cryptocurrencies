@@ -18,6 +18,12 @@ import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUsecaseImpl
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberUseCase
+import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCaseImpl
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -30,4 +36,7 @@ val useCaseModule = module {
 	factory<ObserveCoinsTickersUseCase> { ObserveCoinsTickersUseCaseImpl(get()) }
 	factory<FetchCoinsTickersUseCase> { FetchCoinsTickersUseCaseImpl(get(), get()) }
 	factory<HasCachedCoinsTickersUseCase> { HasCachedCoinsTickersUseCaseImpl(get()) }
+	factory<ObserveTeamMemberDetailsUseCase> { ObserveTeamMemberDetailsUseCaseImpl(get()) }
+	factory<HasCachedTeamMemberDetailsUseCase> { HasCachedTeamMemberDetailsUseCaseImpl(get()) }
+	factory<FetchTeamMemberUseCase> { FetchTeamMemberUseCaseImpl(get(), get()) }
 }

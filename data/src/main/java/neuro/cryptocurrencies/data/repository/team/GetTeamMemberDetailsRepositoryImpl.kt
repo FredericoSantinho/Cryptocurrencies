@@ -1,19 +1,19 @@
-package neuro.cryptocurrencies.data.repository.coin
+package neuro.cryptocurrencies.data.repository.team
 
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mapper.network.toDomain
-import neuro.cryptocurrencies.domain.entity.CoinTicker
-import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
+import neuro.cryptocurrencies.domain.entity.TeamMemberDetails
+import neuro.cryptocurrencies.domain.repository.team.GetTeamMemberDetailsRepository
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import retrofit2.HttpException
 import java.io.IOException
 
-class GetCoinTickersRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
-	GetCoinTickersRepository {
-	override suspend fun getCoinTickers(): List<CoinTicker> {
+class GetTeamMemberDetailsRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
+	GetTeamMemberDetailsRepository {
+	override suspend fun getTeamMemberDetails(teamMemberId: String): TeamMemberDetails {
 		try {
-			return coinPaprikaApi.getCoinsTickers().filter { it.rank != 0 }.map { it.toDomain() }
+			return coinPaprikaApi.getTeamMember(teamMemberId).toDomain()
 		} catch (e: HttpException) {
 			if (e.code() == 404) {
 				throw NoDataAvailableException(e.localizedMessage ?: "Not found")

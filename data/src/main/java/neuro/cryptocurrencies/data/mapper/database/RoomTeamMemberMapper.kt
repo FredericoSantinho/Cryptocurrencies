@@ -1,8 +1,8 @@
 package neuro.cryptocurrencies.data.mapper.database
 
 import neuro.cryptocurrencies.data.model.database.team.RoomTeamMember
-import neuro.cryptocurrencies.domain.entity.Team
+import neuro.cryptocurrencies.domain.entity.TeamMember
 
-fun RoomTeamMember.toDomain() = Team(id, name, position)
+fun RoomTeamMember.toDomain() = TeamMember(id, name, position)
 
-fun Team.toDatabase(coinDetailsId: String) = RoomTeamMember(id, name, position, coinDetailsId)
+fun TeamMember.toDatabase(coinDetailsId: String) = RoomTeamMember(id, name, position, coinDetailsId)

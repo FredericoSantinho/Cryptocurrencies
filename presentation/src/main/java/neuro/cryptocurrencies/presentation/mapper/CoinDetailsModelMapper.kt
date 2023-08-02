@@ -2,7 +2,7 @@ package neuro.cryptocurrencies.presentation.mapper
 
 import neuro.cryptocurrencies.domain.entity.CoinDetails
 import neuro.cryptocurrencies.domain.entity.Tag
-import neuro.cryptocurrencies.domain.entity.Team
+import neuro.cryptocurrencies.domain.entity.TeamMember
 import neuro.cryptocurrencies.presentation.model.CoinDetailsModel
 import neuro.cryptocurrencies.presentation.model.TagModel
 import neuro.cryptocurrencies.presentation.model.TeamModel
@@ -22,6 +22,6 @@ fun CoinDetails.toPresentation() = CoinDetailsModel(
 	type
 )
 
-fun Team.toPresentation() = TeamModel(name, position)
+fun TeamMember.toPresentation() = TeamModel(id, name, position)
 
 fun Tag.toPresentation() = TagModel(id, name)

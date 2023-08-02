@@ -19,9 +19,13 @@ import kotlinx.coroutines.withContext
 import neuro.cryptocurrencies.domain.usecase.coin.details.FetchCoinDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.details.HasCachedCoinDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.details.ObserveCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberUseCase
+import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.TagModel
@@ -34,6 +38,9 @@ class CoinDetailsViewModelImpl(
 	private val observeTagDetailsUseCase: ObserveTagDetailsUseCase,
 	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
 	private val hasCachedTagDetailsUsecase: HasCachedTagDetailsUseCase,
+	private val observeTeamMemberDetailsUseCase: ObserveTeamMemberDetailsUseCase,
+	private val fetchTeamMemberUseCase: FetchTeamMemberUseCase,
+	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
 	private val context: Application,
 	savedStateHandle: SavedStateHandle
 ) : ViewModel(), CoinDetailsViewModel {
@@ -72,6 +79,8 @@ class CoinDetailsViewModelImpl(
 	}
 
 	override fun onTagClick(tagModel: TagModel) {
+		_uiState.value =
+			uiState.value.copy(showDialog = true, dialogTitle = tagModel.name, dialogLoading = true)
 		observeTag(tagModel)
 		fetchTag(tagModel)
 	}
@@ -128,8 +137,6 @@ class CoinDetailsViewModelImpl(
 	}
 
 	private fun observeTag(tagModel: TagModel) {
-		_uiState.value =
-			uiState.value.copy(showDialog = true, dialogTitle = tagModel.name, dialogLoading = true)
 		dialogFeedingJob.value =
 			observeTagDetailsUseCase.execute(tagModel.id).flowOn(Dispatchers.IO).onEach { tagDetails ->
 				_uiState.value =
@@ -137,7 +144,7 @@ class CoinDetailsViewModelImpl(
 			}.catch { throwable ->
 				_uiState.value = uiState.value.copy(
 					errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
-					dialogText = context.getString(R.string.error_retrieving_data),
+					dialogText = context.getString(R.string.unexpected_error),
 					dialogLoading = false
 				)
 			}.launchIn(viewModelScope)
@@ -157,14 +164,22 @@ class CoinDetailsViewModelImpl(
 						)
 				}
 			}) {
-				val hasTagDetails = hasCachedTagDetailsUsecase.execute(tagModel.id)
+				val hasCachedTagDetails = hasCachedTagDetailsUsecase.execute(tagModel.id)
 				withContext(Dispatchers.Main) {
-					if (!hasTagDetails) {
-						_uiState.value =
-							uiState.value.copy(
-								dialogText = context.getString(R.string.error_retrieving_data),
-								dialogLoading = false
-							)
+					if (!hasCachedTagDetails) {
+						if (throwable is NoDataAvailableException) {
+							_uiState.value =
+								uiState.value.copy(
+									dialogText = context.getString(R.string.no_data_available),
+									dialogLoading = false
+								)
+						} else {
+							_uiState.value =
+								uiState.value.copy(
+									dialogText = context.getString(R.string.error_retrieving_data),
+									dialogLoading = false
+								)
+						}
 					}
 				}
 			}
@@ -173,12 +188,71 @@ class CoinDetailsViewModelImpl(
 		}
 	}
 
+	private fun observeTeamMember(teamModel: TeamModel) {
+		_uiState.value =
+			uiState.value.copy(showDialog = true, dialogTitle = teamModel.name, dialogLoading = true)
+		dialogFeedingJob.value =
+			observeTeamMemberDetailsUseCase.execute(teamModel.id).flowOn(Dispatchers.IO)
+				.onEach { teamMemberDetails ->
+					_uiState.value =
+						uiState.value.copy(dialogText = teamMemberDetails.description, dialogLoading = false)
+				}.catch { throwable ->
+				_uiState.value = uiState.value.copy(
+					errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
+					dialogText = context.getString(R.string.unexpected_error),
+					dialogLoading = false
+				)
+			}.launchIn(viewModelScope)
+	}
+
+	private fun fetchTeamMember(teamModel: TeamModel) {
+		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+			// In case a network error occurs.
+			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+				// In case a database error occurs.
+				viewModelScope.launch {
+					_uiState.value =
+						uiState.value.copy(
+							errorMessage = throwable1.localizedMessage ?: "Unexpected error occurred!",
+							dialogText = context.getString(R.string.unexpected_error),
+							dialogLoading = false
+						)
+				}
+			}) {
+				val hasCachedTeamMemberDetails = hasCachedTeamMemberDetailsUseCase.execute(teamModel.id)
+				withContext(Dispatchers.Main) {
+					if (!hasCachedTeamMemberDetails) {
+						if (throwable is NoDataAvailableException) {
+							_uiState.value =
+								uiState.value.copy(
+									dialogText = context.getString(R.string.no_data_available),
+									dialogLoading = false
+								)
+						} else {
+							_uiState.value =
+								uiState.value.copy(
+									dialogText = context.getString(R.string.error_retrieving_data),
+									dialogLoading = false
+								)
+						}
+						throwable.printStackTrace()
+					}
+				}
+			}
+		}) {
+			fetchTeamMemberUseCase.execute(teamModel.id)
+		}
+	}
+
 	override fun onTeamMemberClick(teamModel: TeamModel) {
-		_uiState.value = uiState.value.copy(
-			showDialog = true,
-			dialogTitle = "${teamModel.name} (${teamModel.position})",
-			dialogLoading = true
-		)
+		_uiState.value =
+			uiState.value.copy(
+				showDialog = true,
+				dialogTitle = "${teamModel.name} (${teamModel.position})",
+				dialogLoading = true
+			)
+		observeTeamMember(teamModel)
+		fetchTeamMember(teamModel)
 	}
 
 	companion object {

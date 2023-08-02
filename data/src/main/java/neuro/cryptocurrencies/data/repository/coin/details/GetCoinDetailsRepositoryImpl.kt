@@ -5,6 +5,7 @@ import neuro.cryptocurrencies.data.mapper.network.toDomain
 import neuro.cryptocurrencies.domain.entity.CoinDetails
 import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
+import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -14,7 +15,11 @@ class GetCoinDetailsRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
 		try {
 			return coinPaprikaApi.getCoinById(coinId).toDomain()
 		} catch (e: HttpException) {
-			throw ErrorRetrievingDataException(e.localizedMessage ?: "An unexpected error occurred")
+			if (e.code() == 404) {
+				throw NoDataAvailableException(e.localizedMessage ?: "Not found")
+			} else {
+				throw ErrorRetrievingDataException(e.localizedMessage ?: "An unexpected error occurred")
+			}
 		} catch (e: IOException) {
 			throw ErrorRetrievingDataException("Couldn't reach server. Check your internet connection.")
 		}

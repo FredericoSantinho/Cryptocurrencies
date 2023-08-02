@@ -23,7 +23,7 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 						1,
 						"BTC",
 						listOf(TagModel("1", "tag1"), TagModel("2", "tag2"), TagModel("3", "tag3")),
-						listOf(TeamModel("Satoshi Nakamoto", "Founder")),
+						listOf(TeamModel("1", "Satoshi Nakamoto", "Founder")),
 						"Coin"
 					), "$ 25432"
 				)

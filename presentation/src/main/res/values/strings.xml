@@ -2,7 +2,6 @@
 <resources>
   <string name="app_name">Cryptocurrencies</string>
 
-  <string name="no_data_available">No data available</string>
   <string name="refresh">Refresh</string>
 
   <string name="search_for_a_coin">Search for a coin</string>
@@ -16,4 +15,6 @@
 
   <string name="error_retrieving_data">Error retrieving data. Please check your internet connection.</string>
   <string name="unexpected_error">Unexpected error.</string>
+  <string name="no_description_available">No description available</string>
+  <string name="no_data_available">No data available</string>
 </resources>

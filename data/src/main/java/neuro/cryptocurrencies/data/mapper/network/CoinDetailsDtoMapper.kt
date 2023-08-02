@@ -22,6 +22,6 @@ fun CoinDetailsDto.toDomain(): CoinDetails {
 	)
 }
 
-fun Team.toDomain() = neuro.cryptocurrencies.domain.entity.Team(id, name, position)
+fun Team.toDomain() = neuro.cryptocurrencies.domain.entity.TeamMember(id, name, position)
 
 fun Tag.toDomain() = neuro.cryptocurrencies.domain.entity.Tag(id, name)

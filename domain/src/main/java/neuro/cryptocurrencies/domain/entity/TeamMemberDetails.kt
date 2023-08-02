@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.domain.entity
 
-data class Team(
+data class TeamMemberDetails(
 	val id: String,
 	val name: String,
-	val position: String
+	val description: String
 )

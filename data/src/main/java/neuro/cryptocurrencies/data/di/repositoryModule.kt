@@ -13,6 +13,10 @@ import neuro.cryptocurrencies.data.repository.tag.GetTagDetailsRepositoryImpl
 import neuro.cryptocurrencies.data.repository.tag.HasCachedTagDetailsRepositoryImpl
 import neuro.cryptocurrencies.data.repository.tag.ObserveTagDetailsRepositoryImpl
 import neuro.cryptocurrencies.data.repository.tag.SaveTagDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.team.GetTeamMemberDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.team.HasCachedTeamMemberDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.team.ObserveTeamMemberDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.team.SaveTeamMemberDetailsRepositoryImpl
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
 import neuro.cryptocurrencies.domain.repository.coin.HasCachedCoinsTickersRepository
@@ -26,6 +30,10 @@ import neuro.cryptocurrencies.domain.repository.tag.GetTagDetailsRepository
 import neuro.cryptocurrencies.domain.repository.tag.HasCachedTagDetailsRepository
 import neuro.cryptocurrencies.domain.repository.tag.ObserveTagDetailsRepository
 import neuro.cryptocurrencies.domain.repository.tag.SaveTagDetailsRepository
+import neuro.cryptocurrencies.domain.repository.team.GetTeamMemberDetailsRepository
+import neuro.cryptocurrencies.domain.repository.team.HasCachedTeamMemberDetailsRepository
+import neuro.cryptocurrencies.domain.repository.team.ObserveTeamMemberDetailsRepository
+import neuro.cryptocurrencies.domain.repository.team.SaveTeamMemberDetailsRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -49,4 +57,8 @@ val repositoryModule = module {
 	factory<GetCoinTickersRepository> { GetCoinTickersRepositoryImpl(get()) }
 	factory<SaveCoinTickersRepository> { SaveCoinTickersRepositoryImpl(get()) }
 	factory<HasCachedCoinsTickersRepository> { HasCachedCoinsTickersRepositoryImpl(get()) }
+	factory<ObserveTeamMemberDetailsRepository> { ObserveTeamMemberDetailsRepositoryImpl(get()) }
+	factory<HasCachedTeamMemberDetailsRepository> { HasCachedTeamMemberDetailsRepositoryImpl(get()) }
+	factory<GetTeamMemberDetailsRepository> { GetTeamMemberDetailsRepositoryImpl(get()) }
+	factory<SaveTeamMemberDetailsRepository> { SaveTeamMemberDetailsRepositoryImpl(get()) }
 }

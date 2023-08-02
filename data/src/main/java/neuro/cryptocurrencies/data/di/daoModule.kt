@@ -5,6 +5,7 @@ import neuro.cryptocurrencies.data.dao.CoinTickerDao
 import neuro.cryptocurrencies.data.dao.TagDao
 import neuro.cryptocurrencies.data.dao.TagDetailsDao
 import neuro.cryptocurrencies.data.dao.TeamDao
+import neuro.cryptocurrencies.data.dao.TeamDetailsDao
 import neuro.cryptocurrencies.data.database.CryptocurrenciesDatabase
 import org.koin.dsl.module
 
@@ -14,4 +15,5 @@ val daoModule = module {
 	factory<TagDetailsDao> { get<CryptocurrenciesDatabase>().tagDetailsDao }
 	factory<TagDao> { get<CryptocurrenciesDatabase>().tagDao }
 	factory<TeamDao> { get<CryptocurrenciesDatabase>().teamDao }
+	factory<TeamDetailsDao> { get<CryptocurrenciesDatabase>().teamDetailsDao }
 }

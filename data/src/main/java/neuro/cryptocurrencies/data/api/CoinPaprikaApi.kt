@@ -3,6 +3,7 @@ package neuro.cryptocurrencies.data.api
 import neuro.cryptocurrencies.data.model.network.coin.details.CoinDetailsDto
 import neuro.cryptocurrencies.data.model.network.coin.tickers.CoinTickerDto
 import neuro.cryptocurrencies.data.model.network.tag.TagDto
+import neuro.cryptocurrencies.data.model.network.team.TeamMemberDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -18,4 +19,7 @@ interface CoinPaprikaApi {
 
 	@GET("/v1/tags/{tagId}")
 	suspend fun getTag(@Path("tagId") tagId: String): TagDto
+
+	@GET("/v1/people/{teamMemberId}")
+	suspend fun getTeamMember(@Path("teamMemberId") teamMemberId: String): TeamMemberDto
 }

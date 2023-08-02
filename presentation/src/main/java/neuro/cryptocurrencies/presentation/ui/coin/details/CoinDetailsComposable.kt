@@ -215,7 +215,7 @@ fun CoinDetailsComposable(
 		if (uiState.showDialog) {
 			AlertDialogDismissable(
 				title = uiState.dialogTitle,
-				text = uiState.dialogText,
+				text = uiState.dialogText.ifBlank { stringResource(id = R.string.no_description_available) },
 				onDismissRequest = { viewModel.onDialogDismiss() },
 				loading = uiState.dialogLoading,
 				modifier = Modifier.height(240.dp)
