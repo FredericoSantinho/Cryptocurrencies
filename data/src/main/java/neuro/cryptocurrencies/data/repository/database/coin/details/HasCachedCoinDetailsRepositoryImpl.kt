@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository.coin.details
+package neuro.cryptocurrencies.data.repository.database.coin.details
 
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
 import neuro.cryptocurrencies.domain.repository.coin.details.HasCachedCoinDetailsRepository

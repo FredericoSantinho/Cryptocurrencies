@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository.coin.details
+package neuro.cryptocurrencies.data.repository.database.coin.details
 
 import androidx.room.RoomDatabase
 import androidx.room.withTransaction

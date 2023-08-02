@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository.tag
+package neuro.cryptocurrencies.data.repository.database.tag
 
 import neuro.cryptocurrencies.data.dao.TagDetailsDao
 import neuro.cryptocurrencies.domain.repository.tag.HasCachedTagDetailsRepository

@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository.team
+package neuro.cryptocurrencies.data.repository.database.team
 
 import neuro.cryptocurrencies.data.dao.TeamDetailsDao
 import neuro.cryptocurrencies.domain.repository.team.HasCachedTeamMemberDetailsRepository

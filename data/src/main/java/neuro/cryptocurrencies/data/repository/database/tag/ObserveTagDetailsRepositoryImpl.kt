@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository.tag
+package neuro.cryptocurrencies.data.repository.database.tag
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged

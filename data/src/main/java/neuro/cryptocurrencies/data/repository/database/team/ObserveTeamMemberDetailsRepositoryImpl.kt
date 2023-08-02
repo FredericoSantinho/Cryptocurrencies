@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.repository.team
+package neuro.cryptocurrencies.data.repository.database.team
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
