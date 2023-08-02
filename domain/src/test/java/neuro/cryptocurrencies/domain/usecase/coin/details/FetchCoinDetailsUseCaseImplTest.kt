@@ -3,8 +3,8 @@ package neuro.cryptocurrencies.domain.usecase.coin.details
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
-import neuro.cryptocurrencies.domain.entity.CoinDetails
 import neuro.cryptocurrencies.domain.entity.CoinTicker
+import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.SaveCoinDetailsWithPriceRepository
@@ -39,20 +39,7 @@ class FetchCoinDetailsUseCaseImplTest {
 				price
 			)
 		)
-		val coinDetails = CoinDetails(
-			"1",
-			"description",
-			"SHA256",
-			"",
-			"Bitcoin",
-			true,
-			"POW",
-			1,
-			"BTC",
-			emptyList(),
-			emptyList(),
-			"coin"
-		)
+		val coinDetails = coinDetailsMock()
 		whenever(getCoinDetailsRepository.getCoinDetails(coinId)).thenReturn(
 			coinDetails
 		)
