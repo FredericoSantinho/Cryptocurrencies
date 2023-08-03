@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 
 class HasCachedCoinDetailsRepositoryImplTest {
 	@Test
-	fun hasCoinDetails() = runTest {
+	fun hasCachedCoinDetails() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val hasCachedCoinDetailsRepository = HasCachedCoinDetailsRepositoryImpl(coinDetailsDao)
@@ -31,7 +31,7 @@ class HasCachedCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveCoinDetails`() = runTest {
+	fun `doesn'tHaveCachedCoinDetails`() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val hasCachedCoinDetailsRepository = HasCachedCoinDetailsRepositoryImpl(coinDetailsDao)
