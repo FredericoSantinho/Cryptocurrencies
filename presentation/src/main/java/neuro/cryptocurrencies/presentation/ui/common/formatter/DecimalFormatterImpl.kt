@@ -1,4 +1,4 @@
-package neuro.expenses.register.viewmodel.common.formatter
+package neuro.cryptocurrencies.presentation.ui.common.formatter
 
 import java.math.RoundingMode
 import java.text.DecimalFormat

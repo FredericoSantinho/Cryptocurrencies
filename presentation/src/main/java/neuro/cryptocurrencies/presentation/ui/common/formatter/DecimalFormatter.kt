@@ -1,4 +1,4 @@
-package neuro.expenses.register.viewmodel.common.formatter
+package neuro.cryptocurrencies.presentation.ui.common.formatter
 
 fun interface DecimalFormatter {
 	fun format(value: Double): String

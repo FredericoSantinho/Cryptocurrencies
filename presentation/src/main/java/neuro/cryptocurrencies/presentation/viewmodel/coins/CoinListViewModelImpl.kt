@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,7 +27,8 @@ import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 class CoinListViewModelImpl(
 	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
 	private val fetchCoinsTickersUseCase: FetchCoinsTickersUseCase,
-	private val hasCachedCoinsTickersUseCase: HasCachedCoinsTickersUseCase
+	private val hasCachedCoinsTickersUseCase: HasCachedCoinsTickersUseCase,
+	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState
@@ -37,7 +39,7 @@ class CoinListViewModelImpl(
 	private val searchTerm = MutableStateFlow("")
 
 	init {
-		getCoins()
+		setupCoinsTickers()
 		updateUiState()
 	}
 
@@ -49,12 +51,12 @@ class CoinListViewModelImpl(
 
 	override fun onRefresh() {
 		_uiState.value = uiState.value.copy(isRefreshing = true)
-		fetchCoins()
+		fetchCoinsTickers()
 	}
 
 	override fun onRetry() {
 		_uiState.value = uiState.value.copy(isLoading = true)
-		fetchCoins()
+		fetchCoinsTickers()
 	}
 
 	override fun errorShown() {
@@ -79,22 +81,19 @@ class CoinListViewModelImpl(
 						)
 				}
 			}
-		}.catch {
-			_uiState.value = uiState.value.copy(
-				isError = true,
-				errorMessage = it.message ?: "Unexpected error occurred!"
-			)
 		}.launchIn(viewModelScope)
 	}
 
-	private fun getCoins() {
-		observeCoins()
-		fetchCoins()
+	private fun setupCoinsTickers() {
+		observeCoinsTickers()
+		fetchCoinsTickers()
 	}
 
-	private fun observeCoins() {
-		observeCoinsTickersUseCase.execute().map { it.toPresentation() }.flowOn(Dispatchers.IO)
+	private fun observeCoinsTickers() {
+		observeCoinsTickersUseCase.execute().map { it.toPresentation() }.flowOn(ioDispatcher)
 			.onEach { coinModels ->
+				// To allow stateFlow emission when a previous value equal to the new one exists in order to
+				// finish loading.
 				if (coinTickers.value != null) {
 					coinTickers.value = emptyList()
 				}
@@ -110,12 +109,12 @@ class CoinListViewModelImpl(
 			}.launchIn(viewModelScope)
 	}
 
-	private fun fetchCoins() {
+	private fun fetchCoinsTickers() {
 		viewModelScope.launch(
-			Dispatchers.IO +
+			ioDispatcher +
 					CoroutineExceptionHandler { _, throwable ->
 						// In case a network error occurs.
-						viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+						viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
 							// In case a database error occurs.
 							viewModelScope.launch(Dispatchers.Main) {
 								_uiState.value =

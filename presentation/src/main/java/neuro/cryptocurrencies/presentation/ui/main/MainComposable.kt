@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.plcoding.cryptocurrencyappyt.presentation.Screen
+import neuro.cryptocurrencies.presentation.Screen
 import neuro.cryptocurrencies.presentation.ui.coin.details.CoinDetailsComposable
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme

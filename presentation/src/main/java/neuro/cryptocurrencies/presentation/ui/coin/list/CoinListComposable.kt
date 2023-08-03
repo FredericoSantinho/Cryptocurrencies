@@ -30,9 +30,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.plcoding.cryptocurrencyappyt.presentation.Screen
 import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.R
+import neuro.cryptocurrencies.presentation.Screen
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
