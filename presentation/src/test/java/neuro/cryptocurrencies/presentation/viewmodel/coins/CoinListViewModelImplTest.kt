@@ -46,6 +46,7 @@ class CoinListViewModelImplTest {
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(fetchCoinsTickersUseCase, times(1)).execute()
+		verify(observeCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
 			CoinListState(
@@ -55,5 +56,48 @@ class CoinListViewModelImplTest {
 				isError = false
 			), coinListViewModel.uiState.value
 		)
+	}
+
+	@Test
+	fun testErrorObservingTickers() {
+		runTest {
+			val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
+			val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
+			val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
+			val testIoDispatcher = StandardTestDispatcher()
+
+			val errorMessage = "some error"
+
+			whenever(observeCoinsTickersUseCase.execute()).thenReturn(flow {
+				throw RuntimeException(
+					errorMessage
+				)
+			})
+
+			val coinListViewModel = CoinListViewModelImpl(
+				observeCoinsTickersUseCase,
+				fetchCoinsTickersUseCase,
+				hasCachedCoinsTickersUseCase,
+				testIoDispatcher
+			)
+
+			assertEquals(CoinListState(isLoading = true), coinListViewModel.uiState.value)
+
+			verifyNoInteractions(fetchCoinsTickersUseCase)
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(fetchCoinsTickersUseCase, times(1)).execute()
+			verify(observeCoinsTickersUseCase, times(1)).execute()
+
+			assertEquals(
+				CoinListState(
+					isError = true,
+					errorMessage = errorMessage,
+					isLoading = false,
+					isRefreshing = false
+				), coinListViewModel.uiState.value
+			)
+		}
 	}
 }
