@@ -100,4 +100,41 @@ class CoinListViewModelImplTest {
 			)
 		}
 	}
+
+	@Test
+	fun testNetworkErrorWithCachedCoinsTickers() = runTest {
+		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
+		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
+		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
+		val testIoDispatcher = StandardTestDispatcher()
+
+		val errorMessage = "someError"
+		whenever(observeCoinsTickersUseCase.execute()).thenReturn(flow { emit(coinTickerMockList()) })
+		whenever(fetchCoinsTickersUseCase.execute()).thenThrow(RuntimeException(errorMessage))
+		whenever(hasCachedCoinsTickersUseCase.execute()).thenReturn(true)
+
+		val coinListViewModel = CoinListViewModelImpl(
+			observeCoinsTickersUseCase,
+			fetchCoinsTickersUseCase,
+			hasCachedCoinsTickersUseCase,
+			testIoDispatcher
+		)
+
+		assertEquals(CoinListState(isLoading = true), coinListViewModel.uiState.value)
+
+		verifyNoInteractions(fetchCoinsTickersUseCase)
+
+		testIoDispatcher.scheduler.runCurrent()
+
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
+
+		assertEquals(
+			CoinListState(
+				coins = coinTickerModelMockList(),
+				isError = false,
+				isLoading = false,
+				isRefreshing = false
+			), coinListViewModel.uiState.value
+		)
+	}
 }
