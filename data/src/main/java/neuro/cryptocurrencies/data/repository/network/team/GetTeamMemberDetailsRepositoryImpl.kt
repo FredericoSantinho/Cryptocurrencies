@@ -10,7 +10,7 @@ class GetTeamMemberDetailsRepositoryImpl(private val coinPaprikaApi: CoinPaprika
 	GetTeamMemberDetailsRepository {
 	override suspend fun getTeamMemberDetails(teamMemberId: String): TeamMemberDetails {
 		return tryRequest {
-			coinPaprikaApi.getTeamMember(teamMemberId).toDomain()
+			coinPaprikaApi.getTeamMemberDetails(teamMemberId).toDomain()
 		}
 	}
 }

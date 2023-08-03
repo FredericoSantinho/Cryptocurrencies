@@ -10,7 +10,7 @@ class GetTagDetailsRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
 	GetTagDetailsRepository {
 	override suspend fun getTagDetails(tagId: String): TagDetails {
 		return tryRequest {
-			coinPaprikaApi.getTag(tagId).toDomain()
+			coinPaprikaApi.getTagDetails(tagId).toDomain()
 		}
 	}
 }
