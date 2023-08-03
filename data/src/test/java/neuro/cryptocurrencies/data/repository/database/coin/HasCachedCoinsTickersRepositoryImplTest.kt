@@ -23,11 +23,11 @@ class HasCachedCoinsTickersRepositoryImplTest {
 
 		verifyNoInteractions(coinTickerDao)
 
-		val hasCachedCoinDetails = hasCachedCoinsTickersRepository.hasCachedCoinsTickers()
+		val hasCachedCoinsTickers = hasCachedCoinsTickersRepository.hasCachedCoinsTickers()
 
 		verify(coinTickerDao, times(1)).hasCoinTickers()
 
-		assertTrue(hasCachedCoinDetails)
+		assertTrue(hasCachedCoinsTickers)
 	}
 
 	@Test
@@ -40,10 +40,10 @@ class HasCachedCoinsTickersRepositoryImplTest {
 
 		verifyNoInteractions(coinTickerDao)
 
-		val hasCachedCoinDetails = hasCachedCoinsTickersRepository.hasCachedCoinsTickers()
+		val hasCachedCoinsTickers = hasCachedCoinsTickersRepository.hasCachedCoinsTickers()
 
 		verify(coinTickerDao, times(1)).hasCoinTickers()
 
-		assertFalse(hasCachedCoinDetails)
+		assertFalse(hasCachedCoinsTickers)
 	}
 }
