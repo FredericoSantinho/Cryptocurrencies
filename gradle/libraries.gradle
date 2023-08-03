@@ -83,3 +83,9 @@ lib.roomTest = "androidx.room:room-testing:$ver.room"
 ver.retrofit2 = "2.9.0"
 lib.retrofit2 = ["com.squareup.retrofit2:retrofit:${ver.retrofit2}",
                  "com.squareup.retrofit2:converter-gson:${ver.retrofit2}"]
+
+ver.mockk = "1.13.5"
+lib.mockk = "io.mockk:mockk:${ver.mockk}"
+
+ver.slf4j_simple = "2.0.7"
+lib.slf4j_simple = "org.slf4j:slf4j-simple:${ver.slf4j_simple}"

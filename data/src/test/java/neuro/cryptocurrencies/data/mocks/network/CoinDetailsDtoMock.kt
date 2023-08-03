@@ -12,7 +12,7 @@ fun coinDetailsDtoMock() = CoinDetailsDto(
 	"POW",
 	1,
 	"BTC",
-	emptyList(),
-	emptyList(),
+	tagMockList(),
+	teamMockList(),
 	"coin"
 )

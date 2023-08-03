@@ -9,5 +9,5 @@ import neuro.cryptocurrencies.data.model.database.tag.RoomTag
 interface TagDao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	suspend fun upsertTags(roomTagsDetails: List<RoomTag>)
+	suspend fun upsertTags(roomTags: List<RoomTag>)
 }

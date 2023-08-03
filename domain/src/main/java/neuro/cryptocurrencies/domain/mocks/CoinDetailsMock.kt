@@ -12,7 +12,7 @@ fun coinDetailsMock() = CoinDetails(
 	"POW",
 	1,
 	"BTC",
-	emptyList(),
-	emptyList(),
+	tagMockList(),
+	teamMemberMockList(),
 	"coin"
 )
