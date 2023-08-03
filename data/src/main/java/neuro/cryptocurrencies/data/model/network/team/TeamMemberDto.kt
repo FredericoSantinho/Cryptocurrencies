@@ -8,12 +8,6 @@ data class TeamMemberDto(
 	val description: String?,
 	@SerializedName("id")
 	val id: String,
-	@SerializedName("links")
-	val links: Links,
 	@SerializedName("name")
-	val name: String,
-	@SerializedName("positions")
-	val positions: List<Position>,
-	@SerializedName("teams_count")
-	val teamsCount: Int
+	val name: String
 )
