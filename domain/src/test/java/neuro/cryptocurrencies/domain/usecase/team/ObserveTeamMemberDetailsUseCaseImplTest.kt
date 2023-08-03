@@ -2,7 +2,7 @@ package neuro.cryptocurrencies.domain.usecase.team
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.mocks.teamMemberDetailsMock
 import neuro.cryptocurrencies.domain.repository.team.ObserveTeamMemberDetailsRepository
 import org.junit.Assert.assertEquals
@@ -15,7 +15,7 @@ import org.mockito.kotlin.whenever
 
 class ObserveTeamMemberDetailsUseCaseImplTest {
 	@Test
-	fun test() = runBlocking {
+	fun test() = runTest {
 		val observeTeamMemberDetailsRepository = mock<ObserveTeamMemberDetailsRepository>()
 
 		val observeTeamMemberDetailsUseCase =

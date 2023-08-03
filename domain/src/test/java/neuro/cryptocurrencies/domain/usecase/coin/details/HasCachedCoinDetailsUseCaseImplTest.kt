@@ -1,6 +1,5 @@
 package neuro.cryptocurrencies.domain.usecase.coin.details
 
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.repository.coin.details.HasCachedCoinDetailsRepository
 import org.junit.Test
@@ -34,7 +33,7 @@ class HasCachedCoinDetailsUseCaseImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveCachedCoinDetails`() = runBlocking {
+	fun `doesn'tHaveCachedCoinDetails`() = runTest {
 		val hasCachedCoinDetailsRepository = mock<HasCachedCoinDetailsRepository>()
 
 		val hasCachedCoinDetailsUseCase =

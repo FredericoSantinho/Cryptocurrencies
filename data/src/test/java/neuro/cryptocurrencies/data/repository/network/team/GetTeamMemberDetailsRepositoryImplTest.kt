@@ -1,6 +1,7 @@
 package neuro.cryptocurrencies.data.repository.network.team
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mocks.network.teamMemberDetailsDtoMock
 import neuro.cryptocurrencies.domain.mocks.teamMemberDetailsMock
@@ -21,7 +22,7 @@ import java.io.IOException
 
 class GetTeamMemberDetailsRepositoryImplTest {
 	@Test
-	fun test() = runBlocking {
+	fun test() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getTeamMemberDetailsRepository = GetTeamMemberDetailsRepositoryImpl(coinPaprikaApi)
@@ -39,7 +40,7 @@ class GetTeamMemberDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun onHttpException404() = runBlocking {
+	fun onHttpException404() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getTeamMemberDetailsRepository = GetTeamMemberDetailsRepositoryImpl(coinPaprikaApi)
@@ -62,11 +63,11 @@ class GetTeamMemberDetailsRepositoryImplTest {
 			}
 		}
 
-		val teamMemberDetailsDto = verify(coinPaprikaApi, times(1)).getTeamMemberDetails(teamMemberId)
+		verify(coinPaprikaApi, times(1)).getTeamMemberDetails(teamMemberId)
 	}
 
 	@Test
-	fun onOtherHttpException() = runBlocking {
+	fun onOtherHttpException() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getTeamMemberDetailsRepository = GetTeamMemberDetailsRepositoryImpl(coinPaprikaApi)
@@ -82,11 +83,11 @@ class GetTeamMemberDetailsRepositoryImplTest {
 			}
 		}
 
-		val teamMemberDetailsDto = verify(coinPaprikaApi, times(1)).getTeamMemberDetails(teamMemberId)
+		verify(coinPaprikaApi, times(1)).getTeamMemberDetails(teamMemberId)
 	}
 
 	@Test
-	fun onIOException() = runBlocking {
+	fun onIOException() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getTeamMemberDetailsRepository = GetTeamMemberDetailsRepositoryImpl(coinPaprikaApi)
@@ -105,6 +106,6 @@ class GetTeamMemberDetailsRepositoryImplTest {
 			}
 		}
 
-		val teamMemberDetailsDto = verify(coinPaprikaApi, times(1)).getTeamMemberDetails(teamMemberId)
+		verify(coinPaprikaApi, times(1)).getTeamMemberDetails(teamMemberId)
 	}
 }

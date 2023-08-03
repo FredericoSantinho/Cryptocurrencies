@@ -1,6 +1,6 @@
 package neuro.cryptocurrencies.data.repository.database.coin.details
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 
 class HasCachedCoinDetailsRepositoryImplTest {
 	@Test
-	fun hasCoinDetails() = runBlocking {
+	fun hasCoinDetails() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val hasCachedCoinDetailsRepository = HasCachedCoinDetailsRepositoryImpl(coinDetailsDao)
@@ -31,7 +31,7 @@ class HasCachedCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveCoinDetails`() = runBlocking {
+	fun `doesn'tHaveCoinDetails`() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val hasCachedCoinDetailsRepository = HasCachedCoinDetailsRepositoryImpl(coinDetailsDao)

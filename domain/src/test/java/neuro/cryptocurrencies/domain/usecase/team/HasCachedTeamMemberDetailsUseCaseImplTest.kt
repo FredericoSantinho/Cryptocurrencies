@@ -1,6 +1,6 @@
 package neuro.cryptocurrencies.domain.usecase.team
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.repository.team.HasCachedTeamMemberDetailsRepository
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -13,7 +13,7 @@ import org.mockito.kotlin.whenever
 
 class HasCachedTeamMemberDetailsUseCaseImplTest {
 	@Test
-	fun hasCachedTeamMemberDetails() = runBlocking {
+	fun hasCachedTeamMemberDetails() = runTest {
 		val hasCachedTeamMemberDetailsRepository = mock<HasCachedTeamMemberDetailsRepository>()
 
 		val hasCachedTeamMemberDetailsUseCase =
@@ -34,7 +34,7 @@ class HasCachedTeamMemberDetailsUseCaseImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveCachedTeamMemberDetails`() = runBlocking {
+	fun `doesn'tHaveCachedTeamMemberDetails`() = runTest {
 		val hasCachedTeamMemberDetailsRepository = mock<HasCachedTeamMemberDetailsRepository>()
 
 		val hasCachedTeamMemberDetailsUseCase =

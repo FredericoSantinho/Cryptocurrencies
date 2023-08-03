@@ -1,6 +1,7 @@
 package neuro.cryptocurrencies.data.repository.network.coin
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mocks.network.coinTickerDtoMock
 import neuro.cryptocurrencies.domain.mocks.coinTickerMock
@@ -21,7 +22,7 @@ import java.io.IOException
 class GetCoinTickerRepositoryImplTest {
 
 	@Test
-	fun test() = runBlocking {
+	fun test() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -39,7 +40,7 @@ class GetCoinTickerRepositoryImplTest {
 	}
 
 	@Test
-	fun onHttpException404() = runBlocking {
+	fun onHttpException404() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -62,11 +63,11 @@ class GetCoinTickerRepositoryImplTest {
 			}
 		}
 
-		val coinTickerDto = verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
 	}
 
 	@Test
-	fun onOtherHttpException() = runBlocking {
+	fun onOtherHttpException() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -82,11 +83,11 @@ class GetCoinTickerRepositoryImplTest {
 			}
 		}
 
-		val coinTickerDto = verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
 	}
 
 	@Test
-	fun onIOException() = runBlocking {
+	fun onIOException() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -105,6 +106,6 @@ class GetCoinTickerRepositoryImplTest {
 			}
 		}
 
-		val coinTickerDto = verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
 	}
 }

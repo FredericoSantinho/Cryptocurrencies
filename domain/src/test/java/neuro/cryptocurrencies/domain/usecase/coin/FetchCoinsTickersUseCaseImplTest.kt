@@ -1,6 +1,6 @@
 package neuro.cryptocurrencies.domain.usecase.coin
 
-import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.runBlocking
 import neuro.cryptocurrencies.domain.entity.CoinTicker
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
 import neuro.cryptocurrencies.domain.repository.coin.SaveCoinTickersRepository
@@ -13,7 +13,7 @@ import org.mockito.kotlin.whenever
 
 class FetchCoinsTickersUseCaseImplTest {
 	@Test
-	fun test() = runTest {
+	fun test() = runBlocking {
 		val getCoinTickersRepository = mock<GetCoinTickersRepository>()
 		val saveCoinTickersRepository = mock<SaveCoinTickersRepository>()
 

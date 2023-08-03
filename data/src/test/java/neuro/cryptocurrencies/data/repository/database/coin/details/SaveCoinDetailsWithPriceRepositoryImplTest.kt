@@ -6,7 +6,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockkStatic
 import io.mockk.slot
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
 import neuro.cryptocurrencies.data.dao.TagDao
 import neuro.cryptocurrencies.data.dao.TeamDao
@@ -40,7 +40,7 @@ class SaveCoinDetailsWithPriceRepositoryImplTest {
 	}
 
 	@Test
-	fun test() = runBlocking {
+	fun test() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 		val tagDao = mock<TagDao>()
 		val teamDao = mock<TeamDao>()

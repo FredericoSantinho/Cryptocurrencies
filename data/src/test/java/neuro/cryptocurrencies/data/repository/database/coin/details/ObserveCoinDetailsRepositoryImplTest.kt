@@ -3,7 +3,7 @@ package neuro.cryptocurrencies.data.repository.database.coin.details
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
 import neuro.cryptocurrencies.data.mocks.database.roomCoinDetailsWithPriceWithTagsAndTeamMock
 import neuro.cryptocurrencies.domain.mocks.coinDetailsWithPriceMock
@@ -17,7 +17,7 @@ import kotlin.test.assertEquals
 
 class ObserveCoinDetailsRepositoryImplTest {
 	@Test
-	fun testNotNullResult() = runBlocking {
+	fun testNotNullResult() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val observeCoinDetailsRepository = ObserveCoinDetailsRepositoryImpl(coinDetailsDao)
@@ -39,7 +39,7 @@ class ObserveCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun testNullResult() = runBlocking {
+	fun testNullResult() = runTest {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val observeCoinDetailsRepository = ObserveCoinDetailsRepositoryImpl(coinDetailsDao)

@@ -2,7 +2,7 @@ package neuro.cryptocurrencies.domain.usecase.tag
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.entity.TagDetails
 import neuro.cryptocurrencies.domain.repository.tag.ObserveTagDetailsRepository
 import org.junit.Assert.assertEquals
@@ -15,7 +15,7 @@ import org.mockito.kotlin.whenever
 
 class ObserveTagDetailsUseCaseImplTest {
 	@Test
-	fun test() = runBlocking {
+	fun test() = runTest {
 		val observeTagDetailsRepository = mock<ObserveTagDetailsRepository>()
 
 		val observeTagDetailsUseCase = ObserveTagDetailsUseCaseImpl(observeTagDetailsRepository)

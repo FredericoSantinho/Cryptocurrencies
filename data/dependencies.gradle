@@ -16,6 +16,7 @@ dependencies {
   testImplementation lib.koinTest
   testImplementation lib.mockito
   testImplementation lib.roomTest
+  testImplementation lib.coroutines_test
   testImplementation lib.mockk
   testImplementation lib.slf4j_simple
 
