@@ -1,10 +1,9 @@
-package neuro.cryptocurrencies.data.repository.coin.details.network
+package neuro.cryptocurrencies.data.repository.network.coin.details
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mocks.network.coinDetailsDtoMock
-import neuro.cryptocurrencies.data.repository.network.coin.details.GetCoinDetailsRepositoryImpl
 import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
@@ -22,6 +21,7 @@ import java.io.IOException
 import kotlin.test.assertEquals
 
 class GetCoinDetailsRepositoryImplTest {
+
 	@Test
 	fun test() = runTest {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
