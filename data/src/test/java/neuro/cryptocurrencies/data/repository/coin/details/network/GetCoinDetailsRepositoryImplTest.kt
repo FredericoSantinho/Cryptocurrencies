@@ -2,7 +2,7 @@ package neuro.cryptocurrencies.data.repository.coin.details.network
 
 import kotlinx.coroutines.runBlocking
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
-import neuro.cryptocurrencies.data.mocks.coinDetailsDtoMock
+import neuro.cryptocurrencies.data.mocks.network.coinDetailsDtoMock
 import neuro.cryptocurrencies.data.repository.network.coin.details.GetCoinDetailsRepositoryImpl
 import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException

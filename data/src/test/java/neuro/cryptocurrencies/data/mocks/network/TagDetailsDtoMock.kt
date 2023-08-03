@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.data.mocks
+package neuro.cryptocurrencies.data.mocks.network
 
 import neuro.cryptocurrencies.data.model.network.tag.TagDetailsDto
 
