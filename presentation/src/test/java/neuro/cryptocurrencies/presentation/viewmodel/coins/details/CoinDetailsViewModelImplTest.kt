@@ -75,6 +75,8 @@ class CoinDetailsViewModelImplTest {
 			testIoDispatcher
 		)
 
+		assertEquals(CoinDetailsState(isLoading = true), coinDetailsViewModel.uiState.value)
+
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
@@ -194,6 +196,8 @@ class CoinDetailsViewModelImplTest {
 			testIoDispatcher
 		)
 
+		assertEquals(CoinDetailsState(isLoading = true), coinDetailsViewModel.uiState.value)
+
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
@@ -208,4 +212,68 @@ class CoinDetailsViewModelImplTest {
 			), coinDetailsViewModel.uiState.value
 		)
 	}
+
+	@Test
+	fun testNetworkErrorWithCachedCoinDetailsNotRefreshing() =
+		runTest(timeout = Duration.parse("1m")) {
+
+			val observeCoinDetailsUseCase = mock<ObserveCoinDetailsUseCase>()
+			val fetchCoinDetailsUseCase = mock<FetchCoinDetailsUseCase>()
+			val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
+			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
+			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
+			val hasCachedTagDetailsUsecase = mock<HasCachedTagDetailsUseCase>()
+			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
+			val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
+			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
+			val coinId = "btc-bitcoin"
+			val savedStateHandle: SavedStateHandle =
+				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+			val testIoDispatcher = StandardTestDispatcher()
+
+			val errorMessage = "some error"
+
+			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(flow {
+				emit(
+					coinDetailsWithPriceMock()
+				)
+			})
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+				RuntimeException(
+					errorMessage
+				)
+			)
+			whenever(hasCachedCoinDetailsUseCase.execute(coinId)).thenReturn(true)
+
+			val coinDetailsViewModel = CoinDetailsViewModelImpl(
+				observeCoinDetailsUseCase,
+				fetchCoinDetailsUseCase,
+				hasCachedCoinDetailsUseCase,
+				observeTagDetailsUseCase,
+				fetchTagDetailsUseCase,
+				hasCachedTagDetailsUsecase,
+				observeTeamMemberDetailsUseCase,
+				fetchTeamMemberUseCase,
+				hasCachedTeamMemberDetailsUseCase,
+				savedStateHandle,
+				testIoDispatcher
+			)
+
+			assertEquals(CoinDetailsState(isLoading = true), coinDetailsViewModel.uiState.value)
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
+
+			assertEquals(
+				CoinDetailsState(
+					coinDetailsWithPriceModel = coinDetailsWithPriceModelMock(),
+					isLoading = false,
+					isError = false,
+					isRefreshing = false
+				), coinDetailsViewModel.uiState.value
+			)
+		}
 }
