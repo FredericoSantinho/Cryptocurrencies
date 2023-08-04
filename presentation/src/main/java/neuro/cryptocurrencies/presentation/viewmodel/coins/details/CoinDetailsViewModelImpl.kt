@@ -117,8 +117,11 @@ class CoinDetailsViewModelImpl(
 				viewModelScope.launch {
 					_uiState.value =
 						uiState.value.copy(
+							isError = true,
 							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
 								?: ErrorMessage.UnexpectedErrorOccurred,
+							isLoading = false,
+							isRefreshing = false
 						)
 				}
 			}) {
