@@ -102,7 +102,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testNetworkErrorWithCachedCoinsTickers() = runTest {
+	fun testNetworkErrorWithCachedCoinsTickersNotRefreshing() = runTest {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -137,4 +137,43 @@ class CoinListViewModelImplTest {
 			), coinListViewModel.uiState.value
 		)
 	}
+
+	@Test
+	fun testDatabaseErrorCheckingCachedCoinsTickers() = runTest {
+		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
+		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
+		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
+		val testIoDispatcher = StandardTestDispatcher()
+
+		val errorMessage = "someError"
+		whenever(observeCoinsTickersUseCase.execute()).thenReturn(flow { emit(emptyList()) })
+		whenever(fetchCoinsTickersUseCase.execute()).thenThrow(RuntimeException(errorMessage))
+		whenever(hasCachedCoinsTickersUseCase.execute()).thenThrow(RuntimeException(errorMessage))
+
+		val coinListViewModel = CoinListViewModelImpl(
+			observeCoinsTickersUseCase,
+			fetchCoinsTickersUseCase,
+			hasCachedCoinsTickersUseCase,
+			testIoDispatcher
+		)
+
+		assertEquals(CoinListState(isLoading = true), coinListViewModel.uiState.value)
+
+		verifyNoInteractions(fetchCoinsTickersUseCase)
+
+		testIoDispatcher.scheduler.runCurrent()
+
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
+		verify(observeCoinsTickersUseCase, times(1)).execute()
+
+		assertEquals(
+			CoinListState(
+				isError = true,
+				errorMessage = errorMessage,
+				isLoading = false,
+				isRefreshing = false
+			), coinListViewModel.uiState.value
+		)
+	}
+
 }
