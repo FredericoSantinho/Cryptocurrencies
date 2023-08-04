@@ -24,6 +24,7 @@ import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
+import neuro.cryptocurrencies.presentation.model.ErrorMessage
 
 class CoinListViewModelImpl(
 	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
@@ -61,7 +62,7 @@ class CoinListViewModelImpl(
 	}
 
 	override fun errorShown() {
-		_uiState.value = uiState.value.copy(errorMessage = "")
+		_uiState.value = uiState.value.copy(errorMessage = ErrorMessage.Empty)
 	}
 
 	override fun onSearchTerm(searchTerm: String) {
@@ -103,7 +104,8 @@ class CoinListViewModelImpl(
 				_uiState.value =
 					uiState.value.copy(
 						isError = true,
-						errorMessage = it.message ?: "Unexpected error occurred!",
+						errorMessage = it.message?.let { ErrorMessage.GivenMessage(it) }
+							?: ErrorMessage.UnexpectedErrorOccurred,
 						isLoading = false,
 						isRefreshing = false
 					)
@@ -121,7 +123,8 @@ class CoinListViewModelImpl(
 								_uiState.value =
 									uiState.value.copy(
 										isError = true,
-										errorMessage = throwable1.message ?: "Unexpected error occurred!",
+										errorMessage = throwable1.message?.let { ErrorMessage.GivenMessage(it) }
+											?: ErrorMessage.UnexpectedErrorOccurred,
 										isLoading = false,
 										isRefreshing = false
 									)
@@ -133,7 +136,8 @@ class CoinListViewModelImpl(
 									_uiState.value =
 										uiState.value.copy(
 											isError = true,
-											errorMessage = throwable.message ?: "Unexpected error occurred!",
+											errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
+												?: ErrorMessage.UnexpectedErrorOccurred,
 											isLoading = false,
 											isRefreshing = false
 										)
@@ -141,7 +145,8 @@ class CoinListViewModelImpl(
 									if (uiState.value.isRefreshing) {
 										_uiState.value =
 											uiState.value.copy(
-												errorMessage = throwable.message ?: "Unexpected error occurred!",
+												errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
+													?: ErrorMessage.UnexpectedErrorOccurred,
 												isLoading = false,
 												isRefreshing = false
 											)

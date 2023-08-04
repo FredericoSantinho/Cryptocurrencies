@@ -33,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.Screen
+import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
@@ -100,9 +101,10 @@ fun CoinListComposable(
 				}
 
 				val context = LocalContext.current
-				LaunchedEffect(key1 = uiState.errorMessage) {
-					if (uiState.errorMessage.isNotBlank() && !uiState.isRefreshing) {
-						Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_LONG).show()
+				val errorMessage = uiState.errorMessage.toPresentation()
+				LaunchedEffect(key1 = errorMessage) {
+					if (errorMessage.isNotBlank() && !uiState.isRefreshing) {
+						Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
 						viewModel.errorShown()
 					}
 				}

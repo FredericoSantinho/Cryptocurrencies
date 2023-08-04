@@ -15,6 +15,7 @@ import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.MainDispatcherRule
 import neuro.cryptocurrencies.presentation.mocks.coinTickerModelMock
 import neuro.cryptocurrencies.presentation.mocks.coinTickerModelMockList
+import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -236,7 +237,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = true,
-				errorMessage = errorMessage,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -247,7 +248,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = true,
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -333,7 +334,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = coinTickerModelMockList().toImmutableList(),
-				errorMessage = errorMessage,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -344,7 +345,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = coinTickerModelMockList().toImmutableList(),
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -392,7 +393,7 @@ class CoinListViewModelImplTest {
 			CoinListState(
 				coins = null,
 				isError = true,
-				errorMessage = errorMessage,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -404,7 +405,7 @@ class CoinListViewModelImplTest {
 			CoinListState(
 				coins = null,
 				isError = true,
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -444,7 +445,7 @@ class CoinListViewModelImplTest {
 			CoinListState(
 				coins = null,
 				isError = true,
-				errorMessage = errorMessage,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -456,7 +457,7 @@ class CoinListViewModelImplTest {
 			CoinListState(
 				coins = null,
 				isError = true,
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -495,7 +496,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = true,
-				errorMessage = errorMessage,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -506,7 +507,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = true,
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -547,7 +548,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = true,
-				errorMessage = errorMessage,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -558,7 +559,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = true,
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -571,7 +572,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				isError = false,
-				errorMessage = "",
+				errorMessage = ErrorMessage.Empty,
 				isLoading = true,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
