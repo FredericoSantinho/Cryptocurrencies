@@ -14,10 +14,11 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
+import kotlin.time.Duration
 
 class ObserveCoinDetailsRepositoryImplTest {
 	@Test
-	fun testNotNullResult() = runTest {
+	fun testNotNullResult() = runTest(timeout = Duration.parse("1m")) {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val observeCoinDetailsRepository = ObserveCoinDetailsRepositoryImpl(coinDetailsDao)
@@ -39,7 +40,7 @@ class ObserveCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun testNullResult() = runTest {
+	fun testNullResult() = runTest(timeout = Duration.parse("1m")) {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val observeCoinDetailsRepository = ObserveCoinDetailsRepositoryImpl(coinDetailsDao)

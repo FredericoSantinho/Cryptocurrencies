@@ -10,10 +10,11 @@ import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlin.time.Duration
 
 class HasCachedCoinDetailsRepositoryImplTest {
 	@Test
-	fun hasCachedCoinDetails() = runTest {
+	fun hasCachedCoinDetails() = runTest(timeout = Duration.parse("1m")) {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val hasCachedCoinDetailsRepository = HasCachedCoinDetailsRepositoryImpl(coinDetailsDao)
@@ -31,7 +32,7 @@ class HasCachedCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveCachedCoinDetails`() = runTest {
+	fun `doesn'tHaveCachedCoinDetails`() = runTest(timeout = Duration.parse("1m")) {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 
 		val hasCachedCoinDetailsRepository = HasCachedCoinDetailsRepositoryImpl(coinDetailsDao)

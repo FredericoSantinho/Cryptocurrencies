@@ -10,11 +10,12 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import kotlin.time.Duration
 
 class HasCachedCoinsTickersRepositoryImplTest {
 
 	@Test
-	fun hasCachedCoinsTickers() = runTest {
+	fun hasCachedCoinsTickers() = runTest(timeout = Duration.parse("1m")) {
 		val coinTickerDao = mock<CoinTickerDao>()
 
 		val hasCachedCoinsTickersRepository = HasCachedCoinsTickersRepositoryImpl(coinTickerDao)
@@ -31,7 +32,7 @@ class HasCachedCoinsTickersRepositoryImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveCachedCoinsTickers`() = runTest {
+	fun `doesn'tHaveCachedCoinsTickers`() = runTest(timeout = Duration.parse("1m")) {
 		val coinTickerDao = mock<CoinTickerDao>()
 
 		val hasCachedCoinsTickersRepository = HasCachedCoinsTickersRepositoryImpl(coinTickerDao)

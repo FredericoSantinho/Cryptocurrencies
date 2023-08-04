@@ -72,7 +72,6 @@ class CoinListViewModelImplTest {
 		val testIoDispatcher = StandardTestDispatcher()
 
 		val coinsTickersStateFlow = MutableStateFlow(coinTickerMockList())
-		val errorMessage = "someError"
 		whenever(observeCoinsTickersUseCase.execute()).thenReturn(coinsTickersStateFlow)
 		whenever(hasCachedCoinsTickersUseCase.execute()).thenReturn(true)
 

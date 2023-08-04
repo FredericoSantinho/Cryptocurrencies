@@ -13,11 +13,12 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import kotlin.time.Duration
 
 class ObserveTagDetailsRepositoryImplTest {
 
 	@Test
-	fun test() = runTest {
+	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val tagDetailsDao = mock<TagDetailsDao>()
 
 		val observeTagDetailsRepository = ObserveTagDetailsRepositoryImpl(tagDetailsDao)

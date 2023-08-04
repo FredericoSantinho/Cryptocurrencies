@@ -13,11 +13,12 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import kotlin.time.Duration
 
 class ObserveCoinsTickersRepositoryImplTest {
 
 	@Test
-	fun test() = runTest {
+	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val coinTickerDao = mock<CoinTickerDao>()
 
 		val observeCoinsTickersRepository = ObserveCoinsTickersRepositoryImpl(coinTickerDao)

@@ -20,6 +20,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
+import kotlin.time.Duration
 
 class SaveCoinDetailsWithPriceRepositoryImplTest {
 
@@ -40,7 +41,7 @@ class SaveCoinDetailsWithPriceRepositoryImplTest {
 	}
 
 	@Test
-	fun test() = runTest {
+	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val coinDetailsDao = mock<CoinDetailsDao>()
 		val tagDao = mock<TagDao>()
 		val teamDao = mock<TeamDao>()

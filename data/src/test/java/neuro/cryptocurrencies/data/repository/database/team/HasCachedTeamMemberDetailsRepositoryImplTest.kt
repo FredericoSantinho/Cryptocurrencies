@@ -10,11 +10,12 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import kotlin.time.Duration
 
 class HasCachedTeamMemberDetailsRepositoryImplTest {
 
 	@Test
-	fun hasHasCachedTeamMemberDetails() = runTest {
+	fun hasHasCachedTeamMemberDetails() = runTest(timeout = Duration.parse("1m")) {
 		val teamDetailsDao = mock<TeamDetailsDao>()
 
 		val hasCachedTeamMemberDetailsRepository =
@@ -34,7 +35,7 @@ class HasCachedTeamMemberDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun `doesn'tHaveHasCachedTeamMemberDetails`() = runTest {
+	fun `doesn'tHaveHasCachedTeamMemberDetails`() = runTest(timeout = Duration.parse("1m")) {
 		val teamDetailsDao = mock<TeamDetailsDao>()
 
 		val hasCachedTeamMemberDetailsRepository =

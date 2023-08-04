@@ -18,11 +18,12 @@ import org.mockito.kotlin.whenever
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
+import kotlin.time.Duration
 
 class GetCoinTickerRepositoryImplTest {
 
 	@Test
-	fun test() = runTest {
+	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -40,7 +41,7 @@ class GetCoinTickerRepositoryImplTest {
 	}
 
 	@Test
-	fun onHttpException404() = runTest {
+	fun onHttpException404() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -67,7 +68,7 @@ class GetCoinTickerRepositoryImplTest {
 	}
 
 	@Test
-	fun onOtherHttpException() = runTest {
+	fun onOtherHttpException() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
@@ -87,7 +88,7 @@ class GetCoinTickerRepositoryImplTest {
 	}
 
 	@Test
-	fun onIOException() = runTest {
+	fun onIOException() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)

@@ -19,11 +19,12 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 import kotlin.test.assertEquals
+import kotlin.time.Duration
 
 class GetCoinDetailsRepositoryImplTest {
 
 	@Test
-	fun test() = runTest {
+	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
@@ -41,7 +42,7 @@ class GetCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun onHttpException404() = runTest {
+	fun onHttpException404() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
@@ -68,7 +69,7 @@ class GetCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun onOtherHttpException() = runTest {
+	fun onOtherHttpException() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
@@ -88,7 +89,7 @@ class GetCoinDetailsRepositoryImplTest {
 	}
 
 	@Test
-	fun onIOException() = runTest {
+	fun onIOException() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
 		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
