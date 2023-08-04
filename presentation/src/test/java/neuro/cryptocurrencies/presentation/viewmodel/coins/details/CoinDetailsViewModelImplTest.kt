@@ -20,6 +20,7 @@ import neuro.cryptocurrencies.presentation.MainDispatcherRule
 import neuro.cryptocurrencies.presentation.mocks.coinDetailsModelMock
 import neuro.cryptocurrencies.presentation.mocks.coinDetailsWithPriceModelMock
 import neuro.cryptocurrencies.presentation.model.CoinDetailsWithPriceModel
+import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.any
@@ -30,6 +31,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 class CoinDetailsViewModelImplTest {
 
@@ -148,6 +150,60 @@ class CoinDetailsViewModelImplTest {
 				coinDetailsWithPriceModel = expectedCoinDetailsWithPriceModel,
 				isLoading = false,
 				isError = false,
+				isRefreshing = false
+			), coinDetailsViewModel.uiState.value
+		)
+	}
+
+	@Test
+	fun testErrorObservingCoinDetails() = runTest(timeout = 1.minutes) {
+
+		val observeCoinDetailsUseCase = mock<ObserveCoinDetailsUseCase>()
+		val fetchCoinDetailsUseCase = mock<FetchCoinDetailsUseCase>()
+		val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
+		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
+		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
+		val hasCachedTagDetailsUsecase = mock<HasCachedTagDetailsUseCase>()
+		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
+		val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
+		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
+		val coinId = "btc-bitcoin"
+		val savedStateHandle: SavedStateHandle =
+			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+		val testIoDispatcher = StandardTestDispatcher()
+
+		val errorMessage = "some error"
+
+		whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(flow {
+			throw RuntimeException(
+				errorMessage
+			)
+		})
+
+		val coinDetailsViewModel = CoinDetailsViewModelImpl(
+			observeCoinDetailsUseCase,
+			fetchCoinDetailsUseCase,
+			hasCachedCoinDetailsUseCase,
+			observeTagDetailsUseCase,
+			fetchTagDetailsUseCase,
+			hasCachedTagDetailsUsecase,
+			observeTeamMemberDetailsUseCase,
+			fetchTeamMemberUseCase,
+			hasCachedTeamMemberDetailsUseCase,
+			savedStateHandle,
+			testIoDispatcher
+		)
+
+		testIoDispatcher.scheduler.runCurrent()
+
+		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+
+		assertEquals(
+			CoinDetailsState(
+				isError = true,
+				errorMessage = ErrorMessage.GivenMessage(errorMessage),
+				isLoading = false,
 				isRefreshing = false
 			), coinDetailsViewModel.uiState.value
 		)
