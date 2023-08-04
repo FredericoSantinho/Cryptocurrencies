@@ -22,7 +22,7 @@ import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberUseCase
+import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
@@ -39,7 +39,7 @@ class CoinDetailsViewModelImpl(
 	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
 	private val hasCachedTagDetailsUseCase: HasCachedTagDetailsUseCase,
 	private val observeTeamMemberDetailsUseCase: ObserveTeamMemberDetailsUseCase,
-	private val fetchTeamMemberUseCase: FetchTeamMemberUseCase,
+	private val fetchTeamMemberDetailsUseCase: FetchTeamMemberDetailsUseCase,
 	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
 	savedStateHandle: SavedStateHandle,
 	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -271,7 +271,7 @@ class CoinDetailsViewModelImpl(
 				}
 			}
 		}) {
-			fetchTeamMemberUseCase.execute(teamMemberModel.id)
+			fetchTeamMemberDetailsUseCase.execute(teamMemberModel.id)
 		}
 	}
 

@@ -11,14 +11,17 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 
-class FetchTeamMemberUseCaseImplTest {
+class FetchTeamMemberDetailsUseCaseImplTest {
 	@Test
 	fun test() = runTest {
 		val getTeamMemberDetailsRepository = mock<GetTeamMemberDetailsRepository>()
 		val saveTeamMemberDetailsRepository = mock<SaveTeamMemberDetailsRepository>()
 
 		val fetchTeamMemberUseCase =
-			FetchTeamMemberUseCaseImpl(getTeamMemberDetailsRepository, saveTeamMemberDetailsRepository)
+			FetchTeamMemberDetailsUseCaseImpl(
+				getTeamMemberDetailsRepository,
+				saveTeamMemberDetailsRepository
+			)
 
 		val teamMemberId = "satoshi-nakamoto"
 		val teamMemberDetails = teamMemberDetailsMock()
