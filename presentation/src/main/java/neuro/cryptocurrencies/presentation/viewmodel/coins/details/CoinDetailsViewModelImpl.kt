@@ -37,7 +37,7 @@ class CoinDetailsViewModelImpl(
 	private val hasCachedCoinDetailsUseCase: HasCachedCoinDetailsUseCase,
 	private val observeTagDetailsUseCase: ObserveTagDetailsUseCase,
 	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
-	private val hasCachedTagDetailsUsecase: HasCachedTagDetailsUseCase,
+	private val hasCachedTagDetailsUseCase: HasCachedTagDetailsUseCase,
 	private val observeTeamMemberDetailsUseCase: ObserveTeamMemberDetailsUseCase,
 	private val fetchTeamMemberUseCase: FetchTeamMemberUseCase,
 	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
@@ -182,7 +182,7 @@ class CoinDetailsViewModelImpl(
 						)
 				}
 			}) {
-				val hasCachedTagDetails = hasCachedTagDetailsUsecase.execute(tagModel.id)
+				val hasCachedTagDetails = hasCachedTagDetailsUseCase.execute(tagModel.id)
 				withContext(Dispatchers.Main) {
 					if (!hasCachedTagDetails) {
 						if (throwable is NoDataAvailableException) {

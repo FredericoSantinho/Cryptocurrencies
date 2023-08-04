@@ -51,8 +51,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
 			CoinListState(
@@ -140,8 +140,8 @@ class CoinListViewModelImplTest {
 
 		coinListViewModel.onSearchTerm("bitcoin")
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
 			CoinListState(
@@ -175,8 +175,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
 			CoinListState(
@@ -229,8 +229,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
 			CoinListState(
@@ -278,8 +278,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
@@ -317,16 +317,16 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(1)).execute()
 
 		coinListViewModel.onRefresh()
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(2)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(2)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(2)).execute()
 
 		assertEquals(
@@ -375,16 +375,16 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(1)).execute()
 
 		coinListViewModel.onRefresh()
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(2)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(2)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(2)).execute()
 
 		assertEquals(
@@ -435,8 +435,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
@@ -487,8 +487,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(hasCachedCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
@@ -540,8 +540,8 @@ class CoinListViewModelImplTest {
 
 		testIoDispatcher.scheduler.runCurrent()
 
-		verify(fetchCoinsTickersUseCase, times(1)).execute()
 		verify(observeCoinsTickersUseCase, times(1)).execute()
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
 
 		assertEquals(
 			CoinListState(

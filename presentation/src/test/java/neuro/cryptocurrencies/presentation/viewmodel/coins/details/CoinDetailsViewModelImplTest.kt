@@ -46,13 +46,12 @@ class CoinDetailsViewModelImplTest {
 		val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
 		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
-		val hasCachedTagDetailsUsecase = mock<HasCachedTagDetailsUseCase>()
+		val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
 		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
 		val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
 		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 		val coinId = "btc-bitcoin"
-		val savedStateHandle: SavedStateHandle =
-			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+		val savedStateHandle = SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 		val testIoDispatcher = StandardTestDispatcher()
 
 		whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(flow {
@@ -67,7 +66,7 @@ class CoinDetailsViewModelImplTest {
 			hasCachedCoinDetailsUseCase,
 			observeTagDetailsUseCase,
 			fetchTagDetailsUseCase,
-			hasCachedTagDetailsUsecase,
+			hasCachedTagDetailsUseCase,
 			observeTeamMemberDetailsUseCase,
 			fetchTeamMemberUseCase,
 			hasCachedTeamMemberDetailsUseCase,
@@ -165,13 +164,12 @@ class CoinDetailsViewModelImplTest {
 		val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
 		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
-		val hasCachedTagDetailsUsecase = mock<HasCachedTagDetailsUseCase>()
+		val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
 		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
 		val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
 		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 		val coinId = "btc-bitcoin"
-		val savedStateHandle: SavedStateHandle =
-			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+		val savedStateHandle = SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 		val testIoDispatcher = StandardTestDispatcher()
 
 		val errorMessage = "some error"
@@ -188,7 +186,7 @@ class CoinDetailsViewModelImplTest {
 			hasCachedCoinDetailsUseCase,
 			observeTagDetailsUseCase,
 			fetchTagDetailsUseCase,
-			hasCachedTagDetailsUsecase,
+			hasCachedTagDetailsUseCase,
 			observeTeamMemberDetailsUseCase,
 			fetchTeamMemberUseCase,
 			hasCachedTeamMemberDetailsUseCase,
@@ -222,12 +220,12 @@ class CoinDetailsViewModelImplTest {
 			val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
 			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
-			val hasCachedTagDetailsUsecase = mock<HasCachedTagDetailsUseCase>()
+			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
 			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
 			val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
 			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 			val coinId = "btc-bitcoin"
-			val savedStateHandle: SavedStateHandle =
+			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 			val testIoDispatcher = StandardTestDispatcher()
 
@@ -251,7 +249,7 @@ class CoinDetailsViewModelImplTest {
 				hasCachedCoinDetailsUseCase,
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
-				hasCachedTagDetailsUsecase,
+				hasCachedTagDetailsUseCase,
 				observeTeamMemberDetailsUseCase,
 				fetchTeamMemberUseCase,
 				hasCachedTeamMemberDetailsUseCase,
@@ -272,6 +270,148 @@ class CoinDetailsViewModelImplTest {
 					coinDetailsWithPriceModel = coinDetailsWithPriceModelMock(),
 					isLoading = false,
 					isError = false,
+					isRefreshing = false
+				), coinDetailsViewModel.uiState.value
+			)
+		}
+
+	@Test
+	fun testNetworkErrorWithCachedCoinDetailsRefreshing() =
+		runTest(timeout = Duration.parse("1m")) {
+
+			val observeCoinDetailsUseCase = mock<ObserveCoinDetailsUseCase>()
+			val fetchCoinDetailsUseCase = mock<FetchCoinDetailsUseCase>()
+			val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
+			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
+			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
+			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
+			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
+			val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
+			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
+			val coinId = "btc-bitcoin"
+			val savedStateHandle =
+				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+			val testIoDispatcher = StandardTestDispatcher()
+
+			val errorMessage = "some error"
+
+			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(flow {
+				emit(
+					coinDetailsWithPriceMock()
+				)
+			})
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+				RuntimeException(
+					errorMessage
+				)
+			)
+			whenever(hasCachedCoinDetailsUseCase.execute(coinId)).thenReturn(true)
+
+			val coinDetailsViewModel = CoinDetailsViewModelImpl(
+				observeCoinDetailsUseCase,
+				fetchCoinDetailsUseCase,
+				hasCachedCoinDetailsUseCase,
+				observeTagDetailsUseCase,
+				fetchTagDetailsUseCase,
+				hasCachedTagDetailsUseCase,
+				observeTeamMemberDetailsUseCase,
+				fetchTeamMemberUseCase,
+				hasCachedTeamMemberDetailsUseCase,
+				savedStateHandle,
+				testIoDispatcher
+			)
+
+			assertEquals(CoinDetailsState(isLoading = true), coinDetailsViewModel.uiState.value)
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
+
+			coinDetailsViewModel.onRefresh()
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId), any())
+			verify(hasCachedCoinDetailsUseCase, times(2)).execute(eq(coinId))
+
+			assertEquals(
+				CoinDetailsState(
+					coinDetailsWithPriceModel = coinDetailsWithPriceModelMock(),
+					isLoading = false,
+					isError = false,
+					errorMessage = ErrorMessage.GivenMessage(errorMessage),
+					isRefreshing = false
+				), coinDetailsViewModel.uiState.value
+			)
+		}
+
+	@Test
+	fun testNetworkErrorWithoutCachedCoinDetailsRefreshing() =
+		runTest(timeout = Duration.parse("1m")) {
+
+			val observeCoinDetailsUseCase = mock<ObserveCoinDetailsUseCase>()
+			val fetchCoinDetailsUseCase = mock<FetchCoinDetailsUseCase>()
+			val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
+			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
+			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
+			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
+			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
+			val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
+			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
+			val coinId = "btc-bitcoin"
+			val savedStateHandle =
+				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+			val testIoDispatcher = StandardTestDispatcher()
+
+			val errorMessage = "some error"
+			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
+
+			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(observeCoinDetailsSharedFlow)
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+				RuntimeException(
+					errorMessage
+				)
+			)
+			whenever(hasCachedCoinDetailsUseCase.execute(coinId)).thenReturn(false)
+
+			val coinDetailsViewModel = CoinDetailsViewModelImpl(
+				observeCoinDetailsUseCase,
+				fetchCoinDetailsUseCase,
+				hasCachedCoinDetailsUseCase,
+				observeTagDetailsUseCase,
+				fetchTagDetailsUseCase,
+				hasCachedTagDetailsUseCase,
+				observeTeamMemberDetailsUseCase,
+				fetchTeamMemberUseCase,
+				hasCachedTeamMemberDetailsUseCase,
+				savedStateHandle,
+				testIoDispatcher
+			)
+
+			assertEquals(CoinDetailsState(isLoading = true), coinDetailsViewModel.uiState.value)
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
+
+			coinDetailsViewModel.onRefresh()
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId), any())
+			verify(hasCachedCoinDetailsUseCase, times(2)).execute(eq(coinId))
+
+			assertEquals(
+				CoinDetailsState(
+					errorMessage = ErrorMessage.GivenMessage(errorMessage),
+					isError = true,
+					isLoading = false,
 					isRefreshing = false
 				), coinDetailsViewModel.uiState.value
 			)
