@@ -13,6 +13,7 @@ dependencies {
   implementation lib.rxAndroid
   implementation lib.constraint_layout_compose
   implementation lib.coil
+  implementation lib.kotlin_collections_immutable
 
   testImplementation lib.junit4
   testImplementation lib.koinTest

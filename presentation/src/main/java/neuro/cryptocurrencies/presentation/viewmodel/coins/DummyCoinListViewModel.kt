@@ -2,6 +2,7 @@ package neuro.cryptocurrencies.presentation.viewmodel.coins
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
@@ -13,7 +14,7 @@ class DummyCoinListViewModel : CoinListViewModel {
 				listOf(
 					CoinTickerModel("bitcoin", "Bitcoin", 1, "BTC", "25421.53"),
 					CoinTickerModel("ethereum", "Ethereum", 2, "ETH", "1543.43")
-				)
+				).toImmutableList()
 			)
 		)
 	override val uiEvent: SharedFlow<CoinListViewModelImpl.UiEvent> = MutableSharedFlow()

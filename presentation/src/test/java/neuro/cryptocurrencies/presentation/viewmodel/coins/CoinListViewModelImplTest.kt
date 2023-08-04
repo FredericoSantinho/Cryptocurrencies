@@ -1,5 +1,6 @@
 package neuro.cryptocurrencies.presentation.viewmodel.coins
 
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -56,7 +57,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = coinTickerModelMockList(),
+				coins = coinTickerModelMockList().toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
 				isError = false
@@ -108,7 +109,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = coinTickerModelMockList(),
+				coins = coinTickerModelMockList().toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
 				isError = false
@@ -145,7 +146,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = listOf(coinTickerModelMock()),
+				coins = listOf(coinTickerModelMock()).toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
 				isError = false
@@ -180,7 +181,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = coinTickerModelMockList(),
+				coins = coinTickerModelMockList().toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
 				isError = false
@@ -284,7 +285,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = coinTickerModelMockList(),
+				coins = coinTickerModelMockList().toImmutableList(),
 				isError = false,
 				isLoading = false,
 				isRefreshing = false
@@ -331,7 +332,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = coinTickerModelMockList(),
+				coins = coinTickerModelMockList().toImmutableList(),
 				errorMessage = errorMessage,
 				isLoading = false,
 				isRefreshing = false
@@ -342,7 +343,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				coins = coinTickerModelMockList(),
+				coins = coinTickerModelMockList().toImmutableList(),
 				errorMessage = "",
 				isLoading = false,
 				isRefreshing = false

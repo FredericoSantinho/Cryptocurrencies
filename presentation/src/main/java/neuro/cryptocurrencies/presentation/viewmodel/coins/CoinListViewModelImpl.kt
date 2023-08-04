@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -74,7 +75,7 @@ class CoinListViewModelImpl(
 				if (filteredCoins.isNotEmpty()) {
 					_uiState.value =
 						uiState.value.copy(
-							coins = filteredCoins,
+							coins = filteredCoins.toImmutableList(),
 							isLoading = false,
 							isRefreshing = false,
 							isError = false
