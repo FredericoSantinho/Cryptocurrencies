@@ -416,4 +416,76 @@ class CoinDetailsViewModelImplTest {
 				), coinDetailsViewModel.uiState.value
 			)
 		}
+
+	@Test
+	fun testNetworkErrorWithoutCachedCoinDetailsNotRefreshing() =
+		runTest(timeout = Duration.parse("1m")) {
+
+			val observeCoinDetailsUseCase = mock<ObserveCoinDetailsUseCase>()
+			val fetchCoinDetailsUseCase = mock<FetchCoinDetailsUseCase>()
+			val hasCachedCoinDetailsUseCase = mock<HasCachedCoinDetailsUseCase>()
+			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
+			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
+			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
+			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
+			val fetchTeamMemberUseCase = mock<FetchTeamMemberUseCase>()
+			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
+			val coinId = "btc-bitcoin"
+			val savedStateHandle =
+				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
+			val testIoDispatcher = StandardTestDispatcher()
+
+			val errorMessage = "some error"
+			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
+
+			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(observeCoinDetailsSharedFlow)
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+				RuntimeException(
+					errorMessage
+				)
+			)
+			whenever(hasCachedCoinDetailsUseCase.execute(coinId)).thenReturn(false)
+
+			val coinDetailsViewModel = CoinDetailsViewModelImpl(
+				observeCoinDetailsUseCase,
+				fetchCoinDetailsUseCase,
+				hasCachedCoinDetailsUseCase,
+				observeTagDetailsUseCase,
+				fetchTagDetailsUseCase,
+				hasCachedTagDetailsUseCase,
+				observeTeamMemberDetailsUseCase,
+				fetchTeamMemberUseCase,
+				hasCachedTeamMemberDetailsUseCase,
+				savedStateHandle,
+				testIoDispatcher
+			)
+
+			assertEquals(CoinDetailsState(isLoading = true), coinDetailsViewModel.uiState.value)
+
+			testIoDispatcher.scheduler.runCurrent()
+
+			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
+
+			assertEquals(
+				CoinDetailsState(
+					errorMessage = ErrorMessage.GivenMessage(errorMessage),
+					isError = true,
+					isLoading = false,
+					isRefreshing = false
+				), coinDetailsViewModel.uiState.value
+			)
+
+			coinDetailsViewModel.errorShown()
+
+			assertEquals(
+				CoinDetailsState(
+					errorMessage = ErrorMessage.Empty,
+					isError = true,
+					isLoading = false,
+					isRefreshing = false
+				), coinDetailsViewModel.uiState.value
+			)
+		}
 }
