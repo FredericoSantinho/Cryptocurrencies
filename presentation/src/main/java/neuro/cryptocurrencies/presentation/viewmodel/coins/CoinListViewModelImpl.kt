@@ -55,7 +55,7 @@ class CoinListViewModelImpl(
 	}
 
 	override fun onRetry() {
-		_uiState.value = uiState.value.copy(isLoading = true)
+		_uiState.value = uiState.value.copy(isLoading = true, isError = false)
 		fetchCoinsTickers()
 	}
 
