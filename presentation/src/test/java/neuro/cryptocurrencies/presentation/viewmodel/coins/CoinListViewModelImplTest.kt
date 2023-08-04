@@ -2,13 +2,14 @@ package neuro.cryptocurrencies.presentation.viewmodel.coins
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.mocks.coinTickerMockList
 import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.MainDispatcherRule
+import neuro.cryptocurrencies.presentation.mocks.coinTickerModelMock
 import neuro.cryptocurrencies.presentation.mocks.coinTickerModelMockList
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +26,7 @@ class CoinListViewModelImplTest {
 	val mainDispatcherRule = MainDispatcherRule()
 
 	@Test
-	fun testHappyPath() = runTest {
+	fun testHappyPath() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -60,7 +61,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testRefresh() = runTest {
+	fun testRefresh() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -111,8 +112,45 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
+	fun testSearch() = runBlocking {
+		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
+		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
+		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
+		val testIoDispatcher = StandardTestDispatcher()
+
+		whenever(observeCoinsTickersUseCase.execute()).thenReturn(flow { emit(coinTickerMockList()) })
+
+		val coinListViewModel = CoinListViewModelImpl(
+			observeCoinsTickersUseCase,
+			fetchCoinsTickersUseCase,
+			hasCachedCoinsTickersUseCase,
+			testIoDispatcher
+		)
+
+		assertEquals(CoinListState(isLoading = true), coinListViewModel.uiState.value)
+
+		verifyNoInteractions(fetchCoinsTickersUseCase)
+
+		testIoDispatcher.scheduler.runCurrent()
+
+		coinListViewModel.onSearchTerm("bitcoin")
+
+		verify(fetchCoinsTickersUseCase, times(1)).execute()
+		verify(observeCoinsTickersUseCase, times(1)).execute()
+
+		assertEquals(
+			CoinListState(
+				coins = listOf(coinTickerModelMock()),
+				isLoading = false,
+				isRefreshing = false,
+				isError = false
+			), coinListViewModel.uiState.value
+		)
+	}
+
+	@Test
 	fun testErrorObservingCoinsTickers() {
-		runTest {
+		runBlocking {
 			val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 			val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 			val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -154,7 +192,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testNetworkErrorWithCachedCoinsTickersNotRefreshing() = runTest {
+	fun testNetworkErrorWithCachedCoinsTickersNotRefreshing() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -191,7 +229,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testNetworkErrorWithCachedCoinsTickersRefreshing() = runTest {
+	fun testNetworkErrorWithCachedCoinsTickersRefreshing() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -234,7 +272,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testNetworkErrorWithoutCachedCoinsTickersRefreshing() = runTest {
+	fun testNetworkErrorWithoutCachedCoinsTickersRefreshing() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -278,7 +316,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testNetworkErrorWithoutCachedCoinsTickersNotRefreshing() = runTest {
+	fun testNetworkErrorWithoutCachedCoinsTickersNotRefreshing() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
@@ -316,7 +354,7 @@ class CoinListViewModelImplTest {
 	}
 
 	@Test
-	fun testDatabaseErrorCheckingCachedCoinsTickers() = runTest {
+	fun testDatabaseErrorCheckingCachedCoinsTickers() = runBlocking {
 		val observeCoinsTickersUseCase = mock<ObserveCoinsTickersUseCase>()
 		val fetchCoinsTickersUseCase = mock<FetchCoinsTickersUseCase>()
 		val hasCachedCoinsTickersUseCase = mock<HasCachedCoinsTickersUseCase>()
