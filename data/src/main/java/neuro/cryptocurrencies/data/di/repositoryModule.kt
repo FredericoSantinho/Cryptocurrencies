@@ -2,7 +2,7 @@ package neuro.cryptocurrencies.data.di
 
 import neuro.cryptocurrencies.data.repository.database.coin.HasCachedCoinsTickersRepositoryImpl
 import neuro.cryptocurrencies.data.repository.database.coin.ObserveCoinsTickersRepositoryImpl
-import neuro.cryptocurrencies.data.repository.database.coin.SaveCoinTickersRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.coin.SaveCoinsTickersRepositoryImpl
 import neuro.cryptocurrencies.data.repository.database.coin.details.HasCachedCoinDetailsRepositoryImpl
 import neuro.cryptocurrencies.data.repository.database.coin.details.ObserveCoinDetailsRepositoryImpl
 import neuro.cryptocurrencies.data.repository.database.coin.details.SaveCoinDetailsWithPriceRepositoryImpl
@@ -21,7 +21,7 @@ import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
 import neuro.cryptocurrencies.domain.repository.coin.HasCachedCoinsTickersRepository
 import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
-import neuro.cryptocurrencies.domain.repository.coin.SaveCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.SaveCoinsTickersRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.HasCachedCoinDetailsRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.ObserveCoinDetailsRepository
@@ -55,7 +55,7 @@ val repositoryModule = module {
 	factory<ObserveCoinsTickersRepository> { ObserveCoinsTickersRepositoryImpl(get()) }
 	factory<GetCoinTickerRepository> { GetCoinTickerRepositoryImpl(get()) }
 	factory<GetCoinTickersRepository> { GetCoinTickersRepositoryImpl(get()) }
-	factory<SaveCoinTickersRepository> { SaveCoinTickersRepositoryImpl(get()) }
+	factory<SaveCoinsTickersRepository> { SaveCoinsTickersRepositoryImpl(get()) }
 	factory<HasCachedCoinsTickersRepository> { HasCachedCoinsTickersRepositoryImpl(get()) }
 	factory<ObserveTeamMemberDetailsRepository> { ObserveTeamMemberDetailsRepositoryImpl(get()) }
 	factory<HasCachedTeamMemberDetailsRepository> { HasCachedTeamMemberDetailsRepositoryImpl(get()) }

@@ -3,11 +3,11 @@ package neuro.cryptocurrencies.data.repository.database.coin
 import neuro.cryptocurrencies.data.dao.CoinTickerDao
 import neuro.cryptocurrencies.data.mapper.database.toDatabase
 import neuro.cryptocurrencies.domain.entity.CoinTicker
-import neuro.cryptocurrencies.domain.repository.coin.SaveCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.SaveCoinsTickersRepository
 
-class SaveCoinTickersRepositoryImpl(private val coinTickerDao: CoinTickerDao) :
-	SaveCoinTickersRepository {
-	override suspend fun saveCoinTickers(coinTickers: List<CoinTicker>) {
+class SaveCoinsTickersRepositoryImpl(private val coinTickerDao: CoinTickerDao) :
+	SaveCoinsTickersRepository {
+	override suspend fun saveCoinsTickers(coinTickers: List<CoinTicker>) {
 		coinTickerDao.upsertCoinTickers(coinTickers.map { it.toDatabase() })
 	}
 }

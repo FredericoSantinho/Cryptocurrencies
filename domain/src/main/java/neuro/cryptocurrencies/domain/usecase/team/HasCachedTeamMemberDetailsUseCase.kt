@@ -1,7 +1,6 @@
 package neuro.cryptocurrencies.domain.usecase.team
 
 interface HasCachedTeamMemberDetailsUseCase {
-
 	/**
 	 * Checks if there are cached team member details.
 	 * @param teamMemberId team member id.

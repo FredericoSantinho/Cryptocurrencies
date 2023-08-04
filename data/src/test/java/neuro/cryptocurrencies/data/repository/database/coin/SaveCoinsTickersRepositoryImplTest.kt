@@ -11,17 +11,17 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import kotlin.time.Duration
 
-class SaveCoinTickersRepositoryImplTest {
+class SaveCoinsTickersRepositoryImplTest {
 
 	@Test
 	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val coinTickerDao = mock<CoinTickerDao>()
 
-		val saveCoinTickersRepository = SaveCoinTickersRepositoryImpl(coinTickerDao)
+		val saveCoinTickersRepository = SaveCoinsTickersRepositoryImpl(coinTickerDao)
 
 		verifyNoInteractions(coinTickerDao)
 
-		saveCoinTickersRepository.saveCoinTickers(coinTickerMockList())
+		saveCoinTickersRepository.saveCoinsTickers(coinTickerMockList())
 
 		verify(coinTickerDao, times(1)).upsertCoinTickers(roomCoinTickerMockList())
 	}

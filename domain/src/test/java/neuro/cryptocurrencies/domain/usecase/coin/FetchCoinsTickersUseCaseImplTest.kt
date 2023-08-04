@@ -3,7 +3,7 @@ package neuro.cryptocurrencies.domain.usecase.coin
 import kotlinx.coroutines.runBlocking
 import neuro.cryptocurrencies.domain.entity.CoinTicker
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
-import neuro.cryptocurrencies.domain.repository.coin.SaveCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.SaveCoinsTickersRepository
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
@@ -15,20 +15,20 @@ class FetchCoinsTickersUseCaseImplTest {
 	@Test
 	fun test() = runBlocking {
 		val getCoinTickersRepository = mock<GetCoinTickersRepository>()
-		val saveCoinTickersRepository = mock<SaveCoinTickersRepository>()
+		val saveCoinsTickersRepository = mock<SaveCoinsTickersRepository>()
 
 		val fetchCoinsTickersUseCase =
-			FetchCoinsTickersUseCaseImpl(getCoinTickersRepository, saveCoinTickersRepository)
+			FetchCoinsTickersUseCaseImpl(getCoinTickersRepository, saveCoinsTickersRepository)
 
 		whenever(getCoinTickersRepository.getCoinTickers()).thenReturn(buildCoinTickersList())
 
 		verifyNoInteractions(getCoinTickersRepository)
-		verifyNoInteractions(saveCoinTickersRepository)
+		verifyNoInteractions(saveCoinsTickersRepository)
 
 		fetchCoinsTickersUseCase.execute()
 
 		verify(getCoinTickersRepository, times(1)).getCoinTickers()
-		verify(saveCoinTickersRepository, times(1)).saveCoinTickers(buildCoinTickersList())
+		verify(saveCoinsTickersRepository, times(1)).saveCoinsTickers(buildCoinTickersList())
 	}
 
 	private fun buildCoinTickersList() = listOf(
