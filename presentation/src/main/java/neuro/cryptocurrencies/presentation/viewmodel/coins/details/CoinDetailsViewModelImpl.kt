@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,7 +29,7 @@ import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.DialogText
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.model.TagModel
-import neuro.cryptocurrencies.presentation.model.TeamModel
+import neuro.cryptocurrencies.presentation.model.TeamMemberModel
 
 class CoinDetailsViewModelImpl(
 	private val observeCoinDetailsUseCase: ObserveCoinDetailsUseCase,
@@ -40,7 +41,8 @@ class CoinDetailsViewModelImpl(
 	private val observeTeamMemberDetailsUseCase: ObserveTeamMemberDetailsUseCase,
 	private val fetchTeamMemberUseCase: FetchTeamMemberUseCase,
 	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
-	savedStateHandle: SavedStateHandle
+	savedStateHandle: SavedStateHandle,
+	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(), CoinDetailsViewModel {
 	private val _uiState = mutableStateOf(CoinDetailsState(isLoading = true))
 	override val uiState: State<CoinDetailsState> = _uiState
@@ -85,7 +87,7 @@ class CoinDetailsViewModelImpl(
 	}
 
 	private fun observeCoinDetailsWithPrice() {
-		observeCoinDetailsUseCase.execute(coinId).flowOn(Dispatchers.IO)
+		observeCoinDetailsUseCase.execute(coinId).flowOn(ioDispatcher)
 			.onEach { coinDetailsWithPrice ->
 				_uiState.value =
 					uiState.value.copy(
@@ -108,9 +110,9 @@ class CoinDetailsViewModelImpl(
 	}
 
 	private fun fetchCoinDetailsWithPrice() {
-		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
 			// In case a network error occurs.
-			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+			viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
 				// In case a database error occurs.
 				viewModelScope.launch {
 					_uiState.value =
@@ -149,7 +151,7 @@ class CoinDetailsViewModelImpl(
 
 	private fun observeTag(tagModel: TagModel) {
 		dialogFeedingJob.value =
-			observeTagDetailsUseCase.execute(tagModel.id).flowOn(Dispatchers.IO).onEach { tagDetails ->
+			observeTagDetailsUseCase.execute(tagModel.id).flowOn(ioDispatcher).onEach { tagDetails ->
 				_uiState.value =
 					uiState.value.copy(
 						dialogText = DialogText.GivenText(tagDetails.description),
@@ -166,9 +168,9 @@ class CoinDetailsViewModelImpl(
 	}
 
 	private fun fetchTag(tagModel: TagModel) {
-		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
 			// In case a network error occurs.
-			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+			viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
 				// In case a database error occurs.
 				viewModelScope.launch {
 					_uiState.value =
@@ -204,11 +206,15 @@ class CoinDetailsViewModelImpl(
 		}
 	}
 
-	private fun observeTeamMember(teamModel: TeamModel) {
+	private fun observeTeamMember(teamMemberModel: TeamMemberModel) {
 		_uiState.value =
-			uiState.value.copy(showDialog = true, dialogTitle = teamModel.name, dialogLoading = true)
+			uiState.value.copy(
+				showDialog = true,
+				dialogTitle = teamMemberModel.name,
+				dialogLoading = true
+			)
 		dialogFeedingJob.value =
-			observeTeamMemberDetailsUseCase.execute(teamModel.id).flowOn(Dispatchers.IO)
+			observeTeamMemberDetailsUseCase.execute(teamMemberModel.id).flowOn(ioDispatcher)
 				.onEach { teamMemberDetails ->
 					_uiState.value =
 						uiState.value.copy(
@@ -225,10 +231,10 @@ class CoinDetailsViewModelImpl(
 				}.launchIn(viewModelScope)
 	}
 
-	private fun fetchTeamMember(teamModel: TeamModel) {
-		viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable ->
+	private fun fetchTeamMember(teamMemberModel: TeamMemberModel) {
+		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
 			// In case a network error occurs.
-			viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, throwable1 ->
+			viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
 				// In case a database error occurs.
 				viewModelScope.launch {
 					_uiState.value =
@@ -240,7 +246,8 @@ class CoinDetailsViewModelImpl(
 						)
 				}
 			}) {
-				val hasCachedTeamMemberDetails = hasCachedTeamMemberDetailsUseCase.execute(teamModel.id)
+				val hasCachedTeamMemberDetails =
+					hasCachedTeamMemberDetailsUseCase.execute(teamMemberModel.id)
 				withContext(Dispatchers.Main) {
 					if (!hasCachedTeamMemberDetails) {
 						if (throwable is NoDataAvailableException) {
@@ -261,19 +268,19 @@ class CoinDetailsViewModelImpl(
 				}
 			}
 		}) {
-			fetchTeamMemberUseCase.execute(teamModel.id)
+			fetchTeamMemberUseCase.execute(teamMemberModel.id)
 		}
 	}
 
-	override fun onTeamMemberClick(teamModel: TeamModel) {
+	override fun onTeamMemberClick(teamMemberModel: TeamMemberModel) {
 		_uiState.value =
 			uiState.value.copy(
 				showDialog = true,
-				dialogTitle = "${teamModel.name} (${teamModel.position})",
+				dialogTitle = "${teamMemberModel.name} (${teamMemberModel.position})",
 				dialogLoading = true
 			)
-		observeTeamMember(teamModel)
-		fetchTeamMember(teamModel)
+		observeTeamMember(teamMemberModel)
+		fetchTeamMember(teamMemberModel)
 	}
 
 	companion object {

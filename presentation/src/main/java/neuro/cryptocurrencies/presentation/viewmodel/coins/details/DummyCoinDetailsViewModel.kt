@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import neuro.cryptocurrencies.presentation.model.CoinDetailsModel
 import neuro.cryptocurrencies.presentation.model.CoinDetailsWithPriceModel
 import neuro.cryptocurrencies.presentation.model.TagModel
-import neuro.cryptocurrencies.presentation.model.TeamModel
+import neuro.cryptocurrencies.presentation.model.TeamMemberModel
 
 class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 	override val uiState: State<CoinDetailsState> =
@@ -23,7 +23,7 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 						1,
 						"BTC",
 						listOf(TagModel("1", "tag1"), TagModel("2", "tag2"), TagModel("3", "tag3")),
-						listOf(TeamModel("1", "Satoshi Nakamoto", "Founder")),
+						listOf(TeamMemberModel("1", "Satoshi Nakamoto", "Founder")),
 						"Coin"
 					), "$ 25432"
 				)
@@ -50,7 +50,7 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 
 	}
 
-	override fun onTeamMemberClick(teamModel: TeamModel) {
+	override fun onTeamMemberClick(teamMemberModel: TeamMemberModel) {
 
 	}
 }

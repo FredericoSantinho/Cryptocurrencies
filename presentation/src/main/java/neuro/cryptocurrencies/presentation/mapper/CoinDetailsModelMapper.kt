@@ -5,7 +5,7 @@ import neuro.cryptocurrencies.domain.entity.Tag
 import neuro.cryptocurrencies.domain.entity.TeamMember
 import neuro.cryptocurrencies.presentation.model.CoinDetailsModel
 import neuro.cryptocurrencies.presentation.model.TagModel
-import neuro.cryptocurrencies.presentation.model.TeamModel
+import neuro.cryptocurrencies.presentation.model.TeamMemberModel
 
 fun CoinDetails.toPresentation() = CoinDetailsModel(
 	id,
@@ -22,6 +22,6 @@ fun CoinDetails.toPresentation() = CoinDetailsModel(
 	type
 )
 
-fun TeamMember.toPresentation() = TeamModel(id, name, position)
+fun TeamMember.toPresentation() = TeamMemberModel(id, name, position)
 
 fun Tag.toPresentation() = TagModel(id, name)

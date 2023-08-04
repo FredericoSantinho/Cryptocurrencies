@@ -11,6 +11,6 @@ data class CoinDetailsModel(
 	val rank: Int,
 	val symbol: String,
 	val tags: List<TagModel>,
-	val team: List<TeamModel>,
+	val team: List<TeamMemberModel>,
 	val type: String
 )
