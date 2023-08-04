@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.flowlayout.FlowRow
 import neuro.cryptocurrencies.presentation.R
+import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListItemComposable
 import neuro.cryptocurrencies.presentation.ui.common.composables.AlertDialogDismissable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
@@ -215,7 +216,8 @@ fun CoinDetailsComposable(
 		if (uiState.showDialog) {
 			AlertDialogDismissable(
 				title = uiState.dialogTitle,
-				text = uiState.dialogText.ifBlank { stringResource(id = R.string.no_description_available) },
+				text = uiState.dialogText.toPresentation()
+					.ifBlank { stringResource(id = R.string.no_description_available) },
 				onDismissRequest = { viewModel.onDialogDismiss() },
 				loading = uiState.dialogLoading,
 				modifier = Modifier.height(240.dp)
@@ -224,9 +226,10 @@ fun CoinDetailsComposable(
 	}
 
 	val context = LocalContext.current
+	val errorMessage = uiState.errorMessage.toPresentation()
 	LaunchedEffect(key1 = uiState.errorMessage) {
-		if (uiState.errorMessage.isNotBlank()) {
-			Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_LONG).show()
+		if (errorMessage.isNotBlank()) {
+			Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
 			viewModel.errorShown()
 		}
 	}

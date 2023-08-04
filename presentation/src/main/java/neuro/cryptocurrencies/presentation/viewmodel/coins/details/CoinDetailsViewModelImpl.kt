@@ -1,7 +1,5 @@
 package neuro.cryptocurrencies.presentation.viewmodel.coins.details
 
-import android.app.Application
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -26,8 +24,9 @@ import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberUseCase
 import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCase
-import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
+import neuro.cryptocurrencies.presentation.model.DialogText
+import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.model.TagModel
 import neuro.cryptocurrencies.presentation.model.TeamModel
 
@@ -41,7 +40,6 @@ class CoinDetailsViewModelImpl(
 	private val observeTeamMemberDetailsUseCase: ObserveTeamMemberDetailsUseCase,
 	private val fetchTeamMemberUseCase: FetchTeamMemberUseCase,
 	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
-	private val context: Application,
 	savedStateHandle: SavedStateHandle
 ) : ViewModel(), CoinDetailsViewModel {
 	private val _uiState = mutableStateOf(CoinDetailsState(isLoading = true))
@@ -60,7 +58,7 @@ class CoinDetailsViewModelImpl(
 	}
 
 	override fun errorShown() {
-		_uiState.value = uiState.value.copy(errorMessage = "")
+		_uiState.value = uiState.value.copy(errorMessage = ErrorMessage.Empty)
 	}
 
 	override fun onRetry() {
@@ -75,7 +73,8 @@ class CoinDetailsViewModelImpl(
 
 	override fun onDialogDismiss() {
 		dialogFeedingJob.value?.cancel()
-		_uiState.value = uiState.value.copy(showDialog = false, dialogTitle = "", dialogText = "")
+		_uiState.value =
+			uiState.value.copy(showDialog = false, dialogTitle = "", dialogText = DialogText.Empty)
 	}
 
 	override fun onTagClick(tagModel: TagModel) {
@@ -95,7 +94,16 @@ class CoinDetailsViewModelImpl(
 						isError = false,
 						isRefreshing = false
 					)
-			}.catch { Log.e("TAG", "observeCoinDetailsWithPrice: ", it) }
+			}.catch {
+				_uiState.value =
+					uiState.value.copy(
+						isError = true,
+						errorMessage = it.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+							?: ErrorMessage.UnexpectedErrorOccurred,
+						isLoading = false,
+						isRefreshing = false
+					)
+			}
 			.launchIn(viewModelScope)
 	}
 
@@ -107,7 +115,8 @@ class CoinDetailsViewModelImpl(
 				viewModelScope.launch {
 					_uiState.value =
 						uiState.value.copy(
-							errorMessage = throwable1.localizedMessage ?: "Unexpected error occurred!",
+							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+								?: ErrorMessage.UnexpectedErrorOccurred,
 						)
 				}
 			}) {
@@ -116,7 +125,8 @@ class CoinDetailsViewModelImpl(
 					if (!hasCachedCoinDetails) {
 						_uiState.value =
 							uiState.value.copy(
-								errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
+								errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+									?: ErrorMessage.UnexpectedErrorOccurred,
 								isError = true,
 								isLoading = false,
 								isRefreshing = false
@@ -125,7 +135,8 @@ class CoinDetailsViewModelImpl(
 						if (uiState.value.isRefreshing) {
 							_uiState.value = uiState.value.copy(
 								isRefreshing = false,
-								errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!"
+								errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+									?: ErrorMessage.UnexpectedErrorOccurred
 							)
 						}
 					}
@@ -140,11 +151,15 @@ class CoinDetailsViewModelImpl(
 		dialogFeedingJob.value =
 			observeTagDetailsUseCase.execute(tagModel.id).flowOn(Dispatchers.IO).onEach { tagDetails ->
 				_uiState.value =
-					uiState.value.copy(dialogText = tagDetails.description, dialogLoading = false)
+					uiState.value.copy(
+						dialogText = DialogText.GivenText(tagDetails.description),
+						dialogLoading = false
+					)
 			}.catch { throwable ->
 				_uiState.value = uiState.value.copy(
-					errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
-					dialogText = context.getString(R.string.unexpected_error),
+					errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+						?: ErrorMessage.UnexpectedErrorOccurred,
+					dialogText = DialogText.UnexpectedError,
 					dialogLoading = false
 				)
 			}.launchIn(viewModelScope)
@@ -158,8 +173,9 @@ class CoinDetailsViewModelImpl(
 				viewModelScope.launch {
 					_uiState.value =
 						uiState.value.copy(
-							errorMessage = throwable1.localizedMessage ?: "Unexpected error occurred!",
-							dialogText = context.getString(R.string.unexpected_error),
+							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+								?: ErrorMessage.UnexpectedErrorOccurred,
+							dialogText = DialogText.UnexpectedError,
 							dialogLoading = false
 						)
 				}
@@ -170,13 +186,13 @@ class CoinDetailsViewModelImpl(
 						if (throwable is NoDataAvailableException) {
 							_uiState.value =
 								uiState.value.copy(
-									dialogText = context.getString(R.string.no_data_available),
+									dialogText = DialogText.NoDataAvailable,
 									dialogLoading = false
 								)
 						} else {
 							_uiState.value =
 								uiState.value.copy(
-									dialogText = context.getString(R.string.error_retrieving_data),
+									dialogText = DialogText.ErrorRetrievingData,
 									dialogLoading = false
 								)
 						}
@@ -195,14 +211,18 @@ class CoinDetailsViewModelImpl(
 			observeTeamMemberDetailsUseCase.execute(teamModel.id).flowOn(Dispatchers.IO)
 				.onEach { teamMemberDetails ->
 					_uiState.value =
-						uiState.value.copy(dialogText = teamMemberDetails.description, dialogLoading = false)
+						uiState.value.copy(
+							dialogText = DialogText.GivenText(teamMemberDetails.description),
+							dialogLoading = false
+						)
 				}.catch { throwable ->
-				_uiState.value = uiState.value.copy(
-					errorMessage = throwable.localizedMessage ?: "Unexpected error occurred!",
-					dialogText = context.getString(R.string.unexpected_error),
-					dialogLoading = false
-				)
-			}.launchIn(viewModelScope)
+					_uiState.value = uiState.value.copy(
+						errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+							?: ErrorMessage.UnexpectedErrorOccurred,
+						dialogText = DialogText.UnexpectedError,
+						dialogLoading = false
+					)
+				}.launchIn(viewModelScope)
 	}
 
 	private fun fetchTeamMember(teamModel: TeamModel) {
@@ -213,8 +233,9 @@ class CoinDetailsViewModelImpl(
 				viewModelScope.launch {
 					_uiState.value =
 						uiState.value.copy(
-							errorMessage = throwable1.localizedMessage ?: "Unexpected error occurred!",
-							dialogText = context.getString(R.string.unexpected_error),
+							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+								?: ErrorMessage.UnexpectedErrorOccurred,
+							dialogText = DialogText.UnexpectedError,
 							dialogLoading = false
 						)
 				}
@@ -225,13 +246,13 @@ class CoinDetailsViewModelImpl(
 						if (throwable is NoDataAvailableException) {
 							_uiState.value =
 								uiState.value.copy(
-									dialogText = context.getString(R.string.no_data_available),
+									dialogText = DialogText.NoDataAvailable,
 									dialogLoading = false
 								)
 						} else {
 							_uiState.value =
 								uiState.value.copy(
-									dialogText = context.getString(R.string.error_retrieving_data),
+									dialogText = DialogText.ErrorRetrievingData,
 									dialogLoading = false
 								)
 						}
