@@ -188,6 +188,17 @@ class CoinListViewModelImplTest {
 					isRefreshing = false
 				), coinListViewModel.uiState.value
 			)
+
+			coinListViewModel.errorShown()
+
+			assertEquals(
+				CoinListState(
+					isError = true,
+					errorMessage = "",
+					isLoading = false,
+					isRefreshing = false
+				), coinListViewModel.uiState.value
+			)
 		}
 	}
 
@@ -269,6 +280,17 @@ class CoinListViewModelImplTest {
 				isRefreshing = false
 			), coinListViewModel.uiState.value
 		)
+
+		coinListViewModel.errorShown()
+
+		assertEquals(
+			CoinListState(
+				coins = coinTickerModelMockList(),
+				errorMessage = "",
+				isLoading = false,
+				isRefreshing = false
+			), coinListViewModel.uiState.value
+		)
 	}
 
 	@Test
@@ -313,6 +335,18 @@ class CoinListViewModelImplTest {
 				isRefreshing = false
 			), coinListViewModel.uiState.value
 		)
+
+		coinListViewModel.errorShown()
+
+		assertEquals(
+			CoinListState(
+				coins = null,
+				isError = true,
+				errorMessage = "",
+				isLoading = false,
+				isRefreshing = false
+			), coinListViewModel.uiState.value
+		)
 	}
 
 	@Test
@@ -347,6 +381,18 @@ class CoinListViewModelImplTest {
 				coins = null,
 				isError = true,
 				errorMessage = errorMessage,
+				isLoading = false,
+				isRefreshing = false
+			), coinListViewModel.uiState.value
+		)
+
+		coinListViewModel.errorShown()
+
+		assertEquals(
+			CoinListState(
+				coins = null,
+				isError = true,
+				errorMessage = "",
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -389,6 +435,16 @@ class CoinListViewModelImplTest {
 				isRefreshing = false
 			), coinListViewModel.uiState.value
 		)
-	}
 
+		coinListViewModel.errorShown()
+
+		assertEquals(
+			CoinListState(
+				isError = true,
+				errorMessage = "",
+				isLoading = false,
+				isRefreshing = false
+			), coinListViewModel.uiState.value
+		)
+	}
 }
