@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.mocks.coinTickerMockList
-import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.MainDispatcherRule
 import neuro.cryptocurrencies.presentation.mocks.coinTickerModelMock
 import neuro.cryptocurrencies.presentation.mocks.coinTickerModelMockList

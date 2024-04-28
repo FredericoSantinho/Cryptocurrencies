@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 import neuro.cryptocurrencies.presentation.model.ErrorMessage

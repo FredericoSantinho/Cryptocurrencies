@@ -1,23 +1,23 @@
 package neuro.cryptocurrencies.domain.di
 
-import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.FetchCoinsTickersUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.HasCachedCoinsTickersUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.coin.details.FetchCoinDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.details.FetchCoinDetailsUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.coin.details.HasCachedCoinDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.details.HasCachedCoinDetailsUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.coin.details.ObserveCoinDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.coin.details.ObserveCoinDetailsUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCaseImpl
-import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinDetails.FetchCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coinDetails.FetchCoinDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinDetails.HasCachedCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coinDetails.HasCachedCoinDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinDetails.ObserveCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coinDetails.ObserveCoinDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.tagDetails.FetchTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tagDetails.FetchTagDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.tagDetails.HasCachedTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tagDetails.HasCachedTagDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.tagDetails.ObserveTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tagDetails.ObserveTagDetailsUseCaseImpl
 import org.koin.dsl.module
 
 val useCaseModule = module {
