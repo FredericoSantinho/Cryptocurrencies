@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice
+import neuro.cryptocurrencies.domain.entity.TagDetails
 import neuro.cryptocurrencies.domain.usecase.coinDetails.FetchCoinDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.coinDetails.HasCachedCoinDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.coinDetails.ObserveCoinDetailsUseCase
@@ -48,9 +49,7 @@ class CoinDetailsViewModelImpl @Inject constructor(
 	private val dialogFeedingJob = mutableStateOf<Job?>(null)
 
 	init {
-		savedStateHandle.get<String>(PARAM_COIN_ID)?.let {
-			coinId = it
-		}
+		loadParams(savedStateHandle)
 		observeCoinDetailsWithPrice()
 		fetchCoinDetailsWithPrice()
 	}
@@ -82,126 +81,146 @@ class CoinDetailsViewModelImpl @Inject constructor(
 		fetchTag(tagModel)
 	}
 
+	private fun loadParams(savedStateHandle: SavedStateHandle) {
+		savedStateHandle.get<String>(PARAM_COIN_ID)?.let {
+			coinId = it
+		}
+	}
+
 	private fun observeCoinDetailsWithPrice() {
 		observeCoinDetailsUseCase.execute(coinId).flowOn(ioDispatcher)
-			.onEach { coinDetailsWithPrice ->
-				_uiState.value =
-					uiState.value.copy(
-						coinDetailsWithPriceModel = coinDetailsWithPrice.toPresentation(),
-						isLoading = false,
-						isErrorState = false,
-						isRefreshing = false
-					)
-			}.catch {
-				_uiState.value =
-					uiState.value.copy(
-						isErrorState = true,
-						errorMessage = it.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-							?: ErrorMessage.UnexpectedErrorOccurred,
-						isLoading = false,
-						isRefreshing = false
-					)
-			}
+			.onEach { coinDetailsWithPrice -> setCoinDetails(coinDetailsWithPrice) }
+			.catch { showErrorAndSetErrorState(it) }
 			.launchIn(viewModelScope)
 	}
 
 	private fun fetchCoinDetailsWithPrice() {
-		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
-			// In case a network error occurs.
-			viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
-				// In case a database error occurs.
-				viewModelScope.launch {
-					_uiState.value =
-						uiState.value.copy(
-							isErrorState = true,
-							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-								?: ErrorMessage.UnexpectedErrorOccurred,
-							isLoading = false,
-							isRefreshing = false
-						)
-				}
-			}) {
-				val hasCachedCoinDetails = hasCachedCoinDetailsUseCase.execute(coinId)
-				withContext(Dispatchers.Main) {
-					if (!hasCachedCoinDetails) {
-						_uiState.value =
-							uiState.value.copy(
-								errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-									?: ErrorMessage.UnexpectedErrorOccurred,
-								isErrorState = true,
-								isLoading = false,
-								isRefreshing = false
-							)
-					} else {
-						if (uiState.value.isRefreshing) {
-							_uiState.value = uiState.value.copy(
-								isRefreshing = false,
-								errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-									?: ErrorMessage.UnexpectedErrorOccurred
-							)
-						}
-					}
-				}
-			}
+		viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+			handleFetchCoinDetailsError(throwable)
 		}) {
-			fetchCoinDetailsUseCase.execute(coinId, viewModelScope)
+			fetchCoinDetailsUseCase.execute(coinId)
 		}
 	}
 
 	private fun observeTag(tagModel: TagModel) {
 		dialogFeedingJob.value =
-			observeTagDetailsUseCase.execute(tagModel.id).flowOn(ioDispatcher).onEach { tagDetails ->
-				_uiState.value =
-					uiState.value.copy(
-						dialogText = DialogText.GivenText(tagDetails.description),
-						dialogLoading = false
-					)
-			}.catch { throwable ->
-				_uiState.value = uiState.value.copy(
-					errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-						?: ErrorMessage.UnexpectedErrorOccurred,
-					dialogText = DialogText.UnexpectedError,
-					dialogLoading = false
-				)
-			}.launchIn(viewModelScope)
+			observeTagDetailsUseCase.execute(tagModel.id).flowOn(ioDispatcher)
+				.onEach { tagDetails -> setDialog(tagDetails) }
+				.catch { throwable -> setDialogErrorState(throwable) }.launchIn(viewModelScope)
 	}
 
 	private fun fetchTag(tagModel: TagModel) {
 		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
-			// In case a network error occurs.
-			viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
-				// In case a database error occurs.
-				viewModelScope.launch {
-					_uiState.value =
-						uiState.value.copy(
-							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-								?: ErrorMessage.UnexpectedErrorOccurred,
-							dialogText = DialogText.UnexpectedError,
-							dialogLoading = false
-						)
-				}
-			}) {
-				val hasCachedTagDetails = hasCachedTagDetailsUseCase.execute(tagModel.id)
-				withContext(Dispatchers.Main) {
-					if (!hasCachedTagDetails) {
-						if (throwable is NoDataAvailableException) {
-							_uiState.value =
-								uiState.value.copy(
-									dialogText = DialogText.NoDataAvailable,
-									dialogLoading = false
-								)
-						} else {
-							_uiState.value =
-								uiState.value.copy(
-									dialogText = DialogText.ErrorRetrievingData,
-									dialogLoading = false
-								)
-						}
-					}
-				}
-			}
+			handleFetchTagDetailsError(throwable, tagModel)
 		}) {
 			fetchTagDetailsUseCase.execute(tagModel.id)
+		}
+	}
+
+	private fun setCoinDetails(coinDetailsWithPrice: CoinDetailsWithPrice) {
+		_uiState.value =
+			uiState.value.copy(
+				coinDetailsWithPriceModel = coinDetailsWithPrice.toPresentation(),
+				isLoading = false,
+				isErrorState = false,
+				isRefreshing = false
+			)
+	}
+
+	private fun setDialog(tagDetails: TagDetails) {
+		_uiState.value =
+			uiState.value.copy(
+				dialogText = DialogText.GivenText(tagDetails.description),
+				dialogLoading = false
+			)
+	}
+
+	private fun setDialogErrorState(throwable: Throwable) {
+		_uiState.value = uiState.value.copy(
+			errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+				?: ErrorMessage.UnexpectedErrorOccurred,
+			dialogText = DialogText.UnexpectedError,
+			dialogLoading = false
+		)
+	}
+
+	private fun setDialogNoDataAvailable() {
+		_uiState.value =
+			uiState.value.copy(
+				dialogText = DialogText.NoDataAvailable,
+				dialogLoading = false
+			)
+	}
+
+	private fun setDialogErrorRetrievingData() {
+		_uiState.value =
+			uiState.value.copy(
+				dialogText = DialogText.ErrorRetrievingData,
+				dialogLoading = false
+			)
+	}
+
+	private fun showError(throwable: Throwable) {
+		_uiState.value = uiState.value.copy(
+			isRefreshing = false,
+			errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+				?: ErrorMessage.UnexpectedErrorOccurred
+		)
+	}
+
+	private fun showErrorAndSetErrorState(throwable: Throwable) {
+		_uiState.value =
+			uiState.value.copy(
+				errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
+					?: ErrorMessage.UnexpectedErrorOccurred,
+				isErrorState = true,
+				isLoading = false,
+				isRefreshing = false
+			)
+	}
+
+	private fun handleFetchCoinDetailsError(throwable: Throwable) {
+		viewModelScope.launch(CoroutineExceptionHandler { _, throwable1 ->
+			showErrorAndSetErrorState(throwable1)
+		}) {
+			handleErrorIfNoCachedCoinDetails(throwable)
+		}
+	}
+
+	private suspend fun handleErrorIfNoCachedCoinDetails(throwable: Throwable) {
+		val hasCachedCoinDetails = hasCachedCoinDetailsUseCase.execute(coinId)
+		if (!hasCachedCoinDetails) {
+			showErrorAndSetErrorState(throwable)
+		} else {
+			if (uiState.value.isRefreshing) {
+				showError(throwable)
+			}
+		}
+	}
+
+	private fun handleFetchTagDetailsError(
+		throwable: Throwable,
+		tagModel: TagModel
+	) {
+		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
+			// In case a database error occurs.
+			setDialogErrorState(throwable)
+		}) {
+			handleErrorIfNoCachedTagDetails(tagModel, throwable)
+		}
+	}
+
+	private suspend fun handleErrorIfNoCachedTagDetails(
+		tagModel: TagModel,
+		throwable: Throwable
+	) {
+		val hasCachedTagDetails = hasCachedTagDetailsUseCase.execute(tagModel.id)
+		if (!hasCachedTagDetails) {
+			if (throwable is NoDataAvailableException) {
+				setDialogNoDataAvailable()
+			} else {
+				setDialogErrorRetrievingData()
+			}
 		}
 	}
 

@@ -23,12 +23,10 @@ import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsView
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -70,8 +68,6 @@ class CoinDetailsViewModelImplTest {
 				testIoDispatcher
 			)
 
-		verifyNoInteractions(fetchCoinDetailsUseCase)
-
 		assertEquals(
 			CoinDetailsState(
 				isLoading = true
@@ -81,7 +77,7 @@ class CoinDetailsViewModelImplTest {
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 		assertEquals(
 			CoinDetailsState(
@@ -122,8 +118,6 @@ class CoinDetailsViewModelImplTest {
 				testIoDispatcher
 			)
 
-		verifyNoInteractions(fetchCoinDetailsUseCase)
-
 		assertEquals(
 			CoinDetailsState(
 				isLoading = true
@@ -134,14 +128,14 @@ class CoinDetailsViewModelImplTest {
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 		coinDetailsViewModel.onRefresh()
 
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-		verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId), any())
+		verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
 
 		coinDetailsWithPriceFlow.emit(coinDetailsWithPriceMock(1))
 
@@ -194,8 +188,6 @@ class CoinDetailsViewModelImplTest {
 				testIoDispatcher
 			)
 
-		verifyNoInteractions(fetchCoinDetailsUseCase)
-
 		assertEquals(
 			CoinDetailsState(
 				isLoading = true
@@ -205,7 +197,7 @@ class CoinDetailsViewModelImplTest {
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 		assertEquals(
 			CoinDetailsState(
@@ -239,7 +231,7 @@ class CoinDetailsViewModelImplTest {
 					coinDetailsWithPriceMock()
 				)
 			})
-			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId))).thenThrow(
 				RuntimeException(
 					errorMessage
 				)
@@ -258,8 +250,6 @@ class CoinDetailsViewModelImplTest {
 					testIoDispatcher
 				)
 
-			verifyNoInteractions(fetchCoinDetailsUseCase)
-
 			assertEquals(
 				CoinDetailsState(
 					isLoading = true
@@ -269,7 +259,7 @@ class CoinDetailsViewModelImplTest {
 			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			assertEquals(
@@ -304,7 +294,7 @@ class CoinDetailsViewModelImplTest {
 					coinDetailsWithPriceMock()
 				)
 			})
-			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId))).thenThrow(
 				RuntimeException(
 					errorMessage
 				)
@@ -323,8 +313,6 @@ class CoinDetailsViewModelImplTest {
 					testIoDispatcher
 				)
 
-			verifyNoInteractions(fetchCoinDetailsUseCase)
-
 			assertEquals(
 				CoinDetailsState(
 					isLoading = true
@@ -334,7 +322,7 @@ class CoinDetailsViewModelImplTest {
 			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			coinDetailsViewModel.onRefresh()
@@ -342,7 +330,7 @@ class CoinDetailsViewModelImplTest {
 			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(2)).execute(eq(coinId))
 
 			assertEquals(
@@ -375,7 +363,7 @@ class CoinDetailsViewModelImplTest {
 			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
 
 			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(observeCoinDetailsSharedFlow)
-			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId))).thenThrow(
 				RuntimeException(
 					errorMessage
 				)
@@ -394,18 +382,8 @@ class CoinDetailsViewModelImplTest {
 					testIoDispatcher
 				)
 
-			verifyNoInteractions(fetchCoinDetailsUseCase)
-
-			assertEquals(
-				CoinDetailsState(
-					isLoading = true
-				), coinDetailsViewModel.uiState.value
-			)
-
-			testIoDispatcher.scheduler.runCurrent()
-
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			coinDetailsViewModel.onRefresh()
@@ -413,7 +391,7 @@ class CoinDetailsViewModelImplTest {
 			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(2)).execute(eq(coinId))
 
 			assertEquals(
@@ -445,7 +423,7 @@ class CoinDetailsViewModelImplTest {
 			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
 
 			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(observeCoinDetailsSharedFlow)
-			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId))).thenThrow(
 				RuntimeException(
 					errorMessage
 				)
@@ -464,18 +442,8 @@ class CoinDetailsViewModelImplTest {
 					testIoDispatcher
 				)
 
-			verifyNoInteractions(fetchCoinDetailsUseCase)
-
-			assertEquals(
-				CoinDetailsState(
-					isLoading = true
-				), coinDetailsViewModel.uiState.value
-			)
-
-			testIoDispatcher.scheduler.runCurrent()
-
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			assertEquals(
@@ -518,7 +486,7 @@ class CoinDetailsViewModelImplTest {
 			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
 
 			whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(observeCoinDetailsSharedFlow)
-			whenever(fetchCoinDetailsUseCase.execute(eq(coinId), any())).thenThrow(
+			whenever(fetchCoinDetailsUseCase.execute(eq(coinId))).thenThrow(
 				RuntimeException(
 					errorMessage
 				)
@@ -537,18 +505,8 @@ class CoinDetailsViewModelImplTest {
 					testIoDispatcher
 				)
 
-			verifyNoInteractions(fetchCoinDetailsUseCase)
-
-			assertEquals(
-				CoinDetailsState(
-					isLoading = true
-				), coinDetailsViewModel.uiState.value
-			)
-
-			testIoDispatcher.scheduler.runCurrent()
-
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			assertEquals(
@@ -607,8 +565,6 @@ class CoinDetailsViewModelImplTest {
 				testIoDispatcher
 			)
 
-		verifyNoInteractions(fetchCoinDetailsUseCase)
-
 		assertEquals(
 			CoinDetailsState(
 				isLoading = true
@@ -618,7 +574,7 @@ class CoinDetailsViewModelImplTest {
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
-		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId), any())
+		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 		assertEquals(
 			CoinDetailsState(
@@ -653,6 +609,6 @@ class CoinDetailsViewModelImplTest {
 			), coinDetailsViewModel.uiState.value
 		)
 
-		verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId), any())
+		verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
 	}
 }
