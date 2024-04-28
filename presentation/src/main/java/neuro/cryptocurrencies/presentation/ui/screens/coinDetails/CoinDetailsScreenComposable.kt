@@ -66,7 +66,7 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CoinDetailsComposable(
+fun CoinDetailsScreenComposable(
 	navController: NavController,
 	viewModel: CoinDetailsViewModel = getViewModel<CoinDetailsViewModelImpl>()
 ) {
@@ -330,6 +330,6 @@ private fun TopAppBar(navController: NavController, title: String) {
 @Composable
 fun PreviewCoinDetailsComposable() {
 	CryptocurrenciesTheme {
-		CoinDetailsComposable(rememberNavController(), DummyCoinDetailsViewModel())
+		CoinDetailsScreenComposable(rememberNavController(), DummyCoinDetailsViewModel())
 	}
 }

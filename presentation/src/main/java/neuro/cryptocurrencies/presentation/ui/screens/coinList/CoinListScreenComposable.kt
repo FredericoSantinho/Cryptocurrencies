@@ -58,7 +58,7 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CoinListComposable(
+fun CoinListScreenComposable(
 	navController: NavHostController,
 	viewModel: CoinListViewModel = getViewModel<CoinListViewModelImpl>()
 ) {
@@ -180,6 +180,6 @@ private fun onUiEvent(
 @Composable
 fun PreviewCoinListComposable() {
 	CryptocurrenciesTheme {
-		CoinListComposable(rememberNavController(), DummyCoinListViewModel())
+		CoinListScreenComposable(rememberNavController(), DummyCoinListViewModel())
 	}
 }
