@@ -1,6 +1,8 @@
 package neuro.cryptocurrencies.presentation.ui.coin.list
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +27,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -35,6 +40,7 @@ import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.Screen
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
+import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
 import neuro.cryptocurrencies.presentation.viewmodel.coins.DummyCoinListViewModel
@@ -52,9 +58,13 @@ fun CoinListComposable(
 		Surface(
 			modifier = Modifier
 				.padding(it)
-				.fillMaxSize(),
-			color = MaterialTheme.colors.background
+				.fillMaxSize()
 		) {
+			Image(
+				painter = painterResource(id = R.drawable.coins_background),
+				contentDescription = "",
+				contentScale = ContentScale.Crop
+			)
 			if (uiState.isLoading) {
 				Box(modifier = Modifier.fillMaxSize()) {
 					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -86,7 +96,9 @@ fun CoinListComposable(
 						)
 
 						uiState.coins?.let {
-							LazyColumn(modifier = Modifier) {
+							LazyColumn(modifier = Modifier
+								.clip(MaterialTheme.shapes.large)
+								.background(blackTransparent)) {
 								items(uiState.coins, { item -> item.id }) {
 									CoinListItemComposable(
 										it.rank,

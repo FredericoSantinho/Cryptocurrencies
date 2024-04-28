@@ -13,7 +13,7 @@ private val DarkColorPalette = darkColors(
 	secondary = Teal200,
 	background = Color.Black,
 	onBackground = Color.White,
-	onSurface = Color.LightGray
+	onSurface = Color.White
 )
 
 private val LightColorPalette = lightColors(
@@ -22,7 +22,7 @@ private val LightColorPalette = lightColors(
 	secondary = Teal200,
 	background = Color.Black,
 	onBackground = Color.White,
-	onSurface = Color.LightGray
+	onSurface = Color.White
 
 	/* Other default colors to override
     background = Color.White,
@@ -39,11 +39,7 @@ fun CryptocurrenciesTheme(
 	darkTheme: Boolean = isSystemInDarkTheme(),
 	content: @Composable () -> Unit
 ) {
-	val colors = if (darkTheme) {
-		DarkColorPalette
-	} else {
-		LightColorPalette
-	}
+	val colors = LightColorPalette
 
 	MaterialTheme(
 		colors = colors,

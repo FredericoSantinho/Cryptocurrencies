@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -92,11 +91,11 @@ class CoinListViewModelImpl(
 	}
 
 	private fun observeCoinsTickers() {
-		observeCoinsTickersUseCase.execute().map { it.toPresentation() }.flowOn(ioDispatcher)
+		observeCoinsTickersUseCase.execute().map { it.toPresentation() }
 			.onEach { coinModels ->
-				// To allow stateFlow emission when a previous value equal to the new one exists in order to
-				// finish loading.
 				if (coinTickers.value != null) {
+					// To allow stateFlow emission when a previous value equal to the new one exists in order
+					// to finish loading.
 					coinTickers.value = emptyList()
 				}
 				coinTickers.value = coinModels
