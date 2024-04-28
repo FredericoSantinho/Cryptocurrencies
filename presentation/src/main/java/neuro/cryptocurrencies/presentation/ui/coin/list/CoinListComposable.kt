@@ -40,7 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.R
-import neuro.cryptocurrencies.presentation.Screen
+import neuro.cryptocurrencies.presentation.ScreenRoutes
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
@@ -148,7 +148,7 @@ fun onUiEvent(
 	LaunchedEffect(key1 = Unit) {
 		uiEventSharedFlow.collect { uiEvent ->
 			when (uiEvent) {
-				is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(Screen.CoinDetailScreen.route + "/${uiEvent.coinId}")
+				is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
 			}
 		}
 	}

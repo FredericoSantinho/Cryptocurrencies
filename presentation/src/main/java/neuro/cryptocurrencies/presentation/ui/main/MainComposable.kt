@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import neuro.cryptocurrencies.presentation.Screen
+import neuro.cryptocurrencies.presentation.ScreenRoutes
 import neuro.cryptocurrencies.presentation.ui.coin.details.CoinDetailsComposable
 import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
@@ -16,15 +16,15 @@ fun MainComposable() {
 	val navController = rememberNavController()
 	NavHost(
 		navController = navController,
-		startDestination = Screen.CoinListScreen.route
+		startDestination = ScreenRoutes.coinList
 	) {
 		composable(
-			route = Screen.CoinListScreen.route
+			route = ScreenRoutes.coinList
 		) {
 			CoinListComposable(navController)
 		}
 		composable(
-			route = Screen.CoinDetailScreen.route + "/{${CoinDetailsViewModelImpl.PARAM_COIN_ID}}"
+			route = ScreenRoutes.coinDetails + "/{${CoinDetailsViewModelImpl.PARAM_COIN_ID}}"
 		) {
 			CoinDetailsComposable(navController)
 		}
