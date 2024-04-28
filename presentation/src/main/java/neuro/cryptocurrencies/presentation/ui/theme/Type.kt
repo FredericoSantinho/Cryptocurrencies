@@ -19,7 +19,7 @@ val Typography = Typography(
 		fontFamily = FontFamily.Default,
 		fontWeight = FontWeight.Normal,
 		fontSize = 14.sp,
-		color = Color.White
+		color = Color.Green
 	),
 	h6 = TextStyle(
 		fontFamily = FontFamily.Default,

@@ -68,14 +68,16 @@ fun CoinDetailsComposable(
 	val uiState = viewModel.uiState.value
 	val coinDetailsModelWithPrice = uiState.coinDetailsWithPriceModel
 
-	Scaffold(topBar = {
-		TopAppBar(
-			navController,
-			coinDetailsModelWithPrice?.coinDetailsModel?.name ?: stringResource(id = R.string.app_name)
-		)
-	}, modifier = Modifier
-		.background(Color.Green)
-		.statusBarsPadding()) {
+	Scaffold(
+		topBar = {
+			TopAppBar(
+				navController,
+				coinDetailsModelWithPrice?.coinDetailsModel?.name ?: stringResource(id = R.string.app_name)
+			)
+		}, modifier = Modifier
+			.background(Color.Green)
+			.statusBarsPadding()
+	) {
 		Box(
 			modifier = Modifier
 				.padding(it)
@@ -246,10 +248,14 @@ fun CoinDetailsComposable(
 											TeamListItem(teamModel, modifier = Modifier.clickable {
 												viewModel.onTeamMemberClick(teamModel)
 											})
-											Divider()
+											Divider(
+												thickness = 1.dp,
+												color = MaterialTheme.colors.onSurface,
+												modifier = Modifier.padding(top = 8.dp)
+											)
 										}
 									}
-									item { 
+									item {
 										Spacer(modifier = Modifier.navigationBarsPadding())
 									}
 								}
