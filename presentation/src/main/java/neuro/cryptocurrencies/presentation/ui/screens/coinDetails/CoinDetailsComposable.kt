@@ -127,7 +127,7 @@ fun CoinDetailsComposable(
 								)
 
 								LazyColumn(
-									modifier = Modifier.padding(16.dp),
+									modifier = Modifier.padding(horizontal = 16.dp),
 									verticalArrangement = Arrangement.spacedBy(16.dp),
 								) {
 									if (coinDetailsModel.logo.isNotBlank()) {
