@@ -265,9 +265,7 @@ fun CoinDetailsComposable(
 											)
 										}
 										items(coinDetailsModel.team) { teamModel ->
-											TeamListItem(teamModel, modifier = Modifier.clickable {
-												viewModel.onTeamMemberClick(teamModel)
-											})
+											TeamListItem(teamModel)
 											Divider(
 												thickness = 1.dp,
 												color = MaterialTheme.colors.onSurface,

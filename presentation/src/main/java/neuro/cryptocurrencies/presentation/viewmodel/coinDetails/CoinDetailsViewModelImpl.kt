@@ -21,14 +21,10 @@ import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.DialogText
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.model.TagModel
-import neuro.cryptocurrencies.presentation.model.TeamMemberModel
 import neuro.cryptocurrencies.presentation.ui.base.BaseViewModel
 
 class CoinDetailsViewModelImpl(
@@ -38,9 +34,6 @@ class CoinDetailsViewModelImpl(
 	private val observeTagDetailsUseCase: ObserveTagDetailsUseCase,
 	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
 	private val hasCachedTagDetailsUseCase: HasCachedTagDetailsUseCase,
-	private val observeTeamMemberDetailsUseCase: ObserveTeamMemberDetailsUseCase,
-	private val fetchTeamMemberDetailsUseCase: FetchTeamMemberDetailsUseCase,
-	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
 	savedStateHandle: SavedStateHandle,
 	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel(), CoinDetailsViewModel {
@@ -84,17 +77,6 @@ class CoinDetailsViewModelImpl(
 			uiState.value.copy(showDialog = true, dialogTitle = tagModel.name, dialogLoading = true)
 		observeTag(tagModel)
 		fetchTag(tagModel)
-	}
-
-	override fun onTeamMemberClick(teamMemberModel: TeamMemberModel) {
-		_uiState.value =
-			uiState.value.copy(
-				showDialog = true,
-				dialogTitle = "${teamMemberModel.name} (${teamMemberModel.position})",
-				dialogLoading = true
-			)
-		observeTeamMember(teamMemberModel)
-		fetchTeamMember(teamMemberModel)
 	}
 
 	private fun observeCoinDetailsWithPrice() {
@@ -217,72 +199,6 @@ class CoinDetailsViewModelImpl(
 			}
 		}) {
 			fetchTagDetailsUseCase.execute(tagModel.id)
-		}
-	}
-
-	private fun observeTeamMember(teamMemberModel: TeamMemberModel) {
-		_uiState.value =
-			uiState.value.copy(
-				showDialog = true,
-				dialogTitle = teamMemberModel.name,
-				dialogLoading = true
-			)
-		dialogFeedingJob.value =
-			observeTeamMemberDetailsUseCase.execute(teamMemberModel.id).flowOn(ioDispatcher)
-				.onEach { teamMemberDetails ->
-					_uiState.value =
-						uiState.value.copy(
-							dialogText = DialogText.GivenText(teamMemberDetails.description),
-							dialogLoading = false
-						)
-				}.catch { throwable ->
-					_uiState.value = uiState.value.copy(
-						errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-							?: ErrorMessage.UnexpectedErrorOccurred,
-						dialogText = DialogText.UnexpectedError,
-						dialogLoading = false
-					)
-				}.launchIn(viewModelScope)
-	}
-
-	private fun fetchTeamMember(teamMemberModel: TeamMemberModel) {
-		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
-			// In case a network error occurs.
-			viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
-				// In case a database error occurs.
-				viewModelScope.launch {
-					_uiState.value =
-						uiState.value.copy(
-							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
-								?: ErrorMessage.UnexpectedErrorOccurred,
-							dialogText = DialogText.UnexpectedError,
-							dialogLoading = false
-						)
-				}
-			}) {
-				val hasCachedTeamMemberDetails =
-					hasCachedTeamMemberDetailsUseCase.execute(teamMemberModel.id)
-				withContext(Dispatchers.Main) {
-					if (!hasCachedTeamMemberDetails) {
-						if (throwable is NoDataAvailableException) {
-							_uiState.value =
-								uiState.value.copy(
-									dialogText = DialogText.NoDataAvailable,
-									dialogLoading = false
-								)
-						} else {
-							_uiState.value =
-								uiState.value.copy(
-									dialogText = DialogText.ErrorRetrievingData,
-									dialogLoading = false
-								)
-						}
-						throwable.printStackTrace()
-					}
-				}
-			}
-		}) {
-			fetchTeamMemberDetailsUseCase.execute(teamMemberModel.id)
 		}
 	}
 

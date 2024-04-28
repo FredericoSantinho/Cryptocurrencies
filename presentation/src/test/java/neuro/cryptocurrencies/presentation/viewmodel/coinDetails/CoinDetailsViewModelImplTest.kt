@@ -13,9 +13,6 @@ import neuro.cryptocurrencies.domain.usecase.coin.details.ObserveCoinDetailsUseC
 import neuro.cryptocurrencies.domain.usecase.tag.FetchTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.HasCachedTagDetailsUseCase
 import neuro.cryptocurrencies.domain.usecase.tag.ObserveTagDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.FetchTeamMemberDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.HasCachedTeamMemberDetailsUseCase
-import neuro.cryptocurrencies.domain.usecase.team.ObserveTeamMemberDetailsUseCase
 import neuro.cryptocurrencies.presentation.MainDispatcherRule
 import neuro.cryptocurrencies.presentation.mocks.coinDetailsModelMock
 import neuro.cryptocurrencies.presentation.mocks.coinDetailsWithPriceModelMock
@@ -48,9 +45,6 @@ class CoinDetailsViewModelImplTest {
 		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 		val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-		val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 		val coinId = "btc-bitcoin"
 		val savedStateHandle = SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 		val testIoDispatcher = StandardTestDispatcher()
@@ -68,9 +62,6 @@ class CoinDetailsViewModelImplTest {
 			observeTagDetailsUseCase,
 			fetchTagDetailsUseCase,
 			hasCachedTagDetailsUseCase,
-			observeTeamMemberDetailsUseCase,
-			fetchTeamMemberDetailsUseCase,
-			hasCachedTeamMemberDetailsUseCase,
 			savedStateHandle,
 			testIoDispatcher
 		)
@@ -103,9 +94,6 @@ class CoinDetailsViewModelImplTest {
 		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 		val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-		val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 		val coinId = "btc-bitcoin"
 		val savedStateHandle = SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 		val testIoDispatcher = StandardTestDispatcher()
@@ -120,9 +108,6 @@ class CoinDetailsViewModelImplTest {
 			observeTagDetailsUseCase,
 			fetchTagDetailsUseCase,
 			hasCachedTagDetailsUseCase,
-			observeTeamMemberDetailsUseCase,
-			fetchTeamMemberDetailsUseCase,
-			hasCachedTeamMemberDetailsUseCase,
 			savedStateHandle,
 			testIoDispatcher
 		)
@@ -170,9 +155,6 @@ class CoinDetailsViewModelImplTest {
 		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 		val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-		val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 		val coinId = "btc-bitcoin"
 		val savedStateHandle = SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 		val testIoDispatcher = StandardTestDispatcher()
@@ -192,9 +174,6 @@ class CoinDetailsViewModelImplTest {
 			observeTagDetailsUseCase,
 			fetchTagDetailsUseCase,
 			hasCachedTagDetailsUseCase,
-			observeTeamMemberDetailsUseCase,
-			fetchTeamMemberDetailsUseCase,
-			hasCachedTeamMemberDetailsUseCase,
 			savedStateHandle,
 			testIoDispatcher
 		)
@@ -228,9 +207,6 @@ class CoinDetailsViewModelImplTest {
 			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-			val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
@@ -257,9 +233,6 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				observeTeamMemberDetailsUseCase,
-				fetchTeamMemberDetailsUseCase,
-				hasCachedTeamMemberDetailsUseCase,
 				savedStateHandle,
 				testIoDispatcher
 			)
@@ -294,9 +267,6 @@ class CoinDetailsViewModelImplTest {
 			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-			val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
@@ -323,9 +293,6 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				observeTeamMemberDetailsUseCase,
-				fetchTeamMemberDetailsUseCase,
-				hasCachedTeamMemberDetailsUseCase,
 				savedStateHandle,
 				testIoDispatcher
 			)
@@ -369,9 +336,6 @@ class CoinDetailsViewModelImplTest {
 			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-			val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
@@ -395,9 +359,6 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				observeTeamMemberDetailsUseCase,
-				fetchTeamMemberDetailsUseCase,
-				hasCachedTeamMemberDetailsUseCase,
 				savedStateHandle,
 				testIoDispatcher
 			)
@@ -440,9 +401,6 @@ class CoinDetailsViewModelImplTest {
 			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-			val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
@@ -466,9 +424,6 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				observeTeamMemberDetailsUseCase,
-				fetchTeamMemberDetailsUseCase,
-				hasCachedTeamMemberDetailsUseCase,
 				savedStateHandle,
 				testIoDispatcher
 			)
@@ -514,9 +469,6 @@ class CoinDetailsViewModelImplTest {
 			val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 			val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 			val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-			val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-			val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-			val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
@@ -540,9 +492,6 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				observeTeamMemberDetailsUseCase,
-				fetchTeamMemberDetailsUseCase,
-				hasCachedTeamMemberDetailsUseCase,
 				savedStateHandle,
 				testIoDispatcher
 			)
@@ -588,9 +537,6 @@ class CoinDetailsViewModelImplTest {
 		val observeTagDetailsUseCase = mock<ObserveTagDetailsUseCase>()
 		val fetchTagDetailsUseCase = mock<FetchTagDetailsUseCase>()
 		val hasCachedTagDetailsUseCase = mock<HasCachedTagDetailsUseCase>()
-		val observeTeamMemberDetailsUseCase = mock<ObserveTeamMemberDetailsUseCase>()
-		val fetchTeamMemberDetailsUseCase = mock<FetchTeamMemberDetailsUseCase>()
-		val hasCachedTeamMemberDetailsUseCase = mock<HasCachedTeamMemberDetailsUseCase>()
 		val coinId = "btc-bitcoin"
 		val savedStateHandle = SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
 		val testIoDispatcher = StandardTestDispatcher()
@@ -610,9 +556,6 @@ class CoinDetailsViewModelImplTest {
 			observeTagDetailsUseCase,
 			fetchTagDetailsUseCase,
 			hasCachedTagDetailsUseCase,
-			observeTeamMemberDetailsUseCase,
-			fetchTeamMemberDetailsUseCase,
-			hasCachedTeamMemberDetailsUseCase,
 			savedStateHandle,
 			testIoDispatcher
 		)

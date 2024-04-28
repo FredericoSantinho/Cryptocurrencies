@@ -52,8 +52,4 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 	override fun onTagClick(tagModel: TagModel) {
 
 	}
-
-	override fun onTeamMemberClick(teamMemberModel: TeamMemberModel) {
-
-	}
 }
