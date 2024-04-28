@@ -16,9 +16,8 @@ Cryptocurrencies is an App that allows you so view cryptocurrencies prices and d
 
 It's composed of four modules:
 
-  data - Data layer. This is where the repositories are implemented. DAOs and APis are also defined
-  here.  
-
+- data - Data layer. This is where the repositories are implemented. DAOs and APis are also defined
+  here.
 - domain - Business rules. It's where the UseCases and Repository interfaces are located.
 - app - View implementation details and viewmodels.
 
