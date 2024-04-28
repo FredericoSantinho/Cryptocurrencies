@@ -1,0 +1,55 @@
+package neuro.cryptocurrencies.di
+
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import neuro.cryptocurrencies.domain.usecase.coinDetails.FetchCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coinDetails.FetchCoinDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinDetails.HasCachedCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coinDetails.HasCachedCoinDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinDetails.ObserveCoinDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.coinDetails.ObserveCoinDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCase
+import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.tagDetails.FetchTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tagDetails.FetchTagDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.tagDetails.HasCachedTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tagDetails.HasCachedTagDetailsUseCaseImpl
+import neuro.cryptocurrencies.domain.usecase.tagDetails.ObserveTagDetailsUseCase
+import neuro.cryptocurrencies.domain.usecase.tagDetails.ObserveTagDetailsUseCaseImpl
+
+@InstallIn(SingletonComponent::class)
+@Module
+abstract class UseCaseModule {
+	@Binds
+	abstract fun bindsObserveCoinsTickersUseCase(observeCoinsTickersUseCaseImpl: ObserveCoinsTickersUseCaseImpl): ObserveCoinsTickersUseCase
+
+	@Binds
+	abstract fun bindsFetchCoinsTickersUseCase(fetchCoinsTickersUseCaseImpl: FetchCoinsTickersUseCaseImpl): FetchCoinsTickersUseCase
+
+	@Binds
+	abstract fun bindsHasCachedCoinsTickersUseCase(hasCachedCoinsTickersUseCaseImpl: HasCachedCoinsTickersUseCaseImpl): HasCachedCoinsTickersUseCase
+
+	@Binds
+	abstract fun bindsObserveCoinDetailsUseCase(observeCoinDetailsUseCaseImpl: ObserveCoinDetailsUseCaseImpl): ObserveCoinDetailsUseCase
+
+	@Binds
+	abstract fun bindsFetchCoinDetailsUseCase(fetchCoinDetailsUseCaseImpl: FetchCoinDetailsUseCaseImpl): FetchCoinDetailsUseCase
+
+	@Binds
+	abstract fun bindsHasCachedCoinDetailsUseCase(hasCachedCoinDetailsUseCaseImpl: HasCachedCoinDetailsUseCaseImpl): HasCachedCoinDetailsUseCase
+
+	@Binds
+	abstract fun bindsObserveTagDetailsUseCase(observeTagDetailsUseCaseImpl: ObserveTagDetailsUseCaseImpl): ObserveTagDetailsUseCase
+
+	@Binds
+	abstract fun bindsFetchTagDetailsUseCase(fetchTagDetailsUseCaseImpl: FetchTagDetailsUseCaseImpl): FetchTagDetailsUseCase
+
+	@Binds
+	abstract fun bindsHasCachedTagDetailsUseCase(hasCachedTagDetailsUseCaseImpl: HasCachedTagDetailsUseCaseImpl): HasCachedTagDetailsUseCase
+}

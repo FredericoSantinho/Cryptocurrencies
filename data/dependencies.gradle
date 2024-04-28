@@ -6,14 +6,11 @@ dependencies {
   implementation project(":domain")
 
   implementation lib.google
-  implementation lib.koinCore
-  implementation lib.rxKotlin
-  implementation lib.room
-  implementation lib.retrofit2
+  api lib.room
+  api lib.retrofit2
   kapt lib.roomCompiler
 
   testImplementation lib.junit4
-  testImplementation lib.koinTest
   testImplementation lib.mockito
   testImplementation lib.roomTest
   testImplementation lib.coroutines_test
@@ -21,5 +18,4 @@ dependencies {
   testImplementation lib.slf4j_simple
 
   androidTestImplementation lib.googleTest
-  androidTestImplementation lib.koinTest
 }

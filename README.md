@@ -1,6 +1,6 @@
 # Cryptocurrencies
 
-Cryptocurrencies is an App that allows you so check cryptocurrencies prices and details.
+Cryptocurrencies is an App that allows you so view cryptocurrencies prices and details.
 
 ## Features
 
@@ -16,23 +16,21 @@ Cryptocurrencies is an App that allows you so check cryptocurrencies prices and 
 
 It's composed of four modules:
 
-- presentation - View implementation details.  
   data - Data layer. This is where the repositories are implemented. DAOs and APis are also defined
   here.  
-- domain - Application specific business rules. It's where the UseCases and Repository interfaces
-  are located.  
-- app - It has only the AndroidManifest, the Application class and some build configurations.
+
+- domain - Business rules. It's where the UseCases and Repository interfaces are located.
+- app - View implementation details and viewmodels.
 
 ##### These modules were defined this way to provide us some guarantees:
 
 > The Dependency Rule states that source code dependencies can only point inwards. This means no
-> inner circle can refer in any way anything in an outer circle. Using modules we can ensure circle
-> dependencies are respected.
+> inner circle can refer in any way anything in an outer circle. Using modules we can ensure the
+> dependency rule is respected.
 
-Starting with the domain module, it has no dependencies outwards.  
-Presentation module only depends on the domain module.  
-Data module also only depends on the domain module.  
-App module depends on both presentation and data modules.
+Starting with the domain module, it has no dependencies outwards.   
+Data module only depends on the domain module.  
+App module depends on both domain and data modules.
 
 ## Run
 

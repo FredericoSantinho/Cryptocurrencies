@@ -1,0 +1,75 @@
+package neuro.cryptocurrencies.di
+
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import neuro.cryptocurrencies.data.repository.database.coin.HasCachedCoinsTickersRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.coin.ObserveCoinsTickersRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.coin.SaveCoinsTickersRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.coin.details.HasCachedCoinDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.coin.details.ObserveCoinDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.coin.details.SaveCoinDetailsWithPriceRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.tag.HasCachedTagDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.tag.ObserveTagDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.database.tag.SaveTagDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.network.coin.GetCoinTickerRepositoryImpl
+import neuro.cryptocurrencies.data.repository.network.coin.GetCoinTickersRepositoryImpl
+import neuro.cryptocurrencies.data.repository.network.coin.details.GetCoinDetailsRepositoryImpl
+import neuro.cryptocurrencies.data.repository.network.tag.GetTagDetailsRepositoryImpl
+import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
+import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.HasCachedCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.SaveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coin.details.HasCachedCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coin.details.ObserveCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coin.details.SaveCoinDetailsWithPriceRepository
+import neuro.cryptocurrencies.domain.repository.tag.GetTagDetailsRepository
+import neuro.cryptocurrencies.domain.repository.tag.HasCachedTagDetailsRepository
+import neuro.cryptocurrencies.domain.repository.tag.ObserveTagDetailsRepository
+import neuro.cryptocurrencies.domain.repository.tag.SaveTagDetailsRepository
+
+@InstallIn(SingletonComponent::class)
+@Module
+abstract class RepositoryModule {
+	@Binds
+	abstract fun bindsObserveCoinsTickersRepository(observeCoinsTickersRepositoryImpl: ObserveCoinsTickersRepositoryImpl): ObserveCoinsTickersRepository
+
+	@Binds
+	abstract fun bindsGetCoinTickersRepository(getCoinTickersRepositoryImpl: GetCoinTickersRepositoryImpl): GetCoinTickersRepository
+
+	@Binds
+	abstract fun bindsSaveCoinsTickersRepository(saveCoinsTickersRepositoryImpl: SaveCoinsTickersRepositoryImpl): SaveCoinsTickersRepository
+
+	@Binds
+	abstract fun bindsHasCachedCoinsTickersRepository(hasCachedCoinsTickersRepositoryImpl: HasCachedCoinsTickersRepositoryImpl): HasCachedCoinsTickersRepository
+
+	@Binds
+	abstract fun bindsObserveCoinDetailsRepository(observeCoinDetailsRepositoryImpl: ObserveCoinDetailsRepositoryImpl): ObserveCoinDetailsRepository
+
+	@Binds
+	abstract fun bindsGetCoinTickerRepository(getCoinTickerRepositoryImpl: GetCoinTickerRepositoryImpl): GetCoinTickerRepository
+
+	@Binds
+	abstract fun bindsGetCoinDetailsRepository(getCoinDetailsRepositoryImpl: GetCoinDetailsRepositoryImpl): GetCoinDetailsRepository
+
+	@Binds
+	abstract fun bindsSaveCoinDetailsWithPriceRepository(saveCoinDetailsWithPriceRepositoryImpl: SaveCoinDetailsWithPriceRepositoryImpl): SaveCoinDetailsWithPriceRepository
+
+	@Binds
+	abstract fun bindsHasCachedCoinDetailsRepository(hasCachedCoinDetailsRepositoryImpl: HasCachedCoinDetailsRepositoryImpl): HasCachedCoinDetailsRepository
+
+	@Binds
+	abstract fun bindsObserveTagDetailsRepository(observeTagDetailsRepositoryImpl: ObserveTagDetailsRepositoryImpl): ObserveTagDetailsRepository
+
+	@Binds
+	abstract fun bindsGetTagDetailsRepository(getTagDetailsRepositoryImpl: GetTagDetailsRepositoryImpl): GetTagDetailsRepository
+
+	@Binds
+	abstract fun bindsSaveTagDetailsRepository(saveTagDetailsRepositoryImpl: SaveTagDetailsRepositoryImpl): SaveTagDetailsRepository
+
+	@Binds
+	abstract fun bindsHasCachedTagDetailsRepository(hasCachedTagDetailsRepositoryImpl: HasCachedTagDetailsRepositoryImpl): HasCachedTagDetailsRepository
+}

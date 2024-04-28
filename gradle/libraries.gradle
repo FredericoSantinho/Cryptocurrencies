@@ -9,11 +9,6 @@ lib.kotlin = ["org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin",
               "org.jetbrains.kotlinx:kotlinx-coroutines-core:$ver.kotlinx_coroutines"]
 lib.coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$ver.kotlinx_coroutines"
 
-ver.rxKotlin = "3.0.1"
-ver.rxRelay3 = "3.0.1"
-lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
-                "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
-
 ver.ktx = "1.9.0"
 ver.ktx_lifecycle_runtime = "2.6.1"
 ver.activity = "1.8.1"
@@ -43,15 +38,17 @@ lib.googleTest = ["androidx.test.ext:junit:$ver.androidXJunit",
                   "androidx.test.espresso:espresso-core:$ver.expresso",
                   "androidx.arch.core:core-testing:$ver.androidx_core_testing"]
 
-ver.koinAndroid = "3.4.3"
-lib.koinCompose = "io.insert-koin:koin-androidx-compose:$ver.koinAndroid"
+ver.hilt = "2.51.1"
+ver.hiltWork = "1.2.0"
+ver.hiltCompose = "1.2.0"
+lib.hilt = ["com.google.dagger:hilt-android:$ver.hilt",
+            "androidx.hilt:hilt-work:$ver.hiltWork",
+            "androidx.hilt:hilt-navigation-compose:$ver.hiltCompose"]
+lib.hiltKapt = ["com.google.dagger:hilt-compiler:$ver.hilt",
+                "com.google.dagger:hilt-android-compiler:$ver.hilt"]
 
 ver.junit4 = "4.13.2"
 lib.junit4 = ["junit:junit:$ver.junit4"]
-
-ver.koin = "3.4.0"
-lib.koinCore = "io.insert-koin:koin-core:$ver.koin"
-lib.koinTest = "io.insert-koin:koin-test-junit4:$ver.koin"
 
 ver.slf4jNop = "2.0.7"
 lib.slf4jNop = "org.slf4j:slf4j-nop:$ver.slf4jNop"
@@ -63,11 +60,6 @@ lib.mockito = ["org.mockito:mockito-core:$ver.mockito",
 
 ver.coil = "2.3.0"
 lib.coil = "io.coil-kt:coil-compose:$ver.coil"
-
-ver.rxKotlin = "3.0.1"
-ver.rxRelay3 = "3.0.1"
-lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
-                "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
 
 ver.rxAndroid = "3.0.2"
 lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
@@ -101,3 +93,6 @@ lib.kotlin_collections_immutable =
 
 ver.timber = "5.0.1"
 lib.timber = "com.jakewharton.timber:timber:$ver.timber"
+
+ver.androidJetpackWorkVersion = "2.9.0"
+lib.androidJetpackWork = "androidx.work:work-runtime-ktx:$ver.androidJetpackWorkVersion"

@@ -3,14 +3,22 @@ apply from: file("$rootDir/gradle/libraries.gradle")
 dependencies {
   implementation fileTree(dir: 'libs' + '', include: ["*.jar"])
 
-  implementation project(':presentation')
   implementation project(':data')
+  implementation project(':domain')
 
-  implementation lib.koinCompose
+  implementation lib.hilt
+  kapt lib.hiltKapt
 
   implementation lib.google
   implementation lib.google_compose
+  implementation lib.constraint_layout_compose
+  implementation lib.androidJetpackWork
+  implementation lib.coil
+  implementation lib.kotlin_collections_immutable
+  implementation lib.timber
   testImplementation lib.junit4
+  testImplementation lib.mockito
+  testImplementation lib.coroutines_test
   androidTestImplementation lib.googleTest
   androidTestImplementation lib.compose_ui_test_junit4
   debugImplementation lib.compose_ui_test_manifest
