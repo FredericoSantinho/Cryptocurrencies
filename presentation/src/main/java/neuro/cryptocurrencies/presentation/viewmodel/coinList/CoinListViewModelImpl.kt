@@ -2,7 +2,6 @@ package neuro.cryptocurrencies.presentation.viewmodel.coinList
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -24,13 +23,14 @@ import neuro.cryptocurrencies.domain.usecase.coin.ObserveCoinsTickersUseCase
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
+import neuro.cryptocurrencies.presentation.ui.base.BaseViewModel
 
 class CoinListViewModelImpl(
 	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
 	private val fetchCoinsTickersUseCase: FetchCoinsTickersUseCase,
 	private val hasCachedCoinsTickersUseCase: HasCachedCoinsTickersUseCase,
 	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel(), CoinListViewModel {
+) : BaseViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState
 	private val _uiEvent = MutableSharedFlow<UiEvent>()

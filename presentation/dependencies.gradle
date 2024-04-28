@@ -14,6 +14,7 @@ dependencies {
   implementation lib.constraint_layout_compose
   implementation lib.coil
   implementation lib.kotlin_collections_immutable
+  implementation lib.timber
 
   testImplementation lib.junit4
   testImplementation lib.koinTest

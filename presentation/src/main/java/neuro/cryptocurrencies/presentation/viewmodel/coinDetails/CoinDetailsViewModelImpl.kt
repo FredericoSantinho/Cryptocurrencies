@@ -3,7 +3,6 @@ package neuro.cryptocurrencies.presentation.viewmodel.coinDetails
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -30,6 +29,7 @@ import neuro.cryptocurrencies.presentation.model.DialogText
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.model.TagModel
 import neuro.cryptocurrencies.presentation.model.TeamMemberModel
+import neuro.cryptocurrencies.presentation.ui.base.BaseViewModel
 
 class CoinDetailsViewModelImpl(
 	private val observeCoinDetailsUseCase: ObserveCoinDetailsUseCase,
@@ -43,7 +43,7 @@ class CoinDetailsViewModelImpl(
 	private val hasCachedTeamMemberDetailsUseCase: HasCachedTeamMemberDetailsUseCase,
 	savedStateHandle: SavedStateHandle,
 	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel(), CoinDetailsViewModel {
+) : BaseViewModel(), CoinDetailsViewModel {
 	private val _uiState = mutableStateOf(CoinDetailsState(isLoading = true))
 	override val uiState: State<CoinDetailsState> = _uiState
 

@@ -6,6 +6,7 @@ import neuro.cryptocurrencies.presentation.model.CoinDetailsModel
 import neuro.cryptocurrencies.presentation.model.CoinDetailsWithPriceModel
 import neuro.cryptocurrencies.presentation.model.TagModel
 import neuro.cryptocurrencies.presentation.model.TeamMemberModel
+import neuro.cryptocurrencies.presentation.utils.helper.DebounceTimer
 
 class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 	override val uiState: State<CoinDetailsState> =
@@ -29,6 +30,8 @@ class DummyCoinDetailsViewModel : CoinDetailsViewModel {
 				)
 			)
 		)
+
+	override val debounceTimer = DebounceTimer()
 
 	override fun errorShown() {
 

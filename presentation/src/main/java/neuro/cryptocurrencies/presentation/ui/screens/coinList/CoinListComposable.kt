@@ -44,6 +44,7 @@ import neuro.cryptocurrencies.presentation.ScreenRoutes
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
+import neuro.cryptocurrencies.presentation.utils.helper.DebounceTimer
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModelImpl
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.DummyCoinListViewModel
@@ -137,18 +138,21 @@ fun CoinListComposable(
 		}
 	}
 
-	onUiEvent(viewModel.uiEvent, navController)
+	onUiEvent(viewModel.uiEvent, navController, viewModel.debounceTimer)
 }
 
 @Composable
 fun onUiEvent(
 	uiEventSharedFlow: SharedFlow<CoinListViewModelImpl.UiEvent>,
-	navController: NavHostController
+	navController: NavHostController,
+	debounceTimer: DebounceTimer
 ) {
 	LaunchedEffect(key1 = Unit) {
 		uiEventSharedFlow.collect { uiEvent ->
-			when (uiEvent) {
-				is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
+			debounceTimer.debounceRunFirst {
+				when (uiEvent) {
+					is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
+				}
 			}
 		}
 	}
