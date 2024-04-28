@@ -19,9 +19,9 @@ ver.ktx_lifecycle_runtime = "2.6.1"
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.lifecycle:lifecycle-runtime-ktx:$ver.ktx_lifecycle_runtime",]
 
-ver.compose_ui = "1.4.0"
+ver.compose_ui = "1.6.5"
 ver.activity_compose = "1.7.0"
-ver.material = "1.4.0"
+ver.material = "1.6.5"
 ver.composeNavigation = "2.5.3"
 ver.accompanist_flowlayout = "0.17.0"
 lib.google_compose = ["androidx.activity:activity-compose:$ver.activity_compose",
@@ -74,7 +74,7 @@ ver.constraintLayoutCompose = "1.0.1"
 lib.constraint_layout_compose =
     "androidx.constraintlayout:constraintlayout-compose:$ver.constraintLayoutCompose"
 
-ver.room = "2.5.0"
+ver.room = "2.6.1"
 lib.room = ["androidx.room:room-runtime:$ver.room",
             "androidx.room:room-ktx:$ver.room"]
 lib.roomCompiler = "androidx.room:room-compiler:$ver.room"

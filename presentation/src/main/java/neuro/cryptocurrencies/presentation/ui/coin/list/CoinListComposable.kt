@@ -87,7 +87,7 @@ fun CoinListComposable(
 
 						uiState.coins?.let {
 							LazyColumn(modifier = Modifier) {
-								items(uiState.coins) {
+								items(uiState.coins, { item -> item.id }) {
 									CoinListItemComposable(
 										it.rank,
 										it.name,
