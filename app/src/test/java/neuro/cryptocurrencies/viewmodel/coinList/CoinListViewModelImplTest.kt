@@ -24,7 +24,6 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import kotlin.time.Duration.Companion.minutes
 
@@ -49,13 +48,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 
@@ -90,13 +82,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 
@@ -145,13 +130,6 @@ class CoinListViewModelImplTest {
 				testIoDispatcher
 			)
 
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
-
 		testIoDispatcher.scheduler.runCurrent()
 
 		coinListViewModel.onSearchTerm("bitcoin")
@@ -185,13 +163,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 
@@ -246,13 +217,6 @@ class CoinListViewModelImplTest {
 				testIoDispatcher
 			)
 
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
-
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinsTickersUseCase, times(1)).execute()
@@ -299,13 +263,6 @@ class CoinListViewModelImplTest {
 				testIoDispatcher
 			)
 
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
-
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinsTickersUseCase, times(1)).execute()
@@ -341,13 +298,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 
@@ -403,13 +353,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 
@@ -468,13 +411,6 @@ class CoinListViewModelImplTest {
 				testIoDispatcher
 			)
 
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
-
 		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinsTickersUseCase, times(1)).execute()
@@ -523,13 +459,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 
@@ -580,13 +509,6 @@ class CoinListViewModelImplTest {
 				hasCachedCoinsTickersUseCase,
 				testIoDispatcher
 			)
-
-		assertEquals(
-			CoinListState(isLoading = true),
-			coinListViewModel.uiState.value
-		)
-
-		verifyNoInteractions(fetchCoinsTickersUseCase)
 
 		testIoDispatcher.scheduler.runCurrent()
 

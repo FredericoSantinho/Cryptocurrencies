@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import neuro.cryptocurrencies.domain.usecase.coinTickers.FetchCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coinTickers.HasCachedCoinsTickersUseCase
 import neuro.cryptocurrencies.domain.usecase.coinTickers.ObserveCoinsTickersUseCase
@@ -48,18 +47,16 @@ class CoinListViewModelImpl @Inject constructor(
 	}
 
 	override fun onCoinClick(coinId: String) {
-		viewModelScope.launch {
-			_uiEvent.emit(UiEvent.NavigateToDetails(coinId))
-		}
+		navigateToDetails(coinId)
 	}
 
 	override fun onRefresh() {
-		_uiState.value = uiState.value.copy(isRefreshing = true)
+		setRefreshingState()
 		fetchCoinsTickers()
 	}
 
 	override fun onRetry() {
-		_uiState.value = uiState.value.copy(isLoading = true, isErrorState = false)
+		showLoading()
 		fetchCoinsTickers()
 	}
 
@@ -71,21 +68,14 @@ class CoinListViewModelImpl @Inject constructor(
 		this.searchTerm.value = searchTerm
 	}
 
-	private fun updateUiState() {
-		coinTickers.combine(searchTerm) { coinModels, searchTerm ->
-			coinModels?.let {
-				val filteredCoins = coinModels.filter { it.name.lowercase().contains(searchTerm) }
-				if (filteredCoins.isNotEmpty()) {
-					_uiState.value =
-						uiState.value.copy(
-							coins = filteredCoins.toImmutableList(),
-							isLoading = false,
-							isRefreshing = false,
-							isErrorState = false
-						)
-				}
-			}
-		}.launchIn(viewModelScope)
+	private fun showLoading() {
+		_uiState.value = uiState.value.copy(isLoading = true, isErrorState = false)
+	}
+
+	private fun navigateToDetails(coinId: String) {
+		viewModelScope.launch {
+			_uiEvent.emit(UiEvent.NavigateToDetails(coinId))
+		}
 	}
 
 	private fun setupCoinsTickers() {
@@ -103,63 +93,81 @@ class CoinListViewModelImpl @Inject constructor(
 				}
 				coinTickers.value = coinModels
 			}.catch {
-				_uiState.value =
-					uiState.value.copy(
-						isErrorState = true,
-						errorMessage = it.message?.let { ErrorMessage.GivenMessage(it) }
-							?: ErrorMessage.UnexpectedErrorOccurred,
-						isLoading = false,
-						isRefreshing = false
-					)
+				showErrorAndSetErrorState(it)
 			}.launchIn(viewModelScope)
 	}
 
 	private fun fetchCoinsTickers() {
 		viewModelScope.launch(
-			ioDispatcher +
-					CoroutineExceptionHandler { _, throwable ->
-						// In case a network error occurs.
-						viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
-							// In case a database error occurs.
-							viewModelScope.launch(Dispatchers.Main) {
-								_uiState.value =
-									uiState.value.copy(
-										isErrorState = true,
-										errorMessage = throwable1.message?.let { ErrorMessage.GivenMessage(it) }
-											?: ErrorMessage.UnexpectedErrorOccurred,
-										isLoading = false,
-										isRefreshing = false
-									)
-							}
-						}) {
-							val hasCachedCoinsTickers = hasCachedCoinsTickersUseCase.execute()
-							withContext(Dispatchers.Main) {
-								if (!hasCachedCoinsTickers) {
-									_uiState.value =
-										uiState.value.copy(
-											isErrorState = true,
-											errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
-												?: ErrorMessage.UnexpectedErrorOccurred,
-											isLoading = false,
-											isRefreshing = false
-										)
-								} else {
-									if (uiState.value.isRefreshing) {
-										_uiState.value =
-											uiState.value.copy(
-												errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
-													?: ErrorMessage.UnexpectedErrorOccurred,
-												isLoading = false,
-												isRefreshing = false
-											)
-									}
-								}
-							}
-						}
-					},
+			handleFetchCoinsTickersError(),
 		) {
 			fetchCoinsTickersUseCase.execute()
 		}
+	}
+
+	private fun handleFetchCoinsTickersError() = CoroutineExceptionHandler { _, throwable ->
+		viewModelScope.launch(CoroutineExceptionHandler { _, throwable1 ->
+			// In case a database error occurs.
+			showErrorAndSetErrorState(throwable1)
+		}) {
+			handleErrorIfNoCachedCoinsTickers(throwable)
+		}
+	}
+
+	private suspend fun handleErrorIfNoCachedCoinsTickers(throwable: Throwable) {
+		val hasCachedCoinsTickers = hasCachedCoinsTickersUseCase.execute()
+		if (!hasCachedCoinsTickers) {
+			showErrorAndSetErrorState(throwable)
+		} else {
+			if (uiState.value.isRefreshing) {
+				showError(throwable)
+			}
+		}
+	}
+
+	private fun setRefreshingState() {
+		_uiState.value = uiState.value.copy(isRefreshing = true)
+	}
+
+	private fun updateUiState() {
+		coinTickers.combine(searchTerm) { coinModels, searchTerm ->
+			coinModels?.let {
+				val filteredCoins = coinModels.filter { it.name.lowercase().contains(searchTerm) }
+				if (filteredCoins.isNotEmpty()) {
+					setCoins(filteredCoins)
+				}
+			}
+		}.launchIn(viewModelScope)
+	}
+
+	private fun setCoins(filteredCoins: List<CoinTickerModel>) {
+		_uiState.value =
+			uiState.value.copy(
+				coins = filteredCoins.toImmutableList(),
+				isLoading = false,
+				isRefreshing = false,
+				isErrorState = false
+			)
+	}
+
+	private fun showError(throwable: Throwable) {
+		_uiState.value = uiState.value.copy(
+			errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
+				?: ErrorMessage.UnexpectedErrorOccurred,
+			isLoading = false,
+			isRefreshing = false
+		)
+	}
+
+	private fun showErrorAndSetErrorState(throwable: Throwable) {
+		_uiState.value =
+			uiState.value.copy(
+				isErrorState = true,
+				errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
+					?: ErrorMessage.UnexpectedErrorOccurred,
+				isLoading = false,
+				isRefreshing = false
+			)
 	}
 
 	sealed class UiEvent {
