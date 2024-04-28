@@ -40,7 +40,7 @@ fun TeamListItem(
 @Preview
 @Composable
 fun PreviewTeamListItem() {
-	CryptocurrenciesTheme{
+	CryptocurrenciesTheme {
 		TeamListItem(TeamMemberModel("1", "Satoshi Nakamoto", "Founder"))
 	}
 }

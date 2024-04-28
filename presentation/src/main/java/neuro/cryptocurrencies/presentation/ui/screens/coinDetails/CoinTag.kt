@@ -42,6 +42,6 @@ fun CoinTag(
 @Composable
 fun PreviewCoinTag() {
 	CryptocurrenciesTheme {
-			CoinTag("Cryptocurrency", modifier = Modifier.background(Color.Black))
+		CoinTag("Cryptocurrency", modifier = Modifier.background(Color.Black))
 	}
 }
