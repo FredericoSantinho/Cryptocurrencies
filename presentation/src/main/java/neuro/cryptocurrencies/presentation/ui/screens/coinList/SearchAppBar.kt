@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.coin.list
+package neuro.cryptocurrencies.presentation.ui.screens.coinList
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton

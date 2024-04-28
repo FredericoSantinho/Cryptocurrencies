@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.main
+package neuro.cryptocurrencies.presentation.ui.screens.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

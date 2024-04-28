@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.coin.details
+package neuro.cryptocurrencies.presentation.ui.screens.coinDetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

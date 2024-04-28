@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.main
+package neuro.cryptocurrencies.presentation.ui.screens.main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import neuro.cryptocurrencies.presentation.ScreenRoutes
-import neuro.cryptocurrencies.presentation.ui.coin.details.CoinDetailsComposable
-import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListComposable
+import neuro.cryptocurrencies.presentation.ui.screens.coinDetails.CoinDetailsComposable
+import neuro.cryptocurrencies.presentation.ui.screens.coinList.CoinListComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
 

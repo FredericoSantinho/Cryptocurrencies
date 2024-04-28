@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.coin.details
+package neuro.cryptocurrencies.presentation.ui.screens.coinDetails
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -50,8 +50,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
-import neuro.cryptocurrencies.presentation.ui.coin.list.CoinListItemComposable
 import neuro.cryptocurrencies.presentation.ui.common.composables.AlertDialogDismissable
+import neuro.cryptocurrencies.presentation.ui.screens.coinList.CoinListItemComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
 import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModel
