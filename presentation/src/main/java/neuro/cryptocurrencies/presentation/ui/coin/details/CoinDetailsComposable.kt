@@ -266,7 +266,7 @@ fun CoinDetailsComposable(
 			}
 		}
 
-		if (uiState.showDialog) {
+		uiState.dialogTitle?.let {
 			AlertDialogDismissable(
 				title = uiState.dialogTitle,
 				text = uiState.dialogText.toPresentation()

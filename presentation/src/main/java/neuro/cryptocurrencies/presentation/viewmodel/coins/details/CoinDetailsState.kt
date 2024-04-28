@@ -12,6 +12,6 @@ data class CoinDetailsState(
 	val isRefreshing: Boolean = false,
 	val showDialog: Boolean = false,
 	val dialogLoading: Boolean = false,
-	val dialogTitle: String = "",
+	val dialogTitle: String? = null,
 	val dialogText: DialogText = DialogText.Empty
 )

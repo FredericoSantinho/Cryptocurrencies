@@ -76,7 +76,7 @@ class CoinDetailsViewModelImpl(
 	override fun onDialogDismiss() {
 		dialogFeedingJob.value?.cancel()
 		_uiState.value =
-			uiState.value.copy(showDialog = false, dialogTitle = "", dialogText = DialogText.Empty)
+			uiState.value.copy(showDialog = false, dialogTitle = null, dialogText = DialogText.Empty)
 	}
 
 	override fun onTagClick(tagModel: TagModel) {
