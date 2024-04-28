@@ -11,12 +11,12 @@ import org.mockito.kotlin.whenever
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class HasCachedTagDetailsUsecaseImplTest {
+class HasCachedTagDetailsUseCaseImplTest {
 	@Test
 	fun hasCachedTagDetailsTickers() = runTest {
 		val hasCachedTagDetailsRepository = mock<HasCachedTagDetailsRepository>()
 
-		val hasCachedTagDetailsUsecase = HasCachedTagDetailsUsecaseImpl(hasCachedTagDetailsRepository)
+		val hasCachedTagDetailsUsecase = HasCachedTagDetailsUseCaseImpl(hasCachedTagDetailsRepository)
 		val tagId = "segwit"
 
 		whenever(hasCachedTagDetailsRepository.hasCachedTagDetails(tagId)).thenReturn(true)
@@ -32,7 +32,7 @@ class HasCachedTagDetailsUsecaseImplTest {
 	fun `doesn'tHaveCachedTagDetails`() = runTest {
 		val hasCachedTagDetailsRepository = mock<HasCachedTagDetailsRepository>()
 
-		val hasCachedTagDetailsUsecase = HasCachedTagDetailsUsecaseImpl(hasCachedTagDetailsRepository)
+		val hasCachedTagDetailsUsecase = HasCachedTagDetailsUseCaseImpl(hasCachedTagDetailsRepository)
 		val tagId = "segwit"
 
 		whenever(hasCachedTagDetailsRepository.hasCachedTagDetails(tagId)).thenReturn(false)
