@@ -1,6 +1,5 @@
 package neuro.cryptocurrencies.presentation.ui.screens.coinList
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +18,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -28,11 +30,13 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,8 +46,10 @@ import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.R
 import neuro.cryptocurrencies.presentation.ScreenRoutes
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
+import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
+import neuro.cryptocurrencies.presentation.utils.compose.snackbar.showSnackBar
 import neuro.cryptocurrencies.presentation.utils.helper.DebounceTimer
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModelImpl
@@ -58,8 +64,19 @@ fun CoinListComposable(
 ) {
 	val uiState = viewModel.uiState.value
 
+	val snackState = remember { SnackbarHostState() }
+	val snackScope = rememberCoroutineScope()
+
 	Scaffold(
 		topBar = { SearchAppBar({ viewModel.onSearchTerm(it) }) },
+		snackbarHost = {
+			SnackbarHost(hostState = snackState, modifier = Modifier.navigationBarsPadding()) { data ->
+				Snackbar(
+					backgroundColor = Color.DarkGray,
+					snackbarData = data
+				)
+			}
+		},
 		modifier = Modifier
 			.background(MaterialTheme.colors.primary)
 			.statusBarsPadding()
@@ -126,12 +143,13 @@ fun CoinListComposable(
 					}
 				}
 
-				val context = LocalContext.current
-				val errorMessage = uiState.errorMessage.toPresentation()
-				LaunchedEffect(key1 = errorMessage) {
-					if (errorMessage.isNotBlank() && !uiState.isRefreshing) {
-						Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-						viewModel.errorShown()
+				if (uiState.errorMessage != ErrorMessage.Empty) {
+					val errorMessage = uiState.errorMessage.toPresentation()
+					LaunchedEffect(key1 = errorMessage) {
+						if (errorMessage.isNotBlank() && !uiState.isRefreshing) {
+							showSnackBar(errorMessage, snackScope, snackState)
+							viewModel.errorShown()
+						}
 					}
 				}
 			}
@@ -142,7 +160,7 @@ fun CoinListComposable(
 }
 
 @Composable
-fun onUiEvent(
+private fun onUiEvent(
 	uiEventSharedFlow: SharedFlow<CoinListViewModelImpl.UiEvent>,
 	navController: NavHostController,
 	debounceTimer: DebounceTimer
