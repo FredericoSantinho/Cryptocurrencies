@@ -45,8 +45,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -79,8 +78,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -126,8 +124,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -160,8 +157,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -213,8 +209,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -259,8 +254,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -295,8 +289,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -350,8 +343,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -407,8 +399,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -456,8 +447,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()
@@ -506,8 +496,7 @@ class CoinListViewModelImplTest {
 			CoinListViewModelImpl(
 				observeCoinsTickersUseCase,
 				fetchCoinsTickersUseCase,
-				hasCachedCoinsTickersUseCase,
-				testIoDispatcher
+				hasCachedCoinsTickersUseCase
 			)
 
 		testIoDispatcher.scheduler.runCurrent()

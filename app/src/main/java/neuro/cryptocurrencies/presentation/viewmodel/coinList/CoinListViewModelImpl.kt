@@ -5,9 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -30,8 +28,7 @@ import javax.inject.Inject
 class CoinListViewModelImpl @Inject constructor(
 	private val observeCoinsTickersUseCase: ObserveCoinsTickersUseCase,
 	private val fetchCoinsTickersUseCase: FetchCoinsTickersUseCase,
-	private val hasCachedCoinsTickersUseCase: HasCachedCoinsTickersUseCase,
-	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+	private val hasCachedCoinsTickersUseCase: HasCachedCoinsTickersUseCase
 ) : BaseViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState

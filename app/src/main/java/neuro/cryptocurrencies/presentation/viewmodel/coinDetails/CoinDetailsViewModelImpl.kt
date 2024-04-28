@@ -5,12 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -38,8 +35,7 @@ class CoinDetailsViewModelImpl @Inject constructor(
 	private val observeTagDetailsUseCase: ObserveTagDetailsUseCase,
 	private val fetchTagDetailsUseCase: FetchTagDetailsUseCase,
 	private val hasCachedTagDetailsUseCase: HasCachedTagDetailsUseCase,
-	savedStateHandle: SavedStateHandle,
-	private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+	savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), CoinDetailsViewModel {
 	private val _uiState = mutableStateOf(CoinDetailsState(isLoading = true))
 	override val uiState: State<CoinDetailsState> = _uiState
@@ -88,7 +84,7 @@ class CoinDetailsViewModelImpl @Inject constructor(
 	}
 
 	private fun observeCoinDetailsWithPrice() {
-		observeCoinDetailsUseCase.execute(coinId).flowOn(ioDispatcher)
+		observeCoinDetailsUseCase.execute(coinId)
 			.onEach { coinDetailsWithPrice -> setCoinDetails(coinDetailsWithPrice) }
 			.catch { showErrorAndSetErrorState(it) }
 			.launchIn(viewModelScope)
@@ -104,13 +100,13 @@ class CoinDetailsViewModelImpl @Inject constructor(
 
 	private fun observeTag(tagModel: TagModel) {
 		dialogFeedingJob.value =
-			observeTagDetailsUseCase.execute(tagModel.id).flowOn(ioDispatcher)
+			observeTagDetailsUseCase.execute(tagModel.id)
 				.onEach { tagDetails -> setDialog(tagDetails) }
 				.catch { throwable -> setDialogErrorState(throwable) }.launchIn(viewModelScope)
 	}
 
 	private fun fetchTag(tagModel: TagModel) {
-		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable ->
+		viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
 			handleFetchTagDetailsError(throwable, tagModel)
 		}) {
 			fetchTagDetailsUseCase.execute(tagModel.id)
@@ -202,7 +198,7 @@ class CoinDetailsViewModelImpl @Inject constructor(
 		throwable: Throwable,
 		tagModel: TagModel
 	) {
-		viewModelScope.launch(ioDispatcher + CoroutineExceptionHandler { _, throwable1 ->
+		viewModelScope.launch(CoroutineExceptionHandler { _, throwable1 ->
 			// In case a database error occurs.
 			setDialogErrorState(throwable)
 		}) {

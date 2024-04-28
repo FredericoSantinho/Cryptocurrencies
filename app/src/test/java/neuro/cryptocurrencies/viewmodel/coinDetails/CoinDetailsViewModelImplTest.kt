@@ -3,7 +3,6 @@ package neuro.cryptocurrencies.viewmodel.coinDetails
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.MainDispatcherRule
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice
@@ -48,7 +47,6 @@ class CoinDetailsViewModelImplTest {
 		val coinId = "btc-bitcoin"
 		val savedStateHandle =
 			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-		val testIoDispatcher = StandardTestDispatcher()
 
 		whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(flow {
 			emit(
@@ -64,8 +62,7 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				savedStateHandle,
-				testIoDispatcher
+				savedStateHandle
 			)
 
 		assertEquals(
@@ -73,8 +70,6 @@ class CoinDetailsViewModelImplTest {
 				isLoading = true
 			), coinDetailsViewModel.uiState.value
 		)
-
-		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
@@ -101,7 +96,6 @@ class CoinDetailsViewModelImplTest {
 		val coinId = "btc-bitcoin"
 		val savedStateHandle =
 			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-		val testIoDispatcher = StandardTestDispatcher()
 
 		val coinDetailsWithPriceFlow = MutableSharedFlow<CoinDetailsWithPrice>()
 		whenever(observeCoinDetailsUseCase.execute(coinId)).thenReturn(coinDetailsWithPriceFlow)
@@ -114,8 +108,7 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				savedStateHandle,
-				testIoDispatcher
+				savedStateHandle
 			)
 
 		assertEquals(
@@ -125,21 +118,16 @@ class CoinDetailsViewModelImplTest {
 		)
 
 		coinDetailsWithPriceFlow.emit(coinDetailsWithPriceMock())
-		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 		coinDetailsViewModel.onRefresh()
 
-		testIoDispatcher.scheduler.runCurrent()
-
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
 
 		coinDetailsWithPriceFlow.emit(coinDetailsWithPriceMock(1))
-
-		testIoDispatcher.scheduler.runCurrent()
 
 		val expectedCoinDetailsWithPriceModel =
 			CoinDetailsWithPriceModel(coinDetailsModelMock(), "$ 25222.00")
@@ -166,7 +154,6 @@ class CoinDetailsViewModelImplTest {
 		val coinId = "btc-bitcoin"
 		val savedStateHandle =
 			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-		val testIoDispatcher = StandardTestDispatcher()
 
 		val errorMessage = "some error"
 
@@ -184,8 +171,7 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				savedStateHandle,
-				testIoDispatcher
+				savedStateHandle
 			)
 
 		assertEquals(
@@ -193,8 +179,6 @@ class CoinDetailsViewModelImplTest {
 				isLoading = true
 			), coinDetailsViewModel.uiState.value
 		)
-
-		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
@@ -222,7 +206,6 @@ class CoinDetailsViewModelImplTest {
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-			val testIoDispatcher = StandardTestDispatcher()
 
 			val errorMessage = "some error"
 
@@ -246,8 +229,7 @@ class CoinDetailsViewModelImplTest {
 					observeTagDetailsUseCase,
 					fetchTagDetailsUseCase,
 					hasCachedTagDetailsUseCase,
-					savedStateHandle,
-					testIoDispatcher
+					savedStateHandle
 				)
 
 			assertEquals(
@@ -255,8 +237,6 @@ class CoinDetailsViewModelImplTest {
 					isLoading = true
 				), coinDetailsViewModel.uiState.value
 			)
-
-			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
@@ -285,7 +265,6 @@ class CoinDetailsViewModelImplTest {
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-			val testIoDispatcher = StandardTestDispatcher()
 
 			val errorMessage = "some error"
 
@@ -309,8 +288,7 @@ class CoinDetailsViewModelImplTest {
 					observeTagDetailsUseCase,
 					fetchTagDetailsUseCase,
 					hasCachedTagDetailsUseCase,
-					savedStateHandle,
-					testIoDispatcher
+					savedStateHandle
 				)
 
 			assertEquals(
@@ -319,15 +297,11 @@ class CoinDetailsViewModelImplTest {
 				), coinDetailsViewModel.uiState.value
 			)
 
-			testIoDispatcher.scheduler.runCurrent()
-
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			coinDetailsViewModel.onRefresh()
-
-			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
@@ -357,7 +331,6 @@ class CoinDetailsViewModelImplTest {
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-			val testIoDispatcher = StandardTestDispatcher()
 
 			val errorMessage = "some error"
 			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
@@ -378,8 +351,7 @@ class CoinDetailsViewModelImplTest {
 					observeTagDetailsUseCase,
 					fetchTagDetailsUseCase,
 					hasCachedTagDetailsUseCase,
-					savedStateHandle,
-					testIoDispatcher
+					savedStateHandle
 				)
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
@@ -387,8 +359,6 @@ class CoinDetailsViewModelImplTest {
 			verify(hasCachedCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
 			coinDetailsViewModel.onRefresh()
-
-			testIoDispatcher.scheduler.runCurrent()
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 			verify(fetchCoinDetailsUseCase, times(2)).execute(eq(coinId))
@@ -417,7 +387,6 @@ class CoinDetailsViewModelImplTest {
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-			val testIoDispatcher = StandardTestDispatcher()
 
 			val errorMessage = "some error"
 			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
@@ -438,8 +407,7 @@ class CoinDetailsViewModelImplTest {
 					observeTagDetailsUseCase,
 					fetchTagDetailsUseCase,
 					hasCachedTagDetailsUseCase,
-					savedStateHandle,
-					testIoDispatcher
+					savedStateHandle
 				)
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
@@ -480,7 +448,6 @@ class CoinDetailsViewModelImplTest {
 			val coinId = "btc-bitcoin"
 			val savedStateHandle =
 				SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-			val testIoDispatcher = StandardTestDispatcher()
 
 			val errorMessage = "some error"
 			val observeCoinDetailsSharedFlow = MutableSharedFlow<CoinDetailsWithPrice>()
@@ -501,8 +468,7 @@ class CoinDetailsViewModelImplTest {
 					observeTagDetailsUseCase,
 					fetchTagDetailsUseCase,
 					hasCachedTagDetailsUseCase,
-					savedStateHandle,
-					testIoDispatcher
+					savedStateHandle
 				)
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
@@ -543,7 +509,6 @@ class CoinDetailsViewModelImplTest {
 		val coinId = "btc-bitcoin"
 		val savedStateHandle =
 			SavedStateHandle(mapOf(CoinDetailsViewModelImpl.PARAM_COIN_ID to coinId))
-		val testIoDispatcher = StandardTestDispatcher()
 
 		val errorMessage = "some error"
 
@@ -561,8 +526,7 @@ class CoinDetailsViewModelImplTest {
 				observeTagDetailsUseCase,
 				fetchTagDetailsUseCase,
 				hasCachedTagDetailsUseCase,
-				savedStateHandle,
-				testIoDispatcher
+				savedStateHandle
 			)
 
 		assertEquals(
@@ -570,8 +534,6 @@ class CoinDetailsViewModelImplTest {
 				isLoading = true
 			), coinDetailsViewModel.uiState.value
 		)
-
-		testIoDispatcher.scheduler.runCurrent()
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
@@ -597,8 +559,6 @@ class CoinDetailsViewModelImplTest {
 		)
 
 		coinDetailsViewModel.onRetry()
-
-		testIoDispatcher.scheduler.runCurrent()
 
 		assertEquals(
 			CoinDetailsState(
