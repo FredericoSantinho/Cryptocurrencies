@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.viewmodel.coins.details
+package neuro.cryptocurrencies.presentation.viewmodel.coinDetails
 
 import neuro.cryptocurrencies.presentation.model.CoinDetailsWithPriceModel
 import neuro.cryptocurrencies.presentation.model.DialogText

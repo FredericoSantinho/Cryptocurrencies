@@ -54,9 +54,9 @@ import neuro.cryptocurrencies.presentation.ui.common.composables.AlertDialogDism
 import neuro.cryptocurrencies.presentation.ui.screens.coinList.CoinListItemComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModel
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.DummyCoinDetailsViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.DummyCoinDetailsViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)

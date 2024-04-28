@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.viewmodel.coins
+package neuro.cryptocurrencies.presentation.viewmodel.coinList
 
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async

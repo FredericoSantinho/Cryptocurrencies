@@ -9,7 +9,7 @@ import neuro.cryptocurrencies.presentation.ScreenRoutes
 import neuro.cryptocurrencies.presentation.ui.screens.coinDetails.CoinDetailsComposable
 import neuro.cryptocurrencies.presentation.ui.screens.coinList.CoinListComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsViewModelImpl
 
 @Composable
 fun MainComposable() {

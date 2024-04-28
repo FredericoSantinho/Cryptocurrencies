@@ -44,9 +44,9 @@ import neuro.cryptocurrencies.presentation.ScreenRoutes
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
-import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModel
-import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
-import neuro.cryptocurrencies.presentation.viewmodel.coins.DummyCoinListViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModel
+import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coinList.DummyCoinListViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)

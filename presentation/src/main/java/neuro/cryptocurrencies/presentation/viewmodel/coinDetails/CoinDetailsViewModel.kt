@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.viewmodel.coins.details
+package neuro.cryptocurrencies.presentation.viewmodel.coinDetails
 
 import androidx.compose.runtime.State
 import neuro.cryptocurrencies.presentation.model.TagModel

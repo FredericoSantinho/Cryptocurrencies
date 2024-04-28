@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.viewmodel.coins
+package neuro.cryptocurrencies.presentation.viewmodel.coinList
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

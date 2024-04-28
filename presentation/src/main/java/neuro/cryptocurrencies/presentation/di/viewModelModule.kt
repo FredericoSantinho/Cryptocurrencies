@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.presentation.di
 
-import neuro.cryptocurrencies.presentation.viewmodel.coins.CoinListViewModelImpl
-import neuro.cryptocurrencies.presentation.viewmodel.coins.details.CoinDetailsViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsViewModelImpl
+import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

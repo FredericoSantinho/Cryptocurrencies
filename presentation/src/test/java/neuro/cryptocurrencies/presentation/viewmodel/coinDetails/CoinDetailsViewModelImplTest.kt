@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.viewmodel.coins.details
+package neuro.cryptocurrencies.presentation.viewmodel.coinDetails
 
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.MutableSharedFlow
