@@ -149,6 +149,9 @@ fun CoinDetailsComposable(
 								) {
 									if (coinDetailsModel.logo.isNotBlank()) {
 										item {
+											Spacer(modifier = Modifier.height(16.dp))
+										}
+										item {
 											Row(
 												modifier = Modifier.fillMaxWidth(),
 												horizontalArrangement = Arrangement.Center
