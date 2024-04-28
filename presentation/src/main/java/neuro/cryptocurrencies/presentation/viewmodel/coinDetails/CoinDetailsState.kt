@@ -6,7 +6,7 @@ import neuro.cryptocurrencies.presentation.model.ErrorMessage
 
 data class CoinDetailsState(
 	val coinDetailsWithPriceModel: CoinDetailsWithPriceModel? = null,
-	val isError: Boolean = false,
+	val isErrorState: Boolean = false,
 	val errorMessage: ErrorMessage = ErrorMessage.Empty,
 	val isLoading: Boolean = false,
 	val isRefreshing: Boolean = false,

@@ -79,7 +79,7 @@ fun CoinListComposable(
 					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
 				}
 			} else {
-				if (uiState.isError && !uiState.isRefreshing) {
+				if (uiState.isErrorState && !uiState.isRefreshing) {
 					Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 						Column(horizontalAlignment = Alignment.CenterHorizontally) {
 							Text(text = stringResource(id = R.string.no_data_available))

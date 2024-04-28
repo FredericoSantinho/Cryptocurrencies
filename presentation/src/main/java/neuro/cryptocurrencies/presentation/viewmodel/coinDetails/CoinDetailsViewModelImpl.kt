@@ -64,7 +64,7 @@ class CoinDetailsViewModelImpl(
 	}
 
 	override fun onRetry() {
-		_uiState.value = uiState.value.copy(isLoading = true, isError = false)
+		_uiState.value = uiState.value.copy(isLoading = true, isErrorState = false)
 		fetchCoinDetailsWithPrice()
 	}
 
@@ -86,6 +86,17 @@ class CoinDetailsViewModelImpl(
 		fetchTag(tagModel)
 	}
 
+	override fun onTeamMemberClick(teamMemberModel: TeamMemberModel) {
+		_uiState.value =
+			uiState.value.copy(
+				showDialog = true,
+				dialogTitle = "${teamMemberModel.name} (${teamMemberModel.position})",
+				dialogLoading = true
+			)
+		observeTeamMember(teamMemberModel)
+		fetchTeamMember(teamMemberModel)
+	}
+
 	private fun observeCoinDetailsWithPrice() {
 		observeCoinDetailsUseCase.execute(coinId).flowOn(ioDispatcher)
 			.onEach { coinDetailsWithPrice ->
@@ -93,13 +104,13 @@ class CoinDetailsViewModelImpl(
 					uiState.value.copy(
 						coinDetailsWithPriceModel = coinDetailsWithPrice.toPresentation(),
 						isLoading = false,
-						isError = false,
+						isErrorState = false,
 						isRefreshing = false
 					)
 			}.catch {
 				_uiState.value =
 					uiState.value.copy(
-						isError = true,
+						isErrorState = true,
 						errorMessage = it.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
 							?: ErrorMessage.UnexpectedErrorOccurred,
 						isLoading = false,
@@ -117,7 +128,7 @@ class CoinDetailsViewModelImpl(
 				viewModelScope.launch {
 					_uiState.value =
 						uiState.value.copy(
-							isError = true,
+							isErrorState = true,
 							errorMessage = throwable1.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
 								?: ErrorMessage.UnexpectedErrorOccurred,
 							isLoading = false,
@@ -132,7 +143,7 @@ class CoinDetailsViewModelImpl(
 							uiState.value.copy(
 								errorMessage = throwable.localizedMessage?.let { ErrorMessage.GivenMessage(it) }
 									?: ErrorMessage.UnexpectedErrorOccurred,
-								isError = true,
+								isErrorState = true,
 								isLoading = false,
 								isRefreshing = false
 							)
@@ -273,17 +284,6 @@ class CoinDetailsViewModelImpl(
 		}) {
 			fetchTeamMemberDetailsUseCase.execute(teamMemberModel.id)
 		}
-	}
-
-	override fun onTeamMemberClick(teamMemberModel: TeamMemberModel) {
-		_uiState.value =
-			uiState.value.copy(
-				showDialog = true,
-				dialogTitle = "${teamMemberModel.name} (${teamMemberModel.position})",
-				dialogLoading = true
-			)
-		observeTeamMember(teamMemberModel)
-		fetchTeamMember(teamMemberModel)
 	}
 
 	companion object {

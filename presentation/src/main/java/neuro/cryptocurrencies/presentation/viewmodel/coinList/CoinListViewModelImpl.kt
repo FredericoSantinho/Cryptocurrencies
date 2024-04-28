@@ -56,7 +56,7 @@ class CoinListViewModelImpl(
 	}
 
 	override fun onRetry() {
-		_uiState.value = uiState.value.copy(isLoading = true, isError = false)
+		_uiState.value = uiState.value.copy(isLoading = true, isErrorState = false)
 		fetchCoinsTickers()
 	}
 
@@ -78,7 +78,7 @@ class CoinListViewModelImpl(
 							coins = filteredCoins.toImmutableList(),
 							isLoading = false,
 							isRefreshing = false,
-							isError = false
+							isErrorState = false
 						)
 				}
 			}
@@ -102,7 +102,7 @@ class CoinListViewModelImpl(
 			}.catch {
 				_uiState.value =
 					uiState.value.copy(
-						isError = true,
+						isErrorState = true,
 						errorMessage = it.message?.let { ErrorMessage.GivenMessage(it) }
 							?: ErrorMessage.UnexpectedErrorOccurred,
 						isLoading = false,
@@ -121,7 +121,7 @@ class CoinListViewModelImpl(
 							viewModelScope.launch(Dispatchers.Main) {
 								_uiState.value =
 									uiState.value.copy(
-										isError = true,
+										isErrorState = true,
 										errorMessage = throwable1.message?.let { ErrorMessage.GivenMessage(it) }
 											?: ErrorMessage.UnexpectedErrorOccurred,
 										isLoading = false,
@@ -134,7 +134,7 @@ class CoinListViewModelImpl(
 								if (!hasCachedCoinsTickers) {
 									_uiState.value =
 										uiState.value.copy(
-											isError = true,
+											isErrorState = true,
 											errorMessage = throwable.message?.let { ErrorMessage.GivenMessage(it) }
 												?: ErrorMessage.UnexpectedErrorOccurred,
 											isLoading = false,

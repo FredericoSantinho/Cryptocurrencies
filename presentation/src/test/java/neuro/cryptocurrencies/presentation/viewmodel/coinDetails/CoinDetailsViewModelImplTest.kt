@@ -87,7 +87,7 @@ class CoinDetailsViewModelImplTest {
 		assertEquals(
 			CoinDetailsState(
 				coinDetailsWithPriceModel = coinDetailsWithPriceModelMock(),
-				isError = false,
+				isErrorState = false,
 				isLoading = false,
 				isRefreshing = false
 			), coinDetailsViewModel.uiState.value
@@ -154,7 +154,7 @@ class CoinDetailsViewModelImplTest {
 		assertEquals(
 			CoinDetailsState(
 				coinDetailsWithPriceModel = expectedCoinDetailsWithPriceModel,
-				isError = false,
+				isErrorState = false,
 				isLoading = false,
 				isRefreshing = false
 			), coinDetailsViewModel.uiState.value
@@ -210,7 +210,7 @@ class CoinDetailsViewModelImplTest {
 
 		assertEquals(
 			CoinDetailsState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -277,7 +277,7 @@ class CoinDetailsViewModelImplTest {
 			assertEquals(
 				CoinDetailsState(
 					coinDetailsWithPriceModel = coinDetailsWithPriceModelMock(),
-					isError = false,
+					isErrorState = false,
 					isLoading = false,
 					isRefreshing = false
 				), coinDetailsViewModel.uiState.value
@@ -351,7 +351,7 @@ class CoinDetailsViewModelImplTest {
 			assertEquals(
 				CoinDetailsState(
 					coinDetailsWithPriceModel = coinDetailsWithPriceModelMock(),
-					isError = false,
+					isErrorState = false,
 					isLoading = false,
 					errorMessage = ErrorMessage.GivenMessage(errorMessage),
 					isRefreshing = false
@@ -422,7 +422,7 @@ class CoinDetailsViewModelImplTest {
 
 			assertEquals(
 				CoinDetailsState(
-					isError = true,
+					isErrorState = true,
 					errorMessage = ErrorMessage.GivenMessage(errorMessage),
 					isLoading = false,
 					isRefreshing = false
@@ -485,7 +485,7 @@ class CoinDetailsViewModelImplTest {
 
 			assertEquals(
 				CoinDetailsState(
-					isError = true,
+					isErrorState = true,
 					errorMessage = ErrorMessage.GivenMessage(errorMessage),
 					isLoading = false,
 					isRefreshing = false
@@ -496,7 +496,7 @@ class CoinDetailsViewModelImplTest {
 
 			assertEquals(
 				CoinDetailsState(
-					isError = true,
+					isErrorState = true,
 					errorMessage = ErrorMessage.Empty,
 					isLoading = false,
 					isRefreshing = false
@@ -559,7 +559,7 @@ class CoinDetailsViewModelImplTest {
 
 			assertEquals(
 				CoinDetailsState(
-					isError = true,
+					isErrorState = true,
 					errorMessage = ErrorMessage.GivenMessage(errorMessage),
 					isLoading = false,
 					isRefreshing = false
@@ -571,7 +571,7 @@ class CoinDetailsViewModelImplTest {
 
 			assertEquals(
 				CoinDetailsState(
-					isError = true,
+					isErrorState = true,
 					errorMessage = ErrorMessage.Empty,
 					isLoading = false,
 					isRefreshing = false
@@ -628,7 +628,7 @@ class CoinDetailsViewModelImplTest {
 
 		assertEquals(
 			CoinDetailsState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -639,7 +639,7 @@ class CoinDetailsViewModelImplTest {
 
 		assertEquals(
 			CoinDetailsState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
@@ -652,7 +652,7 @@ class CoinDetailsViewModelImplTest {
 
 		assertEquals(
 			CoinDetailsState(
-				isError = false,
+				isErrorState = false,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = true,
 				isRefreshing = false

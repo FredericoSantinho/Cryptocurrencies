@@ -61,7 +61,7 @@ class CoinListViewModelImplTest {
 				coins = coinTickerModelMockList().toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
-				isError = false
+				isErrorState = false
 			), coinListViewModel.uiState.value
 		)
 	}
@@ -113,7 +113,7 @@ class CoinListViewModelImplTest {
 				coins = coinTickerModelMockList().toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
-				isError = false
+				isErrorState = false
 			), coinListViewModel.uiState.value
 		)
 	}
@@ -150,7 +150,7 @@ class CoinListViewModelImplTest {
 				coins = listOf(coinTickerModelMock()).toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
-				isError = false
+				isErrorState = false
 			), coinListViewModel.uiState.value
 		)
 	}
@@ -185,7 +185,7 @@ class CoinListViewModelImplTest {
 				coins = coinTickerModelMockList().toImmutableList(),
 				isLoading = false,
 				isRefreshing = false,
-				isError = false
+				isErrorState = false
 			), coinListViewModel.uiState.value
 		)
 
@@ -236,7 +236,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -247,7 +247,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
@@ -287,7 +287,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = coinTickerModelMockList().toImmutableList(),
-				isError = false,
+				isErrorState = false,
 				isLoading = false,
 				isRefreshing = false
 			), coinListViewModel.uiState.value
@@ -392,7 +392,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = null,
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -404,7 +404,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = null,
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
@@ -444,7 +444,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = null,
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -456,7 +456,7 @@ class CoinListViewModelImplTest {
 		assertEquals(
 			CoinListState(
 				coins = null,
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
@@ -495,7 +495,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -506,7 +506,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
@@ -547,7 +547,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.GivenMessage(errorMessage),
 				isLoading = false,
 				isRefreshing = false
@@ -558,7 +558,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = true,
+				isErrorState = true,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = false,
 				isRefreshing = false
@@ -571,7 +571,7 @@ class CoinListViewModelImplTest {
 
 		assertEquals(
 			CoinListState(
-				isError = false,
+				isErrorState = false,
 				errorMessage = ErrorMessage.Empty,
 				isLoading = true,
 				isRefreshing = false
