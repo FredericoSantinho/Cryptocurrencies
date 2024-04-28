@@ -6,8 +6,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -54,7 +57,12 @@ fun CoinListComposable(
 ) {
 	val uiState = viewModel.uiState.value
 
-	Scaffold(topBar = { SearchAppBar({ viewModel.onSearchTerm(it) }) }) {
+	Scaffold(
+		topBar = { SearchAppBar({ viewModel.onSearchTerm(it) }) },
+		modifier = Modifier
+			.background(MaterialTheme.colors.primary)
+			.statusBarsPadding()
+	) {
 		Surface(
 			modifier = Modifier
 				.padding(it)
@@ -96,9 +104,11 @@ fun CoinListComposable(
 						)
 
 						uiState.coins?.let {
-							LazyColumn(modifier = Modifier
-								.clip(MaterialTheme.shapes.large)
-								.background(blackTransparent)) {
+							LazyColumn(
+								modifier = Modifier
+									.clip(MaterialTheme.shapes.large)
+									.background(blackTransparent)
+							) {
 								items(uiState.coins, { item -> item.id }) {
 									CoinListItemComposable(
 										it.rank,
@@ -106,6 +116,9 @@ fun CoinListComposable(
 										it.symbol,
 										it.price,
 										modifier = Modifier.clickable { viewModel.onCoinClick(it.id) })
+								}
+								item {
+									Spacer(modifier = Modifier.navigationBarsPadding())
 								}
 							}
 						}

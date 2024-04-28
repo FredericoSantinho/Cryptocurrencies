@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -70,7 +73,9 @@ fun CoinDetailsComposable(
 			navController,
 			coinDetailsModelWithPrice?.coinDetailsModel?.name ?: stringResource(id = R.string.app_name)
 		)
-	}) {
+	}, modifier = Modifier
+		.background(Color.Green)
+		.statusBarsPadding()) {
 		Box(
 			modifier = Modifier
 				.padding(it)
@@ -189,7 +194,10 @@ fun CoinDetailsComposable(
 											)
 										}
 										item {
-											Text(text = coinDetailsModel.proofType, style = MaterialTheme.typography.body2)
+											Text(
+												text = coinDetailsModel.proofType,
+												style = MaterialTheme.typography.body2
+											)
 										}
 									}
 									if (coinDetailsModel.hashAlgorithm.isNotBlank()) {
@@ -240,6 +248,9 @@ fun CoinDetailsComposable(
 											})
 											Divider()
 										}
+									}
+									item { 
+										Spacer(modifier = Modifier.navigationBarsPadding())
 									}
 								}
 							}

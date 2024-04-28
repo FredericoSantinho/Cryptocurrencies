@@ -16,8 +16,10 @@ lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
 
 ver.ktx = "1.9.0"
 ver.ktx_lifecycle_runtime = "2.6.1"
+ver.activity = "1.8.1"
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
-              "androidx.lifecycle:lifecycle-runtime-ktx:$ver.ktx_lifecycle_runtime",]
+              "androidx.lifecycle:lifecycle-runtime-ktx:$ver.ktx_lifecycle_runtime",
+              "androidx.activity:activity:$ver.activity"]
 
 ver.compose_ui = "1.6.5"
 ver.activity_compose = "1.7.0"
