@@ -9,12 +9,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import neuro.cryptocurrencies.data.database.CryptocurrenciesDatabase
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 class DatabaseModule {
 
 	@Provides
+	@Singleton
 	fun provideCryptocurrenciesDatabase(@ApplicationContext context: Context) =
 		Room.databaseBuilder(context, CryptocurrenciesDatabase::class.java, DATABASE_NAME).build()
 
