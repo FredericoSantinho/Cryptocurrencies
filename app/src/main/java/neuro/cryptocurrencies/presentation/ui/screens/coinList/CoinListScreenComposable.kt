@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -48,6 +49,7 @@ import neuro.cryptocurrencies.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.ui.screens.ScreenRoutes
+import neuro.cryptocurrencies.presentation.ui.screens.common.CoinHeaderComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
 import neuro.cryptocurrencies.presentation.utils.compose.snackbar.showSnackBar
@@ -128,12 +130,15 @@ fun CoinListScreenComposable(
 									.background(blackTransparent)
 							) {
 								items(uiState.coins, { item -> item.id }) {
-									CoinListItemComposable(
-										it.rank,
-										it.name,
-										it.symbol,
-										it.price,
-										modifier = Modifier.clickable { viewModel.onCoinClick(it.id) })
+									CoinHeaderComposable(
+										rank = it.rank,
+										name = it.name,
+										symbol = it.symbol,
+										price = it.price,
+										modifier = Modifier
+											.clickable { viewModel.onCoinClick(it.id) }
+											.padding(16.dp)
+									)
 								}
 								item {
 									Spacer(modifier = Modifier.navigationBarsPadding())

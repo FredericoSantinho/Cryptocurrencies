@@ -56,7 +56,7 @@ import neuro.cryptocurrencies.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.ui.common.composables.AlertDialogDismissable
-import neuro.cryptocurrencies.presentation.ui.screens.coinList.CoinListItemComposable
+import neuro.cryptocurrencies.presentation.ui.screens.common.CoinHeaderComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
 import neuro.cryptocurrencies.presentation.utils.compose.snackbar.showSnackBar
@@ -169,12 +169,13 @@ fun CoinDetailsScreenComposable(
 										}
 									}
 									item {
-										CoinListItemComposable(
-											coinDetailsModel.rank,
-											coinDetailsModel.name,
-											coinDetailsModel.symbol,
-											coinDetailsModelWithPrice.price,
-											3
+										CoinHeaderComposable(
+											rank = coinDetailsModel.rank,
+											name = coinDetailsModel.name,
+											symbol = coinDetailsModel.symbol,
+											price = coinDetailsModelWithPrice.price,
+											maxLines = 3,
+											textStyle = MaterialTheme.typography.h5
 										)
 									}
 									if (coinDetailsModel.description.isNotBlank()) {

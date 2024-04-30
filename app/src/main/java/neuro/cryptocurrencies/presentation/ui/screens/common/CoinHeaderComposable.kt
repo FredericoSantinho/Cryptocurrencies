@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation.ui.screens.coinList
+package neuro.cryptocurrencies.presentation.ui.screens.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,22 +17,22 @@ import androidx.compose.ui.unit.dp
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 
 @Composable
-fun CoinListItemComposable(
+fun CoinHeaderComposable(
 	rank: Int,
 	name: String,
 	symbol: String,
 	price: String,
+	modifier: Modifier = Modifier,
 	maxLines: Int = 1,
-	modifier: Modifier = Modifier
+	textStyle: TextStyle = MaterialTheme.typography.h6
 ) {
 	Row(
 		modifier = modifier
-			.padding(16.dp)
 			.fillMaxWidth()
 	) {
 		Text(
 			text = "$rank. $name ($symbol)",
-			style = MaterialTheme.typography.h6,
+			style = textStyle,
 			overflow = TextOverflow.Ellipsis,
 			maxLines = maxLines,
 			modifier = Modifier.padding(end = 16.dp)
@@ -39,6 +40,7 @@ fun CoinListItemComposable(
 		Spacer(modifier = Modifier.weight(1.0f))
 		Text(
 			text = price,
+			style = textStyle,
 			textAlign = TextAlign.End,
 			color = Color.Green,
 		)
@@ -49,6 +51,6 @@ fun CoinListItemComposable(
 @Composable
 fun PreviewCoinListItemComposable() {
 	CryptocurrenciesTheme {
-		CoinListItemComposable(1, "Bitcoin", "BTC", "$ 25342")
+		CoinHeaderComposable(1, "Bitcoin", "BTC", "$ 25342", modifier = Modifier.padding(16.dp))
 	}
 }
