@@ -54,11 +54,10 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 						onSearchTerm(it)
 					},
 					colors = TextFieldDefaults.textFieldColors(
-						textColor = Color.Black,
 						focusedIndicatorColor = Color.Black,
 						cursorColor = Color.Black,
 					),
-					textStyle = MaterialTheme.typography.body2,
+					textStyle = MaterialTheme.typography.body2.copy(color = Color.Black),
 					label = {
 						Text(
 							text = stringResource(id = R.string.search_for_a_coin),
