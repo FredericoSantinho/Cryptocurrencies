@@ -17,6 +17,7 @@ import neuro.cryptocurrencies.mocks.coinTickerModelMock
 import neuro.cryptocurrencies.mocks.coinTickerModelMockList
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListState
+import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModel
 import neuro.cryptocurrencies.presentation.viewmodel.coinList.CoinListViewModelImpl
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -183,7 +184,7 @@ class CoinListViewModelImplTest {
 		}
 
 		assertEquals(
-			CoinListViewModelImpl.UiEvent.NavigateToDetails(
+			CoinListViewModel.UiEvent.NavigateToDetails(
 				"btc-bitcoin"
 			),
 			uiEventDeferred.await()

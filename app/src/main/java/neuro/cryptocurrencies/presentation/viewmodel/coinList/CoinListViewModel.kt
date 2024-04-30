@@ -6,7 +6,7 @@ import neuro.cryptocurrencies.presentation.utils.helper.DebounceTimer
 
 interface CoinListViewModel {
 	val uiState: State<CoinListState>
-	val uiEvent: SharedFlow<CoinListViewModelImpl.UiEvent>
+	val uiEvent: SharedFlow<UiEvent>
 
 	val debounceTimer: DebounceTimer
 
@@ -15,4 +15,8 @@ interface CoinListViewModel {
 	fun onRetry()
 	fun errorShown()
 	fun onSearchTerm(searchTerm: String)
+
+	sealed interface UiEvent {
+		data class NavigateToDetails(val coinId: String) : UiEvent
+	}
 }

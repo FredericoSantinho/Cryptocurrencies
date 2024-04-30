@@ -32,8 +32,8 @@ class CoinListViewModelImpl @Inject constructor(
 ) : BaseViewModel(), CoinListViewModel {
 	private val _uiState = mutableStateOf(CoinListState(isLoading = true))
 	override val uiState: State<CoinListState> = _uiState
-	private val _uiEvent = MutableSharedFlow<UiEvent>()
-	override val uiEvent: SharedFlow<UiEvent> = _uiEvent
+	private val _uiEvent = MutableSharedFlow<CoinListViewModel.UiEvent>()
+	override val uiEvent: SharedFlow<CoinListViewModel.UiEvent> = _uiEvent
 
 	private val coinTickers = MutableStateFlow<List<CoinTickerModel>?>(null)
 	private val searchTerm = MutableStateFlow("")
@@ -71,7 +71,7 @@ class CoinListViewModelImpl @Inject constructor(
 
 	private fun navigateToDetails(coinId: String) {
 		viewModelScope.launch {
-			_uiEvent.emit(UiEvent.NavigateToDetails(coinId))
+			_uiEvent.emit(CoinListViewModel.UiEvent.NavigateToDetails(coinId))
 		}
 	}
 
@@ -165,9 +165,5 @@ class CoinListViewModelImpl @Inject constructor(
 				isLoading = false,
 				isRefreshing = false
 			)
-	}
-
-	sealed class UiEvent {
-		data class NavigateToDetails(val coinId: String) : UiEvent()
 	}
 }

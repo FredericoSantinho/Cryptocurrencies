@@ -18,7 +18,7 @@ class DummyCoinListViewModel : CoinListViewModel {
 				).toImmutableList()
 			)
 		)
-	override val uiEvent: SharedFlow<CoinListViewModelImpl.UiEvent> = MutableSharedFlow()
+	override val uiEvent: SharedFlow<CoinListViewModel.UiEvent> = MutableSharedFlow()
 
 	override val debounceTimer = DebounceTimer()
 

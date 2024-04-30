@@ -166,7 +166,7 @@ fun CoinListScreenComposable(
 
 @Composable
 private fun onUiEvent(
-	uiEventSharedFlow: SharedFlow<CoinListViewModelImpl.UiEvent>,
+	uiEventSharedFlow: SharedFlow<CoinListViewModel.UiEvent>,
 	navController: NavHostController,
 	debounceTimer: DebounceTimer
 ) {
@@ -174,7 +174,7 @@ private fun onUiEvent(
 		uiEventSharedFlow.collect { uiEvent ->
 			debounceTimer.debounceRunFirst {
 				when (uiEvent) {
-					is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
+					is CoinListViewModel.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
 				}
 			}
 		}
