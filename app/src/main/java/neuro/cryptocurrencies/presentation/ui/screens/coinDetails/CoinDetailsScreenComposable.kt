@@ -180,74 +180,47 @@ fun CoinDetailsScreenComposable(
 									}
 									if (coinDetailsModel.description.isNotBlank()) {
 										item {
-											Text(
-												text = coinDetailsModel.description,
-												style = MaterialTheme.typography.body2
-											)
+											Body(coinDetailsModel.description)
 										}
 									}
 									if (coinDetailsModel.type.isNotBlank()) {
 										item {
-											Text(
-												text = stringResource(id = R.string.type),
-												style = MaterialTheme.typography.h5
-											)
+											Header(stringResource(id = R.string.type))
 										}
 										item {
-											Text(text = coinDetailsModel.type, style = MaterialTheme.typography.body2)
+											Body(text = coinDetailsModel.type)
 										}
 									}
 									item {
-										Text(
-											text = stringResource(id = R.string.open_source),
-											style = MaterialTheme.typography.h5,
-										)
+										Header(text = stringResource(id = R.string.open_source))
 									}
 									item {
-										Text(
-											text = coinDetailsModel.openSource.toString(),
-											style = MaterialTheme.typography.body2
-										)
+										Body(text = coinDetailsModel.openSource.toString())
 									}
 									if (coinDetailsModel.proofType.isNotBlank()) {
 										item {
-											Text(
-												text = stringResource(id = R.string.proof_type),
-												style = MaterialTheme.typography.h5
-											)
+											Header(text = stringResource(id = R.string.proof_type))
 										}
 										item {
-											Text(
-												text = coinDetailsModel.proofType,
-												style = MaterialTheme.typography.body2
-											)
+											Body(text = coinDetailsModel.proofType)
 										}
 									}
 									if (coinDetailsModel.hashAlgorithm.isNotBlank()) {
 										item {
-											Text(
-												text = stringResource(id = R.string.hash_algorithm),
-												style = MaterialTheme.typography.h5
-											)
+											Header(text = stringResource(id = R.string.hash_algorithm))
 										}
 										item {
-											Text(
-												text = coinDetailsModel.hashAlgorithm,
-												style = MaterialTheme.typography.body2
-											)
+											Body(text = coinDetailsModel.hashAlgorithm)
 										}
 									}
 									if (coinDetailsModel.tags.isNotEmpty()) {
 										item {
-											Text(
-												text = stringResource(id = R.string.tags),
-												style = MaterialTheme.typography.h5
-											)
+											Header(text = stringResource(id = R.string.tags))
 										}
 										item {
 											FlowRow(
-												mainAxisSpacing = 10.dp,
-												crossAxisSpacing = 10.dp,
+												mainAxisSpacing = 8.dp,
+												crossAxisSpacing = 8.dp,
 												modifier = Modifier.fillMaxWidth()
 											) {
 												for (tag in coinDetailsModel.tags) {
@@ -260,10 +233,7 @@ fun CoinDetailsScreenComposable(
 									}
 									if (coinDetailsModel.team.isNotEmpty()) {
 										item {
-											Text(
-												text = stringResource(id = R.string.team_members),
-												style = MaterialTheme.typography.h5
-											)
+											Header(text = stringResource(id = R.string.team_members))
 										}
 										items(coinDetailsModel.team) { teamModel ->
 											TeamListItem(teamModel)
@@ -306,6 +276,22 @@ fun CoinDetailsScreenComposable(
 			}
 		}
 	}
+}
+
+@Composable
+private fun Header(text: String) {
+	Text(
+		text = text,
+		style = MaterialTheme.typography.h5
+	)
+}
+
+@Composable
+private fun Body(text: String) {
+	Text(
+		text = text,
+		style = MaterialTheme.typography.body2
+	)
 }
 
 @Composable
