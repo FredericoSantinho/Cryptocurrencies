@@ -1,7 +1,5 @@
 package neuro.cryptocurrencies.presentation.ui.screens.common
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -14,6 +12,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 
 @Composable
@@ -26,23 +26,33 @@ fun CoinHeaderComposable(
 	maxLines: Int = 1,
 	textStyle: TextStyle = MaterialTheme.typography.h6
 ) {
-	Row(
+	ConstraintLayout(
 		modifier = modifier
 			.fillMaxWidth()
 	) {
+		val (textC, activeC) = createRefs()
+
 		Text(
 			text = "$rank. $name ($symbol)",
 			style = textStyle,
 			overflow = TextOverflow.Ellipsis,
-			maxLines = maxLines,
-			modifier = Modifier.padding(end = 16.dp)
+			modifier = Modifier.constrainAs(textC) {
+				start.linkTo(parent.start)
+				end.linkTo(activeC.start, margin = 16.dp)
+				width = Dimension.fillToConstraints
+			},
+			maxLines = maxLines
 		)
-		Spacer(modifier = Modifier.weight(1.0f))
 		Text(
 			text = price,
 			style = textStyle,
 			textAlign = TextAlign.End,
 			color = Color.Green,
+			modifier = Modifier.constrainAs(activeC) {
+				end.linkTo(parent.end)
+				top.linkTo(parent.top)
+				bottom.linkTo(parent.bottom)
+			}
 		)
 	}
 }
