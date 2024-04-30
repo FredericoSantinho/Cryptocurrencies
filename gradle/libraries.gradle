@@ -3,24 +3,24 @@ ext {
   lib = [:]
 }
 
-ver.kotlin = "1.7.22"
-ver.kotlinx_coroutines = "1.7.3"
+ver.kotlin = "2.0.0-RC2"
+ver.kotlinx_coroutines = "1.8.1-Beta"
 lib.kotlin = ["org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin",
               "org.jetbrains.kotlinx:kotlinx-coroutines-core:$ver.kotlinx_coroutines"]
 lib.coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$ver.kotlinx_coroutines"
 
-ver.ktx = "1.9.0"
-ver.ktx_lifecycle_runtime = "2.6.1"
-ver.activity = "1.8.1"
+ver.ktx = "1.13.0"
+ver.ktx_lifecycle_runtime = "2.8.0-beta01"
+ver.activity = "1.9.0"
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.lifecycle:lifecycle-runtime-ktx:$ver.ktx_lifecycle_runtime",
               "androidx.activity:activity:$ver.activity"]
 
-ver.compose_ui = "1.6.5"
-ver.activity_compose = "1.7.0"
-ver.material = "1.6.5"
-ver.composeNavigation = "2.5.3"
-ver.accompanist_flowlayout = "0.17.0"
+ver.compose_ui = "1.7.0-alpha07"
+ver.activity_compose = "1.9.0"
+ver.material = "1.7.0-alpha07"
+ver.composeNavigation = "2.8.0-alpha07"
+ver.accompanist_flowlayout = "0.35.0-alpha"
 lib.google_compose = ["androidx.activity:activity-compose:$ver.activity_compose",
                       "androidx.compose.ui:ui:$ver.compose_ui",
                       "androidx.compose.ui:ui-tooling:$ver.compose_ui",
@@ -31,8 +31,8 @@ lib.google_compose = ["androidx.activity:activity-compose:$ver.activity_compose"
 lib.compose_ui_test_junit4 = ["androidx.compose.ui:ui-test-junit4:$ver.compose_ui"]
 lib.compose_ui_test_manifest = "androidx.compose.ui:ui-test-manifest:$ver.compose_ui"
 
-ver.androidXJunit = "1.1.3-rc01"
-ver.expresso = "3.4.0"
+ver.androidXJunit = "1.2.0-alpha04"
+ver.expresso = "3.6.0-alpha04"
 ver.androidx_core_testing = "2.2.0"
 lib.googleTest = ["androidx.test.ext:junit:$ver.androidXJunit",
                   "androidx.test.espresso:espresso-core:$ver.expresso",
@@ -50,21 +50,18 @@ lib.hiltKapt = ["com.google.dagger:hilt-compiler:$ver.hilt",
 ver.junit4 = "4.13.2"
 lib.junit4 = ["junit:junit:$ver.junit4"]
 
-ver.slf4jNop = "2.0.7"
-lib.slf4jNop = "org.slf4j:slf4j-nop:$ver.slf4jNop"
-
-ver.mockito = "5.2.0"
-ver.mockito_kotlin = "4.1.0"
+ver.mockito = "5.11.0"
+ver.mockito_kotlin = "5.3.1"
 lib.mockito = ["org.mockito:mockito-core:$ver.mockito",
                "org.mockito.kotlin:mockito-kotlin:$ver.mockito_kotlin"]
 
-ver.coil = "2.3.0"
+ver.coil = "2.6.0"
 lib.coil = "io.coil-kt:coil-compose:$ver.coil"
 
 ver.rxAndroid = "3.0.2"
 lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
 
-ver.constraintLayoutCompose = "1.0.1"
+ver.constraintLayoutCompose = "1.1.0-alpha13"
 lib.constraint_layout_compose =
     "androidx.constraintlayout:constraintlayout-compose:$ver.constraintLayoutCompose"
 
@@ -74,25 +71,23 @@ lib.room = ["androidx.room:room-runtime:$ver.room",
 lib.roomCompiler = "androidx.room:room-compiler:$ver.room"
 lib.roomTest = "androidx.room:room-testing:$ver.room"
 
-ver.retrofit2 = "2.9.0"
+ver.retrofit2 = "2.11.0"
 lib.retrofit2 = ["com.squareup.retrofit2:retrofit:${ver.retrofit2}",
                  "com.squareup.retrofit2:converter-gson:${ver.retrofit2}"]
 
-ver.mockk = "1.13.5"
+ver.mockk = "1.13.10"
 lib.mockk = "io.mockk:mockk:${ver.mockk}"
 
-ver.slf4j_simple = "2.0.7"
-lib.slf4j_simple = "org.slf4j:slf4j-simple:${ver.slf4j_simple}"
+ver.slf4j = "2.1.0-alpha1"
+lib.slf4j_simple = "org.slf4j:slf4j-simple:${ver.slf4j}"
+lib.slf4jNop = "org.slf4j:slf4j-nop:$ver.slf4j"
 
-ver.coil = "2.2.2"
-lib.coil = "io.coil-kt:coil-compose:$ver.coil"
-
-ver.kotlin_collections_immutable = "0.3.5"
+ver.kotlin_collections_immutable = "0.3.7"
 lib.kotlin_collections_immutable =
     "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:$ver.kotlin_collections_immutable"
 
 ver.timber = "5.0.1"
 lib.timber = "com.jakewharton.timber:timber:$ver.timber"
 
-ver.androidJetpackWorkVersion = "2.9.0"
+ver.androidJetpackWorkVersion = "2.10.0-alpha02"
 lib.androidJetpackWork = "androidx.work:work-runtime-ktx:$ver.androidJetpackWorkVersion"
