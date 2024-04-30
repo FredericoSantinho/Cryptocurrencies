@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -235,13 +234,8 @@ fun CoinDetailsScreenComposable(
 										item {
 											Header(text = stringResource(id = R.string.team_members))
 										}
-										items(coinDetailsModel.team) { teamModel ->
-											TeamListItem(teamModel)
-											Divider(
-												thickness = 1.dp,
-												color = MaterialTheme.colors.onSurface,
-												modifier = Modifier.padding(top = 8.dp)
-											)
+										items(coinDetailsModel.team) { teamMemberModel ->
+											TeamMemberComposable(teamMemberModel)
 										}
 									}
 									item {

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,7 +18,7 @@ import neuro.cryptocurrencies.presentation.model.TeamMemberModel
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 
 @Composable
-fun TeamListItem(
+fun TeamMemberComposable(
 	teamMemberModel: TeamMemberModel,
 	modifier: Modifier = Modifier
 ) {
@@ -35,12 +37,17 @@ fun TeamListItem(
 			fontStyle = FontStyle.Italic
 		)
 	}
+	Divider(
+		thickness = 1.dp,
+		color = MaterialTheme.colors.onSurface,
+		modifier = Modifier.padding(top = 8.dp)
+	)
 }
 
 @Preview
 @Composable
 fun PreviewTeamListItem() {
 	CryptocurrenciesTheme {
-		TeamListItem(TeamMemberModel("1", "Satoshi Nakamoto", "Founder"))
+		TeamMemberComposable(TeamMemberModel("1", "Satoshi Nakamoto", "Founder"))
 	}
 }
