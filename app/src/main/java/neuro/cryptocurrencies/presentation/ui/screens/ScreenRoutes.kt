@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.presentation
+package neuro.cryptocurrencies.presentation.ui.screens
 
 sealed class ScreenRoutes {
 	companion object {

@@ -46,26 +46,27 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 			if (!searching) Text(
 				text = "Cryptocurrencies",
 				color = MaterialTheme.colors.background
-			) else TextFieldWithoutPadding(
-				searchTerm,
-				{
-					searchTerm = it
-					onSearchTerm(it)
-				},
-				colors = TextFieldDefaults.textFieldColors(
-					textColor = Color.Black,
-					focusedIndicatorColor = Color.Black,
-					cursorColor = Color.Black,
-				),
-				textStyle = MaterialTheme.typography.body2,
-				label = {
-					Text(
-						text = stringResource(id = R.string.search_for_a_coin),
-						color = Color.DarkGray
-					)
-				},
-				modifier = Modifier.focusRequester(focusRequester)
-			)
+			) else
+				TextFieldWithoutPadding(
+					searchTerm,
+					{
+						searchTerm = it
+						onSearchTerm(it)
+					},
+					colors = TextFieldDefaults.textFieldColors(
+						textColor = Color.Black,
+						focusedIndicatorColor = Color.Black,
+						cursorColor = Color.Black,
+					),
+					textStyle = MaterialTheme.typography.body2,
+					label = {
+						Text(
+							text = stringResource(id = R.string.search_for_a_coin),
+							color = Color.DarkGray
+						)
+					},
+					modifier = Modifier.focusRequester(focusRequester)
+				)
 		},
 		backgroundColor = MaterialTheme.colors.primary,
 		actions = {

@@ -47,6 +47,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
+import neuro.cryptocurrencies.presentation.ui.screens.ScreenRoutes
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
 import neuro.cryptocurrencies.presentation.utils.compose.snackbar.showSnackBar
@@ -168,7 +169,7 @@ private fun onUiEvent(
 		uiEventSharedFlow.collect { uiEvent ->
 			debounceTimer.debounceRunFirst {
 				when (uiEvent) {
-					is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(neuro.cryptocurrencies.presentation.ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
+					is CoinListViewModelImpl.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
 				}
 			}
 		}
