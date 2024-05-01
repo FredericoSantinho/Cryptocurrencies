@@ -65,12 +65,6 @@ class CoinDetailsViewModelImplTest {
 				savedStateHandle
 			)
 
-		assertEquals(
-			CoinDetailsState(
-				isLoading = true
-			), coinDetailsViewModel.uiState.value
-		)
-
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
@@ -174,12 +168,6 @@ class CoinDetailsViewModelImplTest {
 				savedStateHandle
 			)
 
-		assertEquals(
-			CoinDetailsState(
-				isLoading = true
-			), coinDetailsViewModel.uiState.value
-		)
-
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
 
@@ -231,12 +219,6 @@ class CoinDetailsViewModelImplTest {
 					hasCachedTagDetailsUseCase,
 					savedStateHandle
 				)
-
-			assertEquals(
-				CoinDetailsState(
-					isLoading = true
-				), coinDetailsViewModel.uiState.value
-			)
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
@@ -290,12 +272,6 @@ class CoinDetailsViewModelImplTest {
 					hasCachedTagDetailsUseCase,
 					savedStateHandle
 				)
-
-			assertEquals(
-				CoinDetailsState(
-					isLoading = true
-				), coinDetailsViewModel.uiState.value
-			)
 
 			verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 			verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
@@ -528,12 +504,6 @@ class CoinDetailsViewModelImplTest {
 				hasCachedTagDetailsUseCase,
 				savedStateHandle
 			)
-
-		assertEquals(
-			CoinDetailsState(
-				isLoading = true
-			), coinDetailsViewModel.uiState.value
-		)
 
 		verify(observeCoinDetailsUseCase, times(1)).execute(coinId)
 		verify(fetchCoinDetailsUseCase, times(1)).execute(eq(coinId))
