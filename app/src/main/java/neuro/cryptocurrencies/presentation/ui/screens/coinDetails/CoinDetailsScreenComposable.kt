@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,7 +52,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.google.accompanist.flowlayout.FlowRow
 import neuro.cryptocurrencies.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
@@ -63,7 +64,7 @@ import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsView
 import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.CoinDetailsViewModelImpl
 import neuro.cryptocurrencies.presentation.viewmodel.coinDetails.DummyCoinDetailsViewModel
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun CoinDetailsScreenComposable(
 	navController: NavController,
@@ -218,14 +219,14 @@ fun CoinDetailsScreenComposable(
 										}
 										item {
 											FlowRow(
-												mainAxisSpacing = 8.dp,
-												crossAxisSpacing = 8.dp,
 												modifier = Modifier.fillMaxWidth()
 											) {
 												for (tag in coinDetailsModel.tags) {
-													CoinTag(tag.name, modifier = Modifier.clickable {
-														viewModel.onTagClick(tag)
-													})
+													CoinTag(tag.name, modifier = Modifier
+														.padding(4.dp)
+														.clickable {
+															viewModel.onTagClick(tag)
+														})
 												}
 											}
 										}

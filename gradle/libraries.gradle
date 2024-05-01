@@ -20,13 +20,11 @@ ver.compose_ui = "1.7.0-alpha07"
 ver.activity_compose = "1.9.0"
 ver.material = "1.7.0-alpha07"
 ver.composeNavigation = "2.8.0-alpha07"
-ver.accompanist_flowlayout = "0.35.0-alpha"
 lib.google_compose = ["androidx.activity:activity-compose:$ver.activity_compose",
                       "androidx.compose.ui:ui:$ver.compose_ui",
                       "androidx.compose.ui:ui-tooling:$ver.compose_ui",
                       "androidx.compose.material:material:$ver.material",
-                      "androidx.navigation:navigation-compose:$ver.composeNavigation",
-                      "com.google.accompanist:accompanist-flowlayout:$ver.accompanist_flowlayout"]
+                      "androidx.navigation:navigation-compose:$ver.composeNavigation"]
 
 lib.compose_ui_test_junit4 = ["androidx.compose.ui:ui-test-junit4:$ver.compose_ui"]
 lib.compose_ui_test_manifest = "androidx.compose.ui:ui-test-manifest:$ver.compose_ui"
