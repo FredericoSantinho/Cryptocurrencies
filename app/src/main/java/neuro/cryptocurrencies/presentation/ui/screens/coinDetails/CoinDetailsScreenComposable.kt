@@ -147,43 +147,43 @@ fun CoinDetailsScreenComposable(
 									modifier = Modifier.padding(horizontal = 16.dp),
 									verticalArrangement = Arrangement.spacedBy(16.dp),
 								) {
-									if (coinDetailsModel.logo.isNotBlank()) {
+									coinDetailsModel.logo?.let {
 										item {
-											Spacer(modifier = Modifier.height(16.dp))
-										}
-										item {
-											Row(
-												modifier = Modifier.fillMaxWidth(),
-												horizontalArrangement = Arrangement.Center
-											) {
-												Image(
-													modifier = Modifier
-														.size(64.dp),
-													painter = rememberAsyncImagePainter(
-														coinDetailsModel.logo
-													),
-													contentDescription = null,
-													contentScale = ContentScale.Crop
-												)
+											Column {
+												Spacer(modifier = Modifier.height(16.dp))
+												Row(
+													modifier = Modifier.fillMaxWidth(),
+													horizontalArrangement = Arrangement.Center
+												) {
+													Image(
+														modifier = Modifier
+															.size(64.dp),
+														painter = rememberAsyncImagePainter(
+															coinDetailsModel.logo
+														),
+														contentDescription = null,
+														contentScale = ContentScale.Crop
+													)
+												}
 											}
 										}
 									}
 									item {
 										CoinHeaderComposable(
-											rank = coinDetailsModel.rank,
-											name = coinDetailsModel.name,
-											symbol = coinDetailsModel.symbol,
+											rank = coinDetailsModel.rank ?: 0,
+											name = coinDetailsModel.name ?: "",
+											symbol = coinDetailsModel.symbol ?: "",
 											price = coinDetailsModelWithPrice.price,
 											maxLines = 3,
 											textStyle = MaterialTheme.typography.h5
 										)
 									}
-									if (coinDetailsModel.description.isNotBlank()) {
+									coinDetailsModel.description?.let {
 										item {
 											Body(coinDetailsModel.description)
 										}
 									}
-									if (coinDetailsModel.type.isNotBlank()) {
+									coinDetailsModel.type?.let {
 										item {
 											Header(stringResource(id = R.string.type))
 										}

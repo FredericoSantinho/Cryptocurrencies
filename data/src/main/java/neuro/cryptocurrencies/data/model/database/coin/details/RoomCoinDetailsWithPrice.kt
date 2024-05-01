@@ -9,14 +9,14 @@ import androidx.room.PrimaryKey
 data class RoomCoinDetailsWithPrice(
 	@PrimaryKey
 	val id: String,
-	val description: String,
+	val description: String?,
 	val hashAlgorithm: String,
-	val logo: String,
-	val name: String,
+	val logo: String?,
+	val name: String?,
 	val openSource: Boolean,
 	val proofType: String,
-	val rank: Int,
-	val symbol: String,
-	val type: String,
+	val rank: Int?,
+	val symbol: String?,
+	val type: String?,
 	val price: Double
 )

@@ -8,7 +8,7 @@ import neuro.cryptocurrencies.domain.entity.CoinDetails
 fun CoinDetailsDto.toDomain(): CoinDetails {
 	return CoinDetails(
 		id,
-		description ?: "",
+		description,
 		hashAlgorithm ?: "",
 		logo,
 		name,
@@ -17,7 +17,7 @@ fun CoinDetailsDto.toDomain(): CoinDetails {
 		rank,
 		symbol,
 		tags?.map { it.toDomain() } ?: emptyList(),
-		team.map { it.toDomain() },
+		team?.map { it.toDomain() } ?: emptyList(),
 		type
 	)
 }
