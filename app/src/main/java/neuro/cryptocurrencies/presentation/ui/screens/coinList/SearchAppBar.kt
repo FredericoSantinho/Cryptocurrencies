@@ -64,6 +64,7 @@ fun SearchAppBar(onSearchTerm: (String) -> Unit = {}) {
 							color = Color.DarkGray
 						)
 					},
+					maxLines = 1,
 					modifier = Modifier.focusRequester(focusRequester)
 				)
 		},
