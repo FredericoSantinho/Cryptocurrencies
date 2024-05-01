@@ -5,8 +5,9 @@ import neuro.cryptocurrencies.data.mapper.network.toDomain
 import neuro.cryptocurrencies.data.repository.network.common.tryRequest
 import neuro.cryptocurrencies.domain.entity.TagDetails
 import neuro.cryptocurrencies.domain.repository.tag.GetTagDetailsRepository
+import javax.inject.Inject
 
-class GetTagDetailsRepositoryImpl(private val coinPaprikaApi: CoinPaprikaApi) :
+class GetTagDetailsRepositoryImpl @Inject constructor(private val coinPaprikaApi: CoinPaprikaApi) :
 	GetTagDetailsRepository {
 	override suspend fun getTagDetails(tagId: String): TagDetails {
 		return tryRequest {

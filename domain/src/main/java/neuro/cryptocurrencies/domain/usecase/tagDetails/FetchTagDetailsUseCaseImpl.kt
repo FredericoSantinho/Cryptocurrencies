@@ -2,8 +2,9 @@ package neuro.cryptocurrencies.domain.usecase.tagDetails
 
 import neuro.cryptocurrencies.domain.repository.tag.GetTagDetailsRepository
 import neuro.cryptocurrencies.domain.repository.tag.SaveTagDetailsRepository
+import javax.inject.Inject
 
-class FetchTagDetailsUseCaseImpl(
+class FetchTagDetailsUseCaseImpl @Inject constructor(
 	private val getTagDetailsRepository: GetTagDetailsRepository,
 	private val saveTagDetailsRepository: SaveTagDetailsRepository
 ) :

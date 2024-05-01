@@ -8,8 +8,9 @@ import neuro.cryptocurrencies.data.dao.TeamDao
 import neuro.cryptocurrencies.data.mapper.database.toDatabase
 import neuro.cryptocurrencies.domain.entity.CoinDetails
 import neuro.cryptocurrencies.domain.repository.coin.details.SaveCoinDetailsWithPriceRepository
+import javax.inject.Inject
 
-class SaveCoinDetailsWithPriceRepositoryImpl(
+class SaveCoinDetailsWithPriceRepositoryImpl @Inject constructor(
 	private val database: RoomDatabase,
 	private val coinDetailsDao: CoinDetailsDao,
 	private val tagDao: TagDao,

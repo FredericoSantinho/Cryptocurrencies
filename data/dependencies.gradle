@@ -6,6 +6,7 @@ dependencies {
   implementation project(":domain")
 
   implementation lib.google
+  implementation lib.javaxInject
   api lib.room
   api lib.retrofit2
   kapt lib.roomCompiler

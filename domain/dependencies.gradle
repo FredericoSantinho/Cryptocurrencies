@@ -4,6 +4,7 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation lib.kotlin
+  implementation lib.javaxInject
 
   testImplementation lib.slf4jNop
   testImplementation lib.junit4

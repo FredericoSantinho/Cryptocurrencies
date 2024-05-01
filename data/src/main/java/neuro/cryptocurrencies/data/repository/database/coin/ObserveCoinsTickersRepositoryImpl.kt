@@ -6,8 +6,9 @@ import neuro.cryptocurrencies.data.dao.CoinTickerDao
 import neuro.cryptocurrencies.data.mapper.database.toDomain
 import neuro.cryptocurrencies.domain.entity.CoinTicker
 import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
+import javax.inject.Inject
 
-class ObserveCoinsTickersRepositoryImpl(
+class ObserveCoinsTickersRepositoryImpl @Inject constructor(
 	private val coinTickerDao: CoinTickerDao
 ) : ObserveCoinsTickersRepository {
 	override fun observeCoinsTickers(): Flow<List<CoinTicker>> {

@@ -47,6 +47,9 @@ lib.hilt = ["com.google.dagger:hilt-android:$ver.hilt",
 lib.hiltKapt = ["com.google.dagger:hilt-compiler:$ver.hilt",
                 "com.google.dagger:hilt-android-compiler:$ver.hilt"]
 
+ver.javaxInject = "1"
+lib.javaxInject = "javax.inject:javax.inject:$ver.javaxInject"
+
 ver.junit4 = "4.13.2"
 lib.junit4 = ["junit:junit:$ver.junit4"]
 

@@ -3,8 +3,9 @@ package neuro.cryptocurrencies.domain.usecase.coinDetails
 import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
 import neuro.cryptocurrencies.domain.repository.coin.details.SaveCoinDetailsWithPriceRepository
+import javax.inject.Inject
 
-class FetchCoinDetailsUseCaseImpl(
+class FetchCoinDetailsUseCaseImpl @Inject constructor(
 	private val getCoinTickerRepository: GetCoinTickerRepository,
 	private val getCoinDetailsRepository: GetCoinDetailsRepository,
 	private val saveCoinDetailsWithPriceRepository: SaveCoinDetailsWithPriceRepository
