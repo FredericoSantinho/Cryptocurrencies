@@ -7,11 +7,11 @@ data class CoinTickerDto(
 	@SerializedName("id")
 	val id: String,
 	@SerializedName("name")
-	val name: String,
+	val name: String?,
 	@SerializedName("quotes")
-	val quotes: Quotes,
+	val quotes: Quotes?,
 	@SerializedName("rank")
-	val rank: Int,
+	val rank: Int?,
 	@SerializedName("symbol")
-	val symbol: String
+	val symbol: String?
 )

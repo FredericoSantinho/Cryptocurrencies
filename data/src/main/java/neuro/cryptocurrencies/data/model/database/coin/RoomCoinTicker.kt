@@ -11,8 +11,8 @@ import androidx.room.PrimaryKey
 data class RoomCoinTicker(
 	@PrimaryKey
 	val id: String,
-	val name: String,
-	val rank: Int,
-	val symbol: String,
+	val name: String?,
+	val rank: Int?,
+	val symbol: String?,
 	val price: Double
 )

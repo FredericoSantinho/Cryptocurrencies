@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class USD(
 	@SerializedName("price")
-	val price: Double
+	val price: Double?
 )

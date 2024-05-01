@@ -131,9 +131,9 @@ fun CoinListScreenComposable(
 							) {
 								items(uiState.coins, { item -> item.id }) {
 									CoinHeaderComposable(
-										rank = it.rank,
-										name = it.name,
-										symbol = it.symbol,
+										rank = it.rank ?: 0,
+										name = it.name ?: "",
+										symbol = it.symbol ?: "",
 										price = it.price,
 										modifier = Modifier
 											.clickable { viewModel.onCoinClick(it.id) }

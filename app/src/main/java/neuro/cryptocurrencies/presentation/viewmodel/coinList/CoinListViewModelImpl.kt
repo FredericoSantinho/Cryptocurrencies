@@ -129,7 +129,7 @@ class CoinListViewModelImpl @Inject constructor(
 	private fun updateUiState() {
 		coinTickers.combine(searchTerm) { coinModels, searchTerm ->
 			coinModels?.let {
-				val filteredCoins = coinModels.filter { it.name.lowercase().contains(searchTerm) }
+				val filteredCoins = coinModels.filter { it.name?.lowercase()?.contains(searchTerm) == true }
 				if (filteredCoins.isNotEmpty()) {
 					setCoins(filteredCoins)
 				}
