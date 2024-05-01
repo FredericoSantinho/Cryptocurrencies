@@ -48,7 +48,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.R
 import neuro.cryptocurrencies.presentation.mapper.toPresentation
 import neuro.cryptocurrencies.presentation.model.ErrorMessage
-import neuro.cryptocurrencies.presentation.ui.screens.ScreenRoutes
+import neuro.cryptocurrencies.presentation.navigation.CallManager
 import neuro.cryptocurrencies.presentation.ui.screens.common.CoinHeaderComposable
 import neuro.cryptocurrencies.presentation.ui.theme.CryptocurrenciesTheme
 import neuro.cryptocurrencies.presentation.ui.theme.blackTransparent
@@ -161,12 +161,13 @@ fun CoinListScreenComposable(
 		}
 	}
 
-	onUiEvent(viewModel.uiEvent, navController, viewModel.debounceTimer)
+	onUiEvent(viewModel.uiEvent, viewModel.callManager, navController, viewModel.debounceTimer)
 }
 
 @Composable
 private fun onUiEvent(
 	uiEventSharedFlow: SharedFlow<CoinListViewModel.UiEvent>,
+	callManager: CallManager,
 	navController: NavHostController,
 	debounceTimer: DebounceTimer
 ) {
@@ -174,7 +175,10 @@ private fun onUiEvent(
 		uiEventSharedFlow.collect { uiEvent ->
 			debounceTimer.debounceRunFirst {
 				when (uiEvent) {
-					is CoinListViewModel.UiEvent.NavigateToDetails -> navController.navigate(ScreenRoutes.coinDetails + "/${uiEvent.coinId}")
+					is CoinListViewModel.UiEvent.NavigateToDetails -> callManager.coinDetails(
+						navController,
+						uiEvent.coinId
+					)
 				}
 			}
 		}

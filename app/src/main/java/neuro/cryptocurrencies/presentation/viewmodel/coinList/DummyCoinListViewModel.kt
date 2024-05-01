@@ -6,9 +6,9 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import neuro.cryptocurrencies.presentation.model.CoinTickerModel
-import neuro.cryptocurrencies.presentation.utils.helper.DebounceTimer
+import neuro.cryptocurrencies.presentation.ui.base.BaseViewModel
 
-class DummyCoinListViewModel : CoinListViewModel {
+class DummyCoinListViewModel : CoinListViewModel, BaseViewModel() {
 	override val uiState: State<CoinListState> =
 		mutableStateOf(
 			CoinListState(
@@ -19,8 +19,6 @@ class DummyCoinListViewModel : CoinListViewModel {
 			)
 		)
 	override val uiEvent: SharedFlow<CoinListViewModel.UiEvent> = MutableSharedFlow()
-
-	override val debounceTimer = DebounceTimer()
 
 	override fun onCoinClick(coinId: String) {
 	}

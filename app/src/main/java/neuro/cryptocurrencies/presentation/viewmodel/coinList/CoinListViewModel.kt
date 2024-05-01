@@ -2,12 +2,14 @@ package neuro.cryptocurrencies.presentation.viewmodel.coinList
 
 import androidx.compose.runtime.State
 import kotlinx.coroutines.flow.SharedFlow
+import neuro.cryptocurrencies.presentation.navigation.CallManager
 import neuro.cryptocurrencies.presentation.utils.helper.DebounceTimer
 
 interface CoinListViewModel {
 	val uiState: State<CoinListState>
 	val uiEvent: SharedFlow<UiEvent>
 
+	val callManager: CallManager
 	val debounceTimer: DebounceTimer
 
 	fun onCoinClick(coinId: String)
