@@ -157,7 +157,7 @@ fun CoinDetailsScreenComposable(
 												) {
 													Image(
 														modifier = Modifier
-															.size(64.dp),
+															.size(96.dp),
 														painter = rememberAsyncImagePainter(
 															coinDetailsModel.logo
 														),
@@ -175,7 +175,8 @@ fun CoinDetailsScreenComposable(
 											symbol = coinDetailsModel.symbol ?: "",
 											price = coinDetailsModelWithPrice.price,
 											maxLines = 3,
-											textStyle = MaterialTheme.typography.h5
+											textStyle = MaterialTheme.typography.h5,
+											modifier = Modifier
 										)
 									}
 									coinDetailsModel.description?.let {
