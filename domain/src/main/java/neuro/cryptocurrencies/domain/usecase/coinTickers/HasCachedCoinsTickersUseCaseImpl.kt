@@ -1,6 +1,6 @@
 package neuro.cryptocurrencies.domain.usecase.coinTickers
 
-import neuro.cryptocurrencies.domain.repository.coin.HasCachedCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.HasCachedCoinsTickersRepository
 import javax.inject.Inject
 
 class HasCachedCoinsTickersUseCaseImpl @Inject constructor(private val hasCachedCoinsTickersRepository: HasCachedCoinsTickersRepository) :

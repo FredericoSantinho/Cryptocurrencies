@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.domain.usecase.coinDetails
 
 import kotlinx.coroutines.test.runTest
-import neuro.cryptocurrencies.domain.repository.coin.details.HasCachedCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coinDetails.HasCachedCoinDetailsRepository
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times

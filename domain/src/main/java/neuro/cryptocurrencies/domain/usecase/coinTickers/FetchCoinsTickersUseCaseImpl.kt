@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.domain.usecase.coinTickers
 
-import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
-import neuro.cryptocurrencies.domain.repository.coin.SaveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.GetCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.SaveCoinsTickersRepository
 import javax.inject.Inject
 
 class FetchCoinsTickersUseCaseImpl @Inject constructor(

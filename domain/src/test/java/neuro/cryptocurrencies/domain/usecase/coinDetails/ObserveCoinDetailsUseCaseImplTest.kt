@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice
 import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
-import neuro.cryptocurrencies.domain.repository.coin.details.ObserveCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coinDetails.ObserveCoinDetailsRepository
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times

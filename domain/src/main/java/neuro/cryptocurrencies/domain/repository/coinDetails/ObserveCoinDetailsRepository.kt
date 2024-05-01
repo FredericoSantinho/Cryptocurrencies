@@ -1,4 +1,4 @@
-package neuro.cryptocurrencies.domain.repository.coin.details
+package neuro.cryptocurrencies.domain.repository.coinDetails
 
 import kotlinx.coroutines.flow.Flow
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice

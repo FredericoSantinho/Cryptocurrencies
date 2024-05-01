@@ -2,8 +2,8 @@ package neuro.cryptocurrencies.domain.usecase.coinTickers
 
 import kotlinx.coroutines.runBlocking
 import neuro.cryptocurrencies.domain.entity.CoinTicker
-import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickersRepository
-import neuro.cryptocurrencies.domain.repository.coin.SaveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.GetCoinTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.SaveCoinsTickersRepository
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times

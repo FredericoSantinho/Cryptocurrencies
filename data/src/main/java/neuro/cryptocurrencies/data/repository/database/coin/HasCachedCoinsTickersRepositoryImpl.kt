@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.data.repository.database.coin
 
 import neuro.cryptocurrencies.data.dao.CoinTickerDao
-import neuro.cryptocurrencies.domain.repository.coin.HasCachedCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.HasCachedCoinsTickersRepository
 import javax.inject.Inject
 
 class HasCachedCoinsTickersRepositoryImpl @Inject constructor(private val coinTickerDao: CoinTickerDao) :

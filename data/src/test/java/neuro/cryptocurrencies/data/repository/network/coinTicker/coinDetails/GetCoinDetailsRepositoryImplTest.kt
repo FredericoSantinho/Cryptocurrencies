@@ -1,10 +1,11 @@
-package neuro.cryptocurrencies.data.repository.network.coin
+package neuro.cryptocurrencies.data.repository.network.coinTicker.coinDetails
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
-import neuro.cryptocurrencies.data.mocks.network.coinTickerDtoMock
-import neuro.cryptocurrencies.domain.mocks.coinTickerMock
+import neuro.cryptocurrencies.data.mocks.network.coinDetailsDtoMock
+import neuro.cryptocurrencies.data.repository.network.coinDetails.GetCoinDetailsRepositoryImpl
+import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import okhttp3.ResponseBody
@@ -18,36 +19,37 @@ import org.mockito.kotlin.whenever
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
+import kotlin.test.assertEquals
 import kotlin.time.Duration
 
-class GetCoinTickerRepositoryImplTest {
+class GetCoinDetailsRepositoryImplTest {
 
 	@Test
 	fun test() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
-		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
+		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
 
 		val coinId = "btc-bitcoin"
-		whenever(coinPaprikaApi.getCoinTicker(coinId)).thenReturn(coinTickerDtoMock())
+		whenever(coinPaprikaApi.getCoinById(coinId)).thenReturn(coinDetailsDtoMock())
 
 		verifyNoInteractions(coinPaprikaApi)
 
-		val coinTicker = getCoinTickerRepository.getCoinTicker(coinId)
+		val coinDetails = getCoinDetailsRepository.getCoinDetails(coinId)
 
-		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinById(coinId)
 
-		kotlin.test.assertEquals(coinTickerMock(), coinTicker)
+		assertEquals(coinDetailsMock(), coinDetails)
 	}
 
 	@Test
 	fun onHttpException404() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
-		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
+		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
 
 		val coinId = "btc-bitcoin"
-		whenever(coinPaprikaApi.getCoinTicker(coinId)).thenThrow(
+		whenever(coinPaprikaApi.getCoinById(coinId)).thenThrow(
 			HttpException(
 				Response.error<Int>(
 					404,
@@ -60,41 +62,41 @@ class GetCoinTickerRepositoryImplTest {
 
 		assertThrows("Not found", NoDataAvailableException::class.java) {
 			runBlocking {
-				getCoinTickerRepository.getCoinTicker(coinId)
+				getCoinDetailsRepository.getCoinDetails(coinId)
 			}
 		}
 
-		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinById(coinId)
 	}
 
 	@Test
 	fun onOtherHttpException() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
-		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
+		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
 
 		val coinId = "btc-bitcoin"
-		whenever(coinPaprikaApi.getCoinTicker(coinId)).thenThrow(HttpException::class.java)
+		whenever(coinPaprikaApi.getCoinById(coinId)).thenThrow(HttpException::class.java)
 
 		verifyNoInteractions(coinPaprikaApi)
 
 		assertThrows("An unexpected error occurred", ErrorRetrievingDataException::class.java) {
 			runBlocking {
-				getCoinTickerRepository.getCoinTicker(coinId)
+				getCoinDetailsRepository.getCoinDetails(coinId)
 			}
 		}
 
-		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinById(coinId)
 	}
 
 	@Test
 	fun onIOException() = runTest(timeout = Duration.parse("1m")) {
 		val coinPaprikaApi = mock<CoinPaprikaApi>()
 
-		val getCoinTickerRepository = GetCoinTickerRepositoryImpl(coinPaprikaApi)
+		val getCoinDetailsRepository = GetCoinDetailsRepositoryImpl(coinPaprikaApi)
 
 		val coinId = "btc-bitcoin"
-		whenever(coinPaprikaApi.getCoinTicker(coinId)).thenThrow(IOException::class.java)
+		whenever(coinPaprikaApi.getCoinById(coinId)).thenThrow(IOException::class.java)
 
 		verifyNoInteractions(coinPaprikaApi)
 
@@ -103,10 +105,10 @@ class GetCoinTickerRepositoryImplTest {
 			ErrorRetrievingDataException::class.java
 		) {
 			runBlocking {
-				getCoinTickerRepository.getCoinTicker(coinId)
+				getCoinDetailsRepository.getCoinDetails(coinId)
 			}
 		}
 
-		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
+		verify(coinPaprikaApi, times(1)).getCoinById(coinId)
 	}
 }

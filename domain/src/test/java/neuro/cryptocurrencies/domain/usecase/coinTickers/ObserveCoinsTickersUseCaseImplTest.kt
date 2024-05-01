@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.entity.CoinTicker
-import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.ObserveCoinsTickersRepository
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.mock

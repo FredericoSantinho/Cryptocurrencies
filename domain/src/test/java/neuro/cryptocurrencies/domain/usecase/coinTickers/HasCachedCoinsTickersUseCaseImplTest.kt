@@ -1,7 +1,7 @@
 package neuro.cryptocurrencies.domain.usecase.coinTickers
 
 import kotlinx.coroutines.test.runTest
-import neuro.cryptocurrencies.domain.repository.coin.HasCachedCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.HasCachedCoinsTickersRepository
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test

@@ -1,13 +1,11 @@
 package neuro.cryptocurrencies.domain.usecase.coinDetails
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.entity.CoinTicker
 import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
-import neuro.cryptocurrencies.domain.repository.coin.GetCoinTickerRepository
-import neuro.cryptocurrencies.domain.repository.coin.details.GetCoinDetailsRepository
-import neuro.cryptocurrencies.domain.repository.coin.details.SaveCoinDetailsWithPriceRepository
+import neuro.cryptocurrencies.domain.repository.coinDetails.GetCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coinDetails.SaveCoinDetailsWithPriceRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.GetCoinTickerRepository
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
@@ -48,7 +46,7 @@ class FetchCoinDetailsUseCaseImplTest {
 		verifyNoInteractions(getCoinDetailsRepository)
 		verifyNoInteractions(saveCoinDetailsWithPriceRepository)
 
-		fetchCoinDetailsUseCase.execute(coinId, CoroutineScope(Job()))
+		fetchCoinDetailsUseCase.execute(coinId)
 
 		verify(getCoinTickerRepository, times(1)).getCoinTicker(coinId)
 		verify(getCoinDetailsRepository, times(1)).getCoinDetails(coinId)

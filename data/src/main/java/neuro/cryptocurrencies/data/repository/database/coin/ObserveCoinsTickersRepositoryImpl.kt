@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.map
 import neuro.cryptocurrencies.data.dao.CoinTickerDao
 import neuro.cryptocurrencies.data.mapper.database.toDomain
 import neuro.cryptocurrencies.domain.entity.CoinTicker
-import neuro.cryptocurrencies.domain.repository.coin.ObserveCoinsTickersRepository
+import neuro.cryptocurrencies.domain.repository.coinTicker.ObserveCoinsTickersRepository
 import javax.inject.Inject
 
 class ObserveCoinsTickersRepositoryImpl @Inject constructor(

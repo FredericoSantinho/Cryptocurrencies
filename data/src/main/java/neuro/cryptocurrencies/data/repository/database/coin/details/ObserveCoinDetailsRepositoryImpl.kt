@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
 import neuro.cryptocurrencies.data.mapper.database.toDomain
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice
-import neuro.cryptocurrencies.domain.repository.coin.details.ObserveCoinDetailsRepository
+import neuro.cryptocurrencies.domain.repository.coinDetails.ObserveCoinDetailsRepository
 import javax.inject.Inject
 
 class ObserveCoinDetailsRepositoryImpl @Inject constructor(private val coinDetailsDao: CoinDetailsDao) :
