@@ -8,6 +8,7 @@ import neuro.cryptocurrencies.domain.mocks.coinTickerMock
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import okhttp3.ResponseBody
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -37,7 +38,7 @@ class GetCoinTickerRepositoryImplTest {
 
 		verify(coinPaprikaApi, times(1)).getCoinTicker(coinId)
 
-		kotlin.test.assertEquals(coinTickerMock(), coinTicker)
+		assertEquals(coinTickerMock(), coinTicker)
 	}
 
 	@Test

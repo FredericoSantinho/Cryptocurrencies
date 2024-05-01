@@ -2,14 +2,14 @@ package neuro.cryptocurrencies.data.repository.database.coin.details
 
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 import kotlin.time.Duration
 
 class HasCachedCoinDetailsRepositoryImplTest {

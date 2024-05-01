@@ -2,14 +2,14 @@ package neuro.cryptocurrencies.domain.usecase.tagDetails
 
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.repository.tag.HasCachedTagDetailsRepository
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 class HasCachedTagDetailsUseCaseImplTest {
 	@Test

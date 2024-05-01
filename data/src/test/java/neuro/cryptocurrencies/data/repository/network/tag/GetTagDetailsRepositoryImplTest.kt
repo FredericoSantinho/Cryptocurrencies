@@ -8,6 +8,7 @@ import neuro.cryptocurrencies.domain.mocks.tagDetailsMock
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import okhttp3.ResponseBody
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -36,7 +37,7 @@ class GetTagDetailsRepositoryImplTest {
 
 		verify(coinPaprikaApi, times(1)).getTagDetails(tagId)
 
-		kotlin.test.assertEquals(tagDetailsMock(), tagDetails)
+		assertEquals(tagDetailsMock(), tagDetails)
 	}
 
 	@Test

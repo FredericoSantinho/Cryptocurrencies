@@ -1,14 +1,14 @@
-package neuro.cryptocurrencies.data.repository.network.coinTicker.coinDetails
+package neuro.cryptocurrencies.data.repository.network.coinDetails
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.api.CoinPaprikaApi
 import neuro.cryptocurrencies.data.mocks.network.coinDetailsDtoMock
-import neuro.cryptocurrencies.data.repository.network.coinDetails.GetCoinDetailsRepositoryImpl
 import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
 import neuro.cryptocurrencies.domain.usecase.error.ErrorRetrievingDataException
 import neuro.cryptocurrencies.domain.usecase.error.NoDataAvailableException
 import okhttp3.ResponseBody
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -19,7 +19,6 @@ import org.mockito.kotlin.whenever
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
-import kotlin.test.assertEquals
 import kotlin.time.Duration
 
 class GetCoinDetailsRepositoryImplTest {

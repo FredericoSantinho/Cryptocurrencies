@@ -6,13 +6,13 @@ import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.domain.entity.CoinDetailsWithPrice
 import neuro.cryptocurrencies.domain.mocks.coinDetailsMock
 import neuro.cryptocurrencies.domain.repository.coinDetails.ObserveCoinDetailsRepository
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import kotlin.test.assertEquals
 
 class ObserveCoinDetailsUseCaseImplTest {
 	@Test

@@ -7,13 +7,13 @@ import kotlinx.coroutines.test.runTest
 import neuro.cryptocurrencies.data.dao.CoinDetailsDao
 import neuro.cryptocurrencies.data.mocks.database.roomCoinDetailsWithPriceWithTagsAndTeamMock
 import neuro.cryptocurrencies.domain.mocks.coinDetailsWithPriceMock
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
-import kotlin.test.assertEquals
 import kotlin.time.Duration
 
 class ObserveCoinDetailsRepositoryImplTest {
